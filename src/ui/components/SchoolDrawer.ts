@@ -1,5 +1,6 @@
 import type { SchoolWithData } from '../../pipeline/generator.ts';
 import type { GroupScore } from '../../types/score.ts';
+import { renderSchoolLogSection } from './FlaggedWatchlist.ts';
 
 export function renderSchoolDrawer(item: SchoolWithData): string {
   const { school, score, flags, snapshot } = item;
@@ -16,7 +17,7 @@ export function renderSchoolDrawer(item: SchoolWithData): string {
               <code style="background: var(--bg-card-alt); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">${school.dbn}</code>
             </div>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
-              ${school.borough} · ${school.programYear} · Installed ${school.installationDate} · Assigned GST: <strong>${school.assignedGst}</strong>
+              ${school.borough} · ${school.programYear} · Installed ${school.installationDate} · Assigned GST: <strong>${school.assignedGst}</strong> · Ed Team: <strong>${school.curriculumSpecialist || 'Heather Holz'}</strong>
             </p>
           </div>
           <button id="close-modal-btn" class="close-btn" title="Close Drawer">✕</button>
@@ -161,6 +162,11 @@ export function renderSchoolDrawer(item: SchoolWithData): string {
                 ${snapshot.knownIssues !== 'None reported' ? `<p style="margin-top: 0.35rem; color: #dc2626;"><strong>Reported Challenges:</strong> ${snapshot.knownIssues}</p>` : ''}
               </div>
             </div>
+          </div>
+
+          <!-- NYSW Operational Status & Intervention Log -->
+          <div style="margin-top: 1.5rem;">
+            ${renderSchoolLogSection(school.dbn)}
           </div>
         </div>
       </div>

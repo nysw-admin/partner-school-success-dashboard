@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "node --loader ts-node/esm --no-warnings tests/worked_examples.test.ts"
+    "test": "node --experimental-strip-types tests/verify_engine.ts"
   },
   "devDependencies": {
     "typescript": "^5.7.0",

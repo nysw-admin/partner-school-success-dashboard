@@ -3,8 +3,9 @@ import type { FlaggedSchoolReport } from './types/flags.ts';
 import { renderNavbar } from './ui/components/Navbar.ts';
 import { renderMetricsRibbon } from './ui/components/MetricsRibbon.ts';
 import { renderSchoolTable, type FilterState } from './ui/components/SchoolTable.ts';
-import { renderFlaggedWatchlist } from './ui/components/FlaggedWatchlist.ts';
+import { renderFlaggedWatchlist, renderSchoolLogSection } from './ui/components/FlaggedWatchlist.ts';
 import { renderSchoolDrawer } from './ui/components/SchoolDrawer.ts';
+import { addLogEntry, deleteLogEntry } from './services/flagLogStore.ts';
 
 interface AppState {
   activeTab: 'directory' | 'watchlist';
@@ -24,6 +25,7 @@ const state: AppState = {
     gradeTier: 'all',
     completeness: 'all',
     gst: 'all',
+    edTeam: 'all',
   },
   selectedSchoolDbn: null,
   schools: cohort.schools,
@@ -94,6 +96,7 @@ function attachEventListeners() {
   const gradeFilter = document.getElementById('grade-filter') as HTMLSelectElement | null;
   const compFilter = document.getElementById('completeness-filter') as HTMLSelectElement | null;
   const gstFilter = document.getElementById('gst-filter') as HTMLSelectElement | null;
+  const edTeamFilter = document.getElementById('edteam-filter') as HTMLSelectElement | null;
 
   searchInput?.addEventListener('input', (e) => {
     state.filters.searchQuery = (e.target as HTMLInputElement).value;
@@ -117,6 +120,11 @@ function attachEventListeners() {
 
   gstFilter?.addEventListener('change', (e) => {
     state.filters.gst = (e.target as HTMLSelectElement).value;
+    updateTableViewOnly();
+  });
+
+  edTeamFilter?.addEventListener('change', (e) => {
+    state.filters.edTeam = (e.target as HTMLSelectElement).value;
     updateTableViewOnly();
   });
 
@@ -166,6 +174,66 @@ function attachEventListeners() {
       renderApp();
     }
   };
+
+  // Wire up flag log forms and deletion buttons
+  attachFlagLogListeners();
+}
+
+function attachFlagLogListeners() {
+  document.querySelectorAll<HTMLFormElement>('.flag-log-form').forEach(form => {
+    if (form.hasAttribute('data-bound')) return;
+    form.setAttribute('data-bound', 'true');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const dbn = form.getAttribute('data-dbn');
+      if (!dbn) return;
+
+      const statusEl = document.getElementById(`log-status-${dbn}`) as HTMLSelectElement | null;
+      const authorEl = document.getElementById(`log-author-${dbn}`) as HTMLInputElement | null;
+      const noteEl = document.getElementById(`log-note-${dbn}`) as HTMLTextAreaElement | null;
+
+      const note = noteEl?.value.trim();
+      if (!note) return;
+
+      const status = statusEl?.value || 'In Progress';
+      const author = authorEl?.value.trim() || 'NYSW Team';
+
+      addLogEntry(dbn, note, author, status);
+
+      // Refresh any log containers for this school
+      document.querySelectorAll<HTMLElement>(`.flag-log-container[data-dbn="${dbn}"]`).forEach(container => {
+        container.outerHTML = renderSchoolLogSection(dbn);
+      });
+
+      attachFlagLogListeners();
+
+      document.querySelectorAll<HTMLElement>(`.flag-log-container[data-dbn="${dbn}"]`).forEach(container => {
+        container.classList.add('just-updated');
+        setTimeout(() => container.classList.remove('just-updated'), 1500);
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.delete-log-btn').forEach(btn => {
+    if (btn.hasAttribute('data-bound')) return;
+    btn.setAttribute('data-bound', 'true');
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const logId = btn.getAttribute('data-log-id');
+      const dbn = btn.getAttribute('data-dbn');
+      if (!logId || !dbn) return;
+
+      deleteLogEntry(logId);
+
+      document.querySelectorAll<HTMLElement>(`.flag-log-container[data-dbn="${dbn}"]`).forEach(container => {
+        container.outerHTML = renderSchoolLogSection(dbn);
+      });
+
+      attachFlagLogListeners();
+    });
+  });
 }
 
 function updateTableViewOnly() {

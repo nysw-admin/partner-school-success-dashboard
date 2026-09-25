@@ -39,17 +39,49 @@ export function renderMetricsRibbon(
           <span>Active Partner Cohort</span>
           <span>🏫</span>
         </div>
-        <div class="metric-card-value">${totalSchools}</div>
-        <div class="metric-card-sub">Schools across 5 NYC Boroughs (Scaling to 370+)</div>
+        <div class="metric-card-value">${totalSchools} <span style="font-size: 0.95rem; font-weight: 500; color: var(--text-muted);">schools</span></div>
+        <div class="metric-card-sub">Across 5 NYC Boroughs · Network Mean: <strong>${avgScore}/100</strong></div>
       </div>
 
-      <div class="metric-card">
+      <div class="metric-card bucket-key-card">
         <div class="metric-card-header">
-          <span>Network Mean Score</span>
-          <span>📊</span>
+          <span>Bucket Key (100 Pts)</span>
+          <span>🔑</span>
         </div>
-        <div class="metric-card-value">${avgScore} <span style="font-size: 1rem; font-weight: 500; color: var(--text-muted);">/ 100</span></div>
-        <div class="metric-card-sub">B1: ${avgB1}/42 · B2: ${avgB2}/40 · B3: ${avgB3}/18</div>
+        <div class="bucket-key-items">
+          <div class="bucket-key-row" title="Bucket 1: 42 Max Points. Evaluates GST weekly maintenance visits, hydroponic systems care, harvest yields, and lab readiness. (Network Avg: ${avgB1}/42 pts)">
+            <span class="bucket-key-tag b1-tag">B1</span>
+            <div class="bucket-key-details">
+              <div class="bucket-key-line">
+                <span class="bucket-key-name">Classroom Maintenance & GST</span>
+                <span class="bucket-key-pts">42 pts</span>
+              </div>
+              <div class="bucket-key-desc">Hydroponic systems, visits & harvests</div>
+            </div>
+          </div>
+
+          <div class="bucket-key-row" title="Bucket 2: 40 Max Points. Evaluates teacher professional development, portal logins, classroom lessons, and student science comprehension. (Network Avg: ${avgB2}/40 pts)">
+            <span class="bucket-key-tag b2-tag">B2</span>
+            <div class="bucket-key-details">
+              <div class="bucket-key-line">
+                <span class="bucket-key-name">Teacher & Student Engagement</span>
+                <span class="bucket-key-pts">40 pts</span>
+              </div>
+              <div class="bucket-key-desc">PD training, portal logins & STEM lessons</div>
+            </div>
+          </div>
+
+          <div class="bucket-key-row" title="Bucket 3: 18 Max Points. Evaluates administration support, principal check-ins, maintenance agreements & long-term sustainability. (Network Avg: ${avgB3}/18 pts)">
+            <span class="bucket-key-tag b3-tag">B3</span>
+            <div class="bucket-key-details">
+              <div class="bucket-key-line">
+                <span class="bucket-key-name">Administration Support</span>
+                <span class="bucket-key-pts">18 pts</span>
+              </div>
+              <div class="bucket-key-desc">Principal check-ins & sustainability</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="metric-card">

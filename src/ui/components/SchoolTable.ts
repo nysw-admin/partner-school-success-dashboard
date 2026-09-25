@@ -6,6 +6,7 @@ export interface FilterState {
   gradeTier: string;
   completeness: string;
   gst: string;
+  edTeam?: string;
 }
 
 export function renderSchoolTable(
@@ -22,7 +23,8 @@ export function renderSchoolTable(
       const match =
         s.name.toLowerCase().includes(q) ||
         s.dbn.toLowerCase().includes(q) ||
-        s.assignedGst.toLowerCase().includes(q);
+        s.assignedGst.toLowerCase().includes(q) ||
+        (s.curriculumSpecialist && s.curriculumSpecialist.toLowerCase().includes(q));
       if (!match) return false;
     }
 
@@ -42,10 +44,17 @@ export function renderSchoolTable(
       return false;
     }
 
+    if (filters.edTeam && filters.edTeam !== 'all' && s.curriculumSpecialist !== filters.edTeam) {
+      return false;
+    }
+
     return true;
   });
 
   const uniqueGsts = Array.from(new Set(schools.map(s => s.school.assignedGst))).sort();
+  const uniqueEdTeam = Array.from(
+    new Set(schools.map(s => s.school.curriculumSpecialist).filter(Boolean))
+  ).sort() as string[];
 
   return `
     <div class="controls-bar">
@@ -55,7 +64,7 @@ export function renderSchoolTable(
           type="text"
           id="school-search-input"
           class="search-input"
-          placeholder="Search by school name, DBN (e.g. K089), or GST..."
+          placeholder="Search by school name, DBN, GST, or Ed Team..."
           value="${escapeHtml(filters.searchQuery)}"
         />
       </div>
@@ -90,6 +99,11 @@ export function renderSchoolTable(
           <option value="all" ${filters.gst === 'all' ? 'selected' : ''}>All GST Staff</option>
           ${uniqueGsts.map(gst => `<option value="${gst}" ${filters.gst === gst ? 'selected' : ''}>${gst}</option>`).join('')}
         </select>
+
+        <select id="edteam-filter" class="filter-select">
+          <option value="all" ${filters.edTeam === 'all' ? 'selected' : ''}>All Ed Team</option>
+          ${uniqueEdTeam.map(ed => `<option value="${ed}" ${filters.edTeam === ed ? 'selected' : ''}>${ed}</option>`).join('')}
+        </select>
       </div>
     </div>
 
@@ -97,18 +111,20 @@ export function renderSchoolTable(
       <table class="school-table">
         <thead>
           <tr>
-            <th>Grade & Score</th>
-            <th>School / DBN</th>
-            <th>Borough & Program</th>
-            <th>Assigned GST</th>
-            <th>Gate Status</th>
-            <th>3-Bucket Breakdown</th>
-            <th>Active Flags</th>
+            <th style="width: 105px;">Grade & Score</th>
+            <th style="min-width: 180px;">School / DBN</th>
+            <th style="width: 100px;">Borough</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 125px;">Assigned GST</th>
+            <th style="width: 140px;">Ed Team Member</th>
+            <th style="width: 115px;">Gate Status</th>
+            <th style="width: 135px;">3-Bucket Breakdown</th>
+            <th style="min-width: 140px;">Active Flags</th>
           </tr>
         </thead>
         <tbody>
           ${filtered.length === 0
-            ? `<tr><td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-muted);">No schools match the selected filters.</td></tr>`
+            ? `<tr><td colspan="9" style="text-align: center; padding: 2rem; color: var(--text-muted);">No schools match the selected filters.</td></tr>`
             : filtered.map(item => renderSchoolRow(item)).join('')
           }
         </tbody>
@@ -163,14 +179,25 @@ function renderSchoolRow(item: SchoolWithData): string {
       </td>
 
       <td>
-        <div style="display: flex; flex-direction: column;">
-          <span style="font-weight: 500;">${school.borough}</span>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">${school.programYear} · Installed ${school.installationDate}</span>
+        <span style="font-weight: 600; color: var(--text-main);">${school.borough}</span>
+      </td>
+
+      <td>
+        <div style="display: flex; flex-direction: column; gap: 0.2rem; align-items: flex-start;">
+          <span class="program-status-badge ${getProgramYearClass(school.programYear)}">${school.programYear}</span>
+          <span style="font-size: 0.72rem; color: var(--text-muted);">Installed ${school.installationDate}</span>
         </div>
       </td>
 
       <td>
         <span style="font-weight: 500;">${school.assignedGst}</span>
+      </td>
+
+      <td>
+        <div style="display: flex; align-items: center; gap: 0.35rem;">
+          <span style="font-size: 0.85rem;" title="NYSW Curriculum Specialist">🎓</span>
+          <span style="font-weight: 500; color: var(--text-main);">${escapeHtml(school.curriculumSpecialist || 'Heather Holz')}</span>
+        </div>
       </td>
 
       <td>
@@ -225,3 +252,14 @@ function escapeHtml(str: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
+
+function getProgramYearClass(year: string): string {
+  switch (year) {
+    case 'Implementation': return 'prog-implementation';
+    case 'Op Y1': return 'prog-opy1';
+    case 'Op Y2': return 'prog-opy2';
+    case 'Op Y3+': return 'prog-opy3';
+    default: return '';
+  }
+}
+

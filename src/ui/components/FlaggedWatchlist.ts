@@ -1,4 +1,5 @@
 import type { FlaggedSchoolReport } from '../../types/flags.ts';
+import { getLogsForSchool } from '../../services/flagLogStore.ts';
 
 export function renderFlaggedWatchlist(flaggedReports: FlaggedSchoolReport[]): string {
   if (flaggedReports.length === 0) {
@@ -25,7 +26,7 @@ export function renderFlaggedWatchlist(flaggedReports: FlaggedSchoolReport[]): s
             <span>🚨</span> Shared Weekly Flagged-Schools Report
           </h2>
           <p style="font-size: 0.85rem; color: #b91c1c; margin-top: 0.25rem;">
-            Generated end-of-week. Lists all currently-flagged schools, assigned GST, trigger causes, and consecutive weeks active.
+            Generated end-of-week. Lists all currently-flagged schools, assigned GST, trigger causes, consecutive weeks active, and team intervention notes.
           </p>
         </div>
         <div style="font-size: 0.85rem; background: #ffffff; padding: 0.5rem 1rem; border-radius: var(--radius-md); border: 1px solid #fecaca;">
@@ -85,6 +86,9 @@ function renderFlaggedCard(report: FlaggedSchoolReport): string {
             </div>
           `).join('')}
         </div>
+
+        <!-- NYSW Operational Status & Intervention Log -->
+        ${renderSchoolLogSection(report.schoolDbn)}
       </div>
 
       <div>
@@ -98,6 +102,107 @@ function renderFlaggedCard(report: FlaggedSchoolReport): string {
       </div>
     </div>
   `;
+}
+
+export function renderSchoolLogSection(schoolDbn: string): string {
+  const logs = getLogsForSchool(schoolDbn);
+
+  return `
+    <div class="flag-log-container" data-dbn="${schoolDbn}">
+      <div class="flag-log-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1rem;">📝</span>
+          <span class="flag-log-title">NYSW Operational Update Log</span>
+          <span class="log-count-pill">${logs.length} update${logs.length === 1 ? '' : 's'}</span>
+        </div>
+        <span style="font-size: 0.72rem; color: var(--text-muted);">Stored permanently for intervention tracking</span>
+      </div>
+
+      <!-- History of logged updates -->
+      <div class="flag-log-history">
+        ${logs.length === 0 ? `
+          <div class="no-logs-msg">
+            No updates logged yet. Use the field below to document calls, site visits, or remediation steps.
+          </div>
+        ` : `
+          <div class="log-entries-list">
+            ${logs.map(log => `
+              <div class="log-entry-item" data-log-id="${log.id}">
+                <div class="log-entry-meta">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                    <span class="log-author-name">👤 ${escapeHtml(log.author)}</span>
+                    <span class="log-status-badge ${getStatusTagClass(log.statusTag)}">${escapeHtml(log.statusTag)}</span>
+                    <span class="log-timestamp">🕒 ${escapeHtml(log.timestamp)}</span>
+                  </div>
+                  <button class="delete-log-btn" data-log-id="${log.id}" data-dbn="${schoolDbn}" title="Remove this note">✕</button>
+                </div>
+                <div class="log-entry-body">
+                  ${escapeHtml(log.note)}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `}
+      </div>
+
+      <!-- New Log Input Form -->
+      <form class="flag-log-form" data-dbn="${schoolDbn}">
+        <div class="log-form-header">
+          <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.03em;">
+            + Log New Status Update / Field Action
+          </span>
+        </div>
+        <div class="log-form-controls">
+          <select class="log-status-select" id="log-status-${schoolDbn}">
+            <option value="In Progress">Status: In Progress</option>
+            <option value="Field Visit Scheduled">Status: Field Visit Scheduled</option>
+            <option value="Principal Contacted">Status: Principal Contacted</option>
+            <option value="Under Review">Status: Under Review</option>
+            <option value="Resolved">Status: Flag Resolved</option>
+            <option value="General Note">Status: General Note</option>
+          </select>
+
+          <input
+            type="text"
+            class="log-author-input"
+            id="log-author-${schoolDbn}"
+            placeholder="Staff name / role"
+            value="NYSW Team"
+          />
+        </div>
+
+        <div class="log-form-input-row">
+          <textarea
+            class="log-note-textarea"
+            id="log-note-${schoolDbn}"
+            placeholder="Log details on intervention, teacher check-in, maintenance action, or principal meeting..."
+            rows="2"
+            required
+          ></textarea>
+          <button type="submit" class="log-submit-btn">
+            <span>💾</span> Log Update
+          </button>
+        </div>
+      </form>
+    </div>
+  `;
+}
+
+function getStatusTagClass(status: string): string {
+  switch (status) {
+    case 'Resolved':
+      return 'log-tag-resolved';
+    case 'Field Visit Scheduled':
+      return 'log-tag-scheduled';
+    case 'Principal Contacted':
+      return 'log-tag-contacted';
+    case 'Under Review':
+      return 'log-tag-review';
+    case 'In Progress':
+      return 'log-tag-inprogress';
+    default:
+      return 'log-tag-default';
+  }
 }
 
 function escapeHtml(str: string): string {
