@@ -91,13 +91,21 @@ function renderFlaggedCard(report: FlaggedSchoolReport): string {
         ${renderSchoolLogSection(report.schoolDbn)}
       </div>
 
-      <div>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: stretch;">
         <button
           class="open-drawer-btn"
           data-dbn="${report.schoolDbn}"
           style="background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary); padding: 0.5rem 1rem; border-radius: var(--radius-md); font-family: var(--font-heading); font-weight: 600; cursor: pointer; white-space: nowrap;"
         >
           Inspect School Snapshot →
+        </button>
+        <button
+          class="ai-generate-report-btn"
+          data-dbn="${report.schoolDbn}"
+          style="background: #ffffff; color: var(--primary-dark); border: 1px solid var(--border-subtle); padding: 0.45rem 1rem; border-radius: var(--radius-md); font-family: var(--font-heading); font-weight: 600; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.35rem;"
+          title="Generate AI status report & diagnosis"
+        >
+          <span>✨</span> AI Status Report
         </button>
       </div>
     </div>

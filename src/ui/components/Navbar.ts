@@ -11,6 +11,10 @@ export function renderNavbar(): string {
         </div>
       </div>
       <div class="nav-meta-badges">
+        <button id="open-ai-agent-btn" class="ai-agent-nav-btn" title="Launch NYSW AI School Copilot">
+          <span class="ai-sparkle">✨</span>
+          <span>AI School Copilot</span>
+        </button>
         <span class="meta-pill meta-pill-program">
           <span>🏛️</span> Pursuit | Mizuho Bank Nonprofit Builder
         </span>

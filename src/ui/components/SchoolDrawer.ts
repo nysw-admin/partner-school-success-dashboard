@@ -20,7 +20,12 @@ export function renderSchoolDrawer(item: SchoolWithData): string {
               ${school.borough} · ${school.programYear} · Installed ${school.installationDate} · Assigned GST: <strong>${school.assignedGst}</strong> · Ed Team: <strong>${school.curriculumSpecialist || 'Heather Holz'}</strong>
             </p>
           </div>
-          <button id="close-modal-btn" class="close-btn" title="Close Drawer">✕</button>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <button class="ai-generate-report-btn" data-dbn="${school.dbn}" title="Generate AI status report and Q&A">
+              <span>✨</span> Generate AI Executive Report
+            </button>
+            <button id="close-modal-btn" class="close-btn" title="Close Drawer">✕</button>
+          </div>
         </div>
 
         <!-- Drawer Body -->
