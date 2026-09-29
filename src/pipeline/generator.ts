@@ -3,6 +3,7 @@ import type { SchoolScore } from '../types/score.ts';
 import type { ActiveFlag, FlaggedSchoolReport } from '../types/flags.ts';
 import { evaluateSchoolScore } from '../engine/grader.ts';
 import { evaluateSchoolFlags, buildFlaggedSchoolReport, type WeeklyLogHistoryItem } from '../engine/flagger.ts';
+import realCohortData from '../../data/cohort.json';
 
 export interface SchoolWithData {
   school: School;
@@ -26,6 +27,13 @@ export function generateRealisticCohort(): {
   schools: SchoolWithData[];
   flaggedReports: FlaggedSchoolReport[];
 } {
+  if (realCohortData && realCohortData.schools && realCohortData.schools.length > 0) {
+    return {
+      schools: realCohortData.schools as unknown as SchoolWithData[],
+      flaggedReports: realCohortData.flaggedReports as unknown as FlaggedSchoolReport[],
+    };
+  }
+
   const baseSchools: Array<{
     dbn: string;
     name: string;
