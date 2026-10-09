@@ -13,8 +13,30 @@ export function renderSchoolTable(
   schools: SchoolWithData[],
   filters: FilterState
 ): string {
+  if (schools.length === 0) {
+    return `
+      <div class="test-cleared-banner" style="background: var(--bg-card); border: 2px dashed #cbd5e1; border-radius: var(--radius-lg); padding: 3.5rem 2rem; text-align: center; margin-top: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+        <div style="font-size: 3.5rem; margin-bottom: 0.75rem;">🧪</div>
+        <h2 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">
+          Testing Mode: Dashboard is Cleared (0 Partner Schools Loaded)
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 580px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
+          The active dashboard cohort has been cleared for testing. Your underlying operational spreadsheets are safe and intact in <code>1st slice of data SY 25-26/</code>.
+          Click the button below to open the <strong>Data Ingestion Hub</strong> and click <strong>"Run Data Ingestion Pipeline Now"</strong> to populate all 405 schools!
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <button id="table-open-ingest-btn" class="ingest-run-btn" style="padding: 0.75rem 1.75rem; font-size: 1rem; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);">
+            <span>🚀</span>
+            <span>Open Data Ingestion Hub & Run Pipeline</span>
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
   // Filter logic
   const filtered = schools.filter(item => {
+
     const s = item.school;
     const sc = item.score;
 

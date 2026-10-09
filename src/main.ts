@@ -8,6 +8,7 @@ import { renderSchoolDrawer } from './ui/components/SchoolDrawer.ts';
 import { addLogEntry, deleteLogEntry } from './services/flagLogStore.ts';
 import { renderAIAgentModal, type AIMessage } from './ui/components/AIAgentModal.ts';
 import { generateSchoolExecutiveReport, askSchoolCopilot } from './services/aiAgent.ts';
+import { renderDataIngestionModal, type IngestionStatusData } from './ui/components/DataIngestionModal.ts';
 
 interface AppState {
   activeTab: 'directory' | 'watchlist';
@@ -18,6 +19,12 @@ interface AppState {
   isAIAgentOpen: boolean;
   aiFocusSchoolDbn: string | null;
   aiMessages: AIMessage[];
+  isIngestModalOpen: boolean;
+  ingestStatusData: IngestionStatusData | null;
+  isIngesting: boolean;
+  ingestLogOutput: string | null;
+  ingestError: string | null;
+  ingestSuccessToast: string | null;
 }
 
 const cohort = generateRealisticCohort();
@@ -46,6 +53,9 @@ Select any quick action chip above or type your question below!`,
   ]
 };
 
+// Testing mode initialized as cleared per user instruction ("lets clear the dashboard on the testing mode")
+const isTestingCleared = sessionStorage.getItem('nysw_test_cleared') !== 'false';
+
 const state: AppState = {
   activeTab: 'directory',
   filters: {
@@ -57,11 +67,19 @@ const state: AppState = {
     edTeam: 'all',
   },
   selectedSchoolDbn: null,
-  schools: cohort.schools,
-  flaggedReports: cohort.flaggedReports,
+  schools: isTestingCleared ? [] : cohort.schools,
+  flaggedReports: isTestingCleared ? [] : cohort.flaggedReports,
   isAIAgentOpen: false,
   aiFocusSchoolDbn: null,
   aiMessages: [initialWelcomeMsg],
+  isIngestModalOpen: false,
+  ingestStatusData: null,
+  isIngesting: false,
+  ingestLogOutput: isTestingCleared
+    ? `[TEST MODE ACTIVE] Dashboard is CLEARED (0 partner schools loaded).\n\nSpreadsheets in "data/incoming/" are safe & intact.\n\nReady to test the pipeline:\n  1. Click "Run Data Ingestion Pipeline Now" above.\n  2. The pipeline will ingest all 7 Excel files and extract Assigned GSTs from Column A.\n  3. Rubric scores and flags will be calculated.\n  4. All 405 schools will populate the dashboard in real time!\n\nWaiting for you to click "Run Data Ingestion Pipeline Now"...`
+    : null,
+  ingestError: null,
+  ingestSuccessToast: null,
 };
 
 function renderApp() {
@@ -74,7 +92,7 @@ function renderApp() {
 
   app.innerHTML = `
     <div class="app-container">
-      ${renderNavbar()}
+      ${renderNavbar(state.schools.length)}
 
       <!-- Navigation Tabs -->
       <nav class="view-tabs" aria-label="Dashboard Views">
@@ -86,6 +104,19 @@ function renderApp() {
           <span class="tab-badge">${state.flaggedReports.length}</span>
         </button>
       </nav>
+
+      ${state.ingestSuccessToast ? `
+        <div class="ingest-success-toast" id="ingest-success-toast" role="status" aria-live="polite">
+          <div class="toast-content">
+            <span class="toast-icon">✅</span>
+            <div class="toast-body">
+              <strong class="toast-title">Data Ingestion Complete!</strong>
+              <span class="toast-desc">${state.ingestSuccessToast}</span>
+            </div>
+          </div>
+          <button id="close-toast-btn" class="toast-close-btn" aria-label="Dismiss notification" title="Dismiss">✕</button>
+        </div>
+      ` : ''}
 
       <!-- Main Body Container -->
       <main class="main-content">
@@ -104,6 +135,9 @@ function renderApp() {
 
       <!-- AI Copilot Modal -->
       ${state.isAIAgentOpen ? renderAIAgentModal(state.schools, state.aiFocusSchoolDbn, state.aiMessages) : ''}
+
+      <!-- Data Ingestion Hub Modal -->
+      ${state.isIngestModalOpen ? renderDataIngestionModal(state.ingestStatusData, state.isIngesting, state.ingestLogOutput, state.ingestError, state.schools.length) : ''}
     </div>
   `;
 
@@ -123,6 +157,70 @@ function attachEventListeners() {
   tabWatch?.addEventListener('click', () => {
     state.activeTab = 'watchlist';
     renderApp();
+  });
+
+  // Open Data Ingestion Hub modal from Navbar
+  const openIngestBtn = document.getElementById('open-ingest-modal-btn');
+  openIngestBtn?.addEventListener('click', async () => {
+    state.isIngestModalOpen = true;
+    renderApp();
+    await fetchIngestStatus();
+  });
+
+  // Close Data Ingestion Hub modal
+  const closeIngestBtn = document.getElementById('close-ingest-modal-btn');
+  closeIngestBtn?.addEventListener('click', () => {
+    state.isIngestModalOpen = false;
+    renderApp();
+  });
+
+  const ingestOverlay = document.getElementById('ingest-modal-overlay');
+  ingestOverlay?.addEventListener('click', (e) => {
+    if (e.target === ingestOverlay) {
+      state.isIngestModalOpen = false;
+      renderApp();
+    }
+  });
+
+  // Refresh source files status
+  const refreshSourcesBtn = document.getElementById('refresh-sources-btn');
+  refreshSourcesBtn?.addEventListener('click', async () => {
+    await fetchIngestStatus();
+  });
+
+  // Run data ingestion pipeline
+  const runIngestBtn = document.getElementById('run-ingest-pipeline-btn');
+  runIngestBtn?.addEventListener('click', async () => {
+    await triggerDataIngestion();
+  });
+
+  // Dismiss success toast banner
+  const closeToastBtn = document.getElementById('close-toast-btn');
+  closeToastBtn?.addEventListener('click', () => {
+    if (toastTimer) clearTimeout(toastTimer);
+    state.ingestSuccessToast = null;
+    renderApp();
+  });
+
+  // Clear dashboard in testing mode
+  const clearTestBtn = document.getElementById('clear-test-dashboard-btn');
+  clearTestBtn?.addEventListener('click', () => {
+    sessionStorage.setItem('nysw_test_cleared', 'true');
+    state.schools = [];
+    state.flaggedReports = [];
+    state.selectedSchoolDbn = null;
+    state.ingestLogOutput = `[TEST MODE ACTIVE] Dashboard successfully CLEARED (0 partner schools active).\n\nSpreadsheets in "data/incoming/" are completely safe and untouched.\n\nNow click "Run Data Ingestion Pipeline Now" to verify that the automated pipeline repopulates all 405 schools!`;
+    renderApp();
+  });
+
+  // Open ingest modal from empty state banner
+  const tableOpenIngestBtn = document.getElementById('table-open-ingest-btn');
+  tableOpenIngestBtn?.addEventListener('click', async () => {
+    state.isIngestModalOpen = true;
+    renderApp();
+    if (!state.ingestStatusData) {
+      await fetchIngestStatus();
+    }
   });
 
   // Open AI Agent modal from Navbar
@@ -445,6 +543,73 @@ function updateTableViewOnly() {
       input.focus();
       input.setSelectionRange(input.value.length, input.value.length);
     }
+  }
+}
+
+let toastTimer: any = null;
+
+function showIngestSuccessToast(message: string) {
+  state.ingestSuccessToast = message;
+  renderApp();
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    state.ingestSuccessToast = null;
+    renderApp();
+  }, 6000);
+}
+
+async function fetchIngestStatus(shouldRender: boolean = true) {
+  try {
+    const res = await fetch('/api/ingest-status');
+    if (res.ok) {
+      const data = await res.json();
+      state.ingestStatusData = data;
+      state.ingestError = null;
+    } else {
+      state.ingestError = 'Could not load data source status from server.';
+    }
+  } catch (err: any) {
+    state.ingestError = err.message || 'Error communicating with local server.';
+  }
+  if (shouldRender) {
+    renderApp();
+  }
+}
+
+async function triggerDataIngestion() {
+  state.isIngesting = true;
+  state.ingestError = null;
+  state.ingestLogOutput = '[RUNNING] Executing Python ingestion pipeline...\nProcessing 7 operational data sources in data/incoming/...\nMapping Assigned GSTs from Column A...\nRecalculating 100-point rubric scores across all schools...';
+  renderApp();
+
+  try {
+    const res = await fetch('/api/run-ingest', { method: 'POST' });
+    const data = await res.json();
+    state.isIngesting = false;
+    if (data.success) {
+      state.ingestLogOutput = data.output;
+      state.ingestError = null;
+      if (data.cohort && data.cohort.schools) {
+        sessionStorage.setItem('nysw_test_cleared', 'false');
+        state.schools = data.cohort.schools;
+        state.flaggedReports = data.cohort.flaggedReports;
+      }
+      await fetchIngestStatus(false);
+
+      // Close the data ingestion window and show the dashboard
+      state.isIngestModalOpen = false;
+      state.selectedSchoolDbn = null;
+      state.activeTab = 'directory';
+      showIngestSuccessToast(`Data ingestion complete! Evaluated ${state.schools.length} partner schools with active rubric scores and early-warning flags.`);
+    } else {
+      state.ingestError = data.error || 'Ingestion encountered an issue.';
+      state.ingestLogOutput = (data.stdout || '') + '\n' + (data.stderr || data.error || '');
+      renderApp();
+    }
+  } catch (err: any) {
+    state.isIngesting = false;
+    state.ingestError = err.message || 'Failed to trigger ingestion pipeline.';
+    renderApp();
   }
 }
 

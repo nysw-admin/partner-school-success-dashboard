@@ -6,31 +6,31 @@ export function renderMetricsRibbon(
   flaggedReports: FlaggedSchoolReport[]
 ): string {
   const totalSchools = schools.length;
-  const avgScore = Number(
-    (schools.reduce((acc, s) => acc + s.score.overallScore, 0) / totalSchools).toFixed(1)
-  );
+  const avgScore = totalSchools > 0
+    ? Number((schools.reduce((acc, s) => acc + s.score.overallScore, 0) / totalSchools).toFixed(1))
+    : 0;
 
   const gradeCounts: Record<string, number> = { A: 0, B: 0, C: 0, D: 0, F: 0 };
   schools.forEach(s => {
     gradeCounts[s.score.letterGrade] = (gradeCounts[s.score.letterGrade] || 0) + 1;
   });
 
-  const pctA = Math.round((gradeCounts.A / totalSchools) * 100);
-  const pctB = Math.round((gradeCounts.B / totalSchools) * 100);
-  const pctC = Math.round((gradeCounts.C / totalSchools) * 100);
-  const pctD = Math.round((gradeCounts.D / totalSchools) * 100);
-  const pctF = Math.round((gradeCounts.F / totalSchools) * 100);
+  const pctA = totalSchools > 0 ? Math.round((gradeCounts.A / totalSchools) * 100) : 0;
+  const pctB = totalSchools > 0 ? Math.round((gradeCounts.B / totalSchools) * 100) : 0;
+  const pctC = totalSchools > 0 ? Math.round((gradeCounts.C / totalSchools) * 100) : 0;
+  const pctD = totalSchools > 0 ? Math.round((gradeCounts.D / totalSchools) * 100) : 0;
+  const pctF = totalSchools > 0 ? Math.round((gradeCounts.F / totalSchools) * 100) : 0;
 
   // Bucket Averages
-  const avgB1 = Number(
-    (schools.reduce((acc, s) => acc + s.score.bucket1.earnedPoints, 0) / totalSchools).toFixed(1)
-  );
-  const avgB2 = Number(
-    (schools.reduce((acc, s) => acc + s.score.bucket2.earnedPoints, 0) / totalSchools).toFixed(1)
-  );
-  const avgB3 = Number(
-    (schools.reduce((acc, s) => acc + s.score.bucket3.earnedPoints, 0) / totalSchools).toFixed(1)
-  );
+  const avgB1 = totalSchools > 0
+    ? Number((schools.reduce((acc, s) => acc + s.score.bucket1.earnedPoints, 0) / totalSchools).toFixed(1))
+    : 0;
+  const avgB2 = totalSchools > 0
+    ? Number((schools.reduce((acc, s) => acc + s.score.bucket2.earnedPoints, 0) / totalSchools).toFixed(1))
+    : 0;
+  const avgB3 = totalSchools > 0
+    ? Number((schools.reduce((acc, s) => acc + s.score.bucket3.earnedPoints, 0) / totalSchools).toFixed(1))
+    : 0;
 
   return `
     <div class="metrics-ribbon">

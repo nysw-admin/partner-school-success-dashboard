@@ -20,15 +20,44 @@ import openpyxl, xlrd, pandas as pd
 from collections import defaultdict, Counter
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SLICE_DIR = os.path.join(PROJECT_ROOT, '1st slice of data SY 25-26')
+INCOMING_DIR = os.path.join(PROJECT_ROOT, 'data', 'incoming')
+LEGACY_DIR = os.path.join(PROJECT_ROOT, '1st slice of data SY 25-26')
+
+# Established intake directory: data/incoming/ (portable across any computer)
+if len(sys.argv) > 1 and os.path.isdir(sys.argv[1]):
+    SLICE_DIR = os.path.abspath(sys.argv[1])
+elif os.path.isdir(INCOMING_DIR) and len([f for f in os.listdir(INCOMING_DIR) if f.endswith(('.xls', '.xlsx'))]) > 0:
+    SLICE_DIR = INCOMING_DIR
+elif os.path.isdir(LEGACY_DIR) and len([f for f in os.listdir(LEGACY_DIR) if f.endswith(('.xls', '.xlsx'))]) > 0:
+    SLICE_DIR = LEGACY_DIR
+else:
+    os.makedirs(INCOMING_DIR, exist_ok=True)
+    SLICE_DIR = INCOMING_DIR
+
 DATA_OUT_DIR = os.path.join(PROJECT_ROOT, 'data')
 COHORT_OUT_FILE = os.path.join(DATA_OUT_DIR, 'cohort.json')
 
 os.makedirs(DATA_OUT_DIR, exist_ok=True)
+os.makedirs(INCOMING_DIR, exist_ok=True)
+
+if not os.path.exists(SLICE_DIR) or len([f for f in os.listdir(SLICE_DIR) if f.endswith(('.xls', '.xlsx'))]) == 0:
+    print(f"[ERROR] No Excel spreadsheets found in intake directory: {SLICE_DIR}")
+    print(f"Please place the 7 NYSW operational spreadsheets into: {INCOMING_DIR}")
+    print("Files required:")
+    print("  1. Accelo Partner Schools Export.xls")
+    print("  2. GST Schedule SY 25_26 - Visit Cadence.xlsx")
+    print("  3. Copy of GST Schedule SY 25_26.xlsx")
+    print("  4. Accelo GST Asset Export Sept-Dec 2025.xlsx")
+    print("  5. Area Manager Asset Sep-Dec 2025.xlsx")
+    print("  6. HC Performance Asset Sep25-Jun26.xls")
+    print("  7. Teacher Survey 25_26.xlsx")
+    sys.exit(1)
 
 print("=" * 60)
 print("NY SUN WORKS — REAL DATA INGESTION PIPELINE")
 print("=" * 60)
+print(f"Established Intake Folder : {os.path.relpath(SLICE_DIR, PROJECT_ROOT)}")
+print(f"Full System Path          : {SLICE_DIR}")
 
 # Helper utilities
 def clamp(val, min_val, max_val):
@@ -220,34 +249,77 @@ def resolve_school_id(raw_str):
             return canon
     return None
 
+def clean_schedule_gst(name):
+    if not name or pd.isna(name):
+        return None
+    s = str(name).strip()
+    s_low = s.lower()
+    if any(k in s_low for k in ['unnamed', 'date', 'week', 'monday', 'tuesday', 'day', 'apprenticeship', 'interns', '6', 'bui']):
+        return None
+    if len(s) < 2:
+        return None
+    if s == 'Rebeca':
+        return 'Rebecca'
+    if s == 'Jocc':
+        return 'Joc'
+    return s
+
+def resolve_all_school_ids(val_str):
+    if not val_str or pd.isna(val_str):
+        return []
+    s = str(val_str).strip()
+    matches = re.findall(r'\b([KMXQRkmxqr][0-9]{3})\b', s)
+    found = [m.upper() for m in matches]
+    if found:
+        return list(set(found))
+    s_low = s.lower()
+    if s_low in alias_map:
+        return [alias_map[s_low]]
+    for k, v in alias_map.items():
+        if len(k) > 4 and k in s_low:
+            return [v]
+    return []
+
 # ----------------------------------------------------
-# STEP 2: Parse Scheduled Appearances (Weekly Tabs)
+# STEP 2: Parse Scheduled Appearances (Weekly Tabs) & Extract Assigned GST from Column A
 # ----------------------------------------------------
-print("\n[2/6] Parsing 53-tab Weekly GST Schedule...")
+print("\n[2/6] Parsing 53-tab Weekly GST Schedule (reading Column A for Assigned GST)...")
 sched_path = os.path.join(SLICE_DIR, 'Copy of GST Schedule SY 25_26.xlsx')
 wb_sched = openpyxl.load_workbook(sched_path, read_only=True)
 fall_sheets = [s for s in wb_sched.sheetnames if any(m in s for m in ['Sept', 'Oct', 'Nov', 'Dec']) and not s.startswith('August')]
 
 scheduled_by_school = defaultdict(list)
-for s_name in fall_sheets:
+schedule_gst_by_school = defaultdict(Counter)
+
+for s_name in wb_sched.sheetnames:
     try:
         df_sheet = pd.read_excel(sched_path, sheet_name=s_name)
+        is_fall = s_name in fall_sheets
         for r in range(len(df_sheet)):
-            gst = str(df_sheet.iloc[r, 0]).strip()
+            raw_gst = df_sheet.iloc[r, 0]
+            gst = clean_schedule_gst(raw_gst)
+            if not gst:
+                continue
+
             for col_idx in range(1, min(6, df_sheet.shape[1])):
-                val = str(df_sheet.iloc[r, col_idx]).strip()
-                if val and val != 'nan' and val != 'OFF' and 'meeting' not in val.lower() and 'admin' not in val.lower():
-                    sc = resolve_school_id(val)
-                    if sc:
-                        scheduled_by_school[sc].append({
-                            'sheet': s_name,
-                            'date': str(df_sheet.columns[col_idx]),
-                            'gst': gst,
-                            'raw': val
-                        })
-    except:
+                val = df_sheet.iloc[r, col_idx]
+                if pd.notna(val):
+                    val_str = str(val).strip()
+                    if val_str and val_str != 'OFF' and 'meeting' not in val_str.lower() and 'admin' not in val_str.lower():
+                        sc_list = resolve_all_school_ids(val_str)
+                        for sc in sc_list:
+                            schedule_gst_by_school[sc][gst] += 1
+                            if is_fall:
+                                scheduled_by_school[sc].append({
+                                    'sheet': s_name,
+                                    'date': str(df_sheet.columns[col_idx]),
+                                    'gst': gst,
+                                    'raw': val_str
+                                })
+    except Exception as e:
         pass
 
+print(f"Assigned GSTs mapped from Column A for {len(schedule_gst_by_school)} schools.")
 print(f"Scheduled appearances tracked for {len(scheduled_by_school)} schools.")
 
 # ----------------------------------------------------
@@ -325,7 +397,13 @@ for _, row in df_gst.iterrows():
     })
 
 for sc in registry:
-    if gst_counter[sc]: registry[sc]['assignedGst'] = gst_counter[sc].most_common(1)[0][0]
+    # Set assigned GST team member strictly from spreadsheet 'Copy of GST Schedule SY 25_26' Column A
+    if schedule_gst_by_school[sc]:
+        registry[sc]['assignedGst'] = schedule_gst_by_school[sc].most_common(1)[0][0]
+    elif gst_counter[sc]:
+        registry[sc]['assignedGst'] = gst_counter[sc].most_common(1)[0][0]
+    else:
+        registry[sc]['assignedGst'] = 'Unassigned'
     if am_counter[sc]: registry[sc]['areaManager'] = am_counter[sc].most_common(1)[0][0]
     if borough_counter[sc]: registry[sc]['borough'] = borough_counter[sc].most_common(1)[0][0]
     if year_counter[sc]: registry[sc]['installationDate'] = year_counter[sc].most_common(1)[0][0]
@@ -837,7 +915,7 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
         'name': meta['name'],
         'borough': meta['borough'],
         'programYear': meta['programYear'],
-        'assignedGst': meta['assignedGst'] if meta['assignedGst'] != 'TBD' else 'Jasmin',
+        'assignedGst': meta['assignedGst'] if meta['assignedGst'] not in ['TBD', ''] else 'Unassigned',
         'areaManager': meta['areaManager'] if meta['areaManager'] != 'TBD' else 'Amanda Low',
         'curriculumSpecialist': meta['curriculumSpecialist'],
         'installationDate': meta['installationDate'],
@@ -861,7 +939,7 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
         flagged_reports.append({
             'schoolDbn': sc,
             'schoolName': meta['name'],
-            'assignedGst': meta['assignedGst'] if meta['assignedGst'] != 'TBD' else 'Jasmin',
+            'assignedGst': meta['assignedGst'] if meta['assignedGst'] not in ['TBD', ''] else 'Unassigned',
             'borough': meta['borough'],
             'activeFlags': active_flags,
             'maxConsecutiveWeeks': max_weeks,
@@ -883,8 +961,10 @@ cohort_bundle = {
     'flaggedReports': flagged_reports
 }
 
-with open(COHORT_OUT_FILE, 'w', encoding='utf-8') as f:
+tmp_file = COHORT_OUT_FILE + '.tmp'
+with open(tmp_file, 'w', encoding='utf-8') as f:
     json.dump(cohort_bundle, f, indent=2)
+os.replace(tmp_file, COHORT_OUT_FILE)
 
 file_size_kb = os.path.getsize(COHORT_OUT_FILE) / 1024
 print(f"Saved {COHORT_OUT_FILE} ({file_size_kb:.1f} KB)")

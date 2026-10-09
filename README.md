@@ -150,6 +150,9 @@ While the composite Grade provides a stable, long-term health indicator, the **F
 ├── docs/                                          # Specifications and Requirements
 │   ├── Partner_School_Success_Dashboard_PRD.docx  # Full Product Requirement Document
 │   └── Partner School Success Dashboard Data Sources.xlsx # Master Rubric & KPI Workbook
+├── DATA_INGESTION_PLAN.md                         # Complete Data Ingestion Architecture & Execution Plan
+├── NYSW_DATA_INGESTION_MANUAL.md                  # Non-Technical User Manual for NYSW Staff
+├── data/incoming/                                 # Universal Spreadsheet Intake Folder
 ├── src/                                           # Application & Engine Source Code
 │   ├── engine/                                    # Grading engine, clamping, and rescaling logic
 │   ├── pipeline/                                  # Ingestion, normalization, and deduplication
