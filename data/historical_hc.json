@@ -1,0 +1,395 @@
+{
+  "lastUpdated": "2026-10-15T20:11:09.118690",
+  "hcBySchool": {
+    "K158": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K218": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K272": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K202": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K643": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K211": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K114": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K637": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K562": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K660": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K086": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K071": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": false,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K394": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": false,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K345": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K403": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": false,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K377": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": false,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K663": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K564": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K122": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K552": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K514": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K697": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": false,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K155": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K299": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K067": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K654": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K557": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": false,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K159": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K012": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K644": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K455": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K600": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": false,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K151": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": false,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K021": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K108": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": false,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K007": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K279": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": false,
+      "sign": false,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K292": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    },
+    "K401": {
+      "custodian_rating": 3.0,
+      "usability_rating": 3.0,
+      "visitor_rating": 3.0,
+      "teacher_rel_rating": 3.0,
+      "stickers": true,
+      "sign": true,
+      "has_budget_concern": false,
+      "known_issues": ""
+    }
+  }
+}

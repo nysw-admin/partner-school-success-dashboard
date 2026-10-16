@@ -18,6 +18,7 @@ The **Data Ingestion System** transforms raw, siloed spreadsheets from New York 
 3. **Accurate Column A GST Assignments:** Extract field technician assignments directly from **Column A** across all 53 weekly tabs of `Copy of GST Schedule SY 25_26.xlsx`.
 4. **Seamless User Experience:** Upon clicking the green ingestion button, execute the pipeline, **automatically close the ingestion window**, and **immediately present the live dashboard** with an animated confirmation toast.
 5. **Fail-Safe Operation:** Provide test modes, backward compatibility, and standalone Windows desktop runners for teams without open browser sessions.
+6. **Incremental Bi-Weekly Accumulator:** Support ongoing Excel uploads every 1–2 weeks, preserving historical records in `data/historical_visits.json`, deduplicating overlapping records, and dynamically scaling elapsed periods and harvest metrics.
 
 ---
 

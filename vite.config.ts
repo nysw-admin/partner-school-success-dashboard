@@ -116,11 +116,43 @@ export default defineConfig({
                     lastGeneratedAt: raw.generatedAt || stat.mtime.toISOString(),
                     totalSchools: raw.totalSchools || raw.schools?.length || 0,
                     flaggedCount: raw.flaggedCount || raw.flaggedReports?.length || 0,
+                    ingestionMetadata: raw.ingestionMetadata || null,
                   };
                 } catch {
                   // ignore
                 }
               }
+
+              let historicalMeta = null;
+              const histFile = path.join(rootDir, 'data', 'historical_visits.json');
+              if (fs.existsSync(histFile)) {
+                try {
+                  const rawHist = JSON.parse(fs.readFileSync(histFile, 'utf-8'));
+                  historicalMeta = {
+                    totalCumulativeVisits: rawHist.totalCumulativeVisits || 0,
+                    totalSchoolsTracked: rawHist.totalSchoolsTracked || 0,
+                    newVisitsAddedThisRun: rawHist.newVisitsAddedThisRun || 0,
+                    historicalVisitsRetained: rawHist.historicalVisitsRetained || 0,
+                    lastUpdated: rawHist.lastUpdated || null,
+                  };
+                } catch {
+                  // ignore
+                }
+              }
+
+              // Scan for incremental spreadsheets in sliceDir
+              const allFiles = fs.readdirSync(sliceDir);
+              const incrementalFiles = allFiles
+                .filter(f => (f.endsWith('.xls') || f.endsWith('.xlsx')) && !f.startsWith('~$'))
+                .filter(f => !expectedFiles.some(ef => ef.name.toLowerCase() === f.toLowerCase()))
+                .map(f => {
+                  const stat = fs.statSync(path.join(sliceDir, f));
+                  return {
+                    name: f,
+                    sizeBytes: stat.size,
+                    modifiedAt: stat.mtime.toISOString(),
+                  };
+                });
 
               res.setHeader('Content-Type', 'application/json');
               res.end(
@@ -131,6 +163,8 @@ export default defineConfig({
                   canonicalPath: incomingDir,
                   activePath: sliceDir,
                   files: filesStatus,
+                  incrementalFiles,
+                  historicalMeta,
                   cohortMeta,
                 })
               );
@@ -214,6 +248,70 @@ export default defineConfig({
                   cohort: cohortData,
                 })
               );
+            });
+            return;
+          }
+
+          if (req.url === '/api/snapshots' && req.method === 'GET') {
+            try {
+              const rootDir = process.cwd();
+              const snapDir = path.join(rootDir, 'data', 'snapshots');
+              if (!fs.existsSync(snapDir)) {
+                fs.mkdirSync(snapDir, { recursive: true });
+              }
+              const files = fs.readdirSync(snapDir).filter(f => f.endsWith('.json'));
+              const snapshots = files.map(f => {
+                try {
+                  return JSON.parse(fs.readFileSync(path.join(snapDir, f), 'utf-8'));
+                } catch {
+                  return null;
+                }
+              }).filter(Boolean);
+
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: true, snapshots }));
+              return;
+            } catch (err: any) {
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: false, error: err.message }));
+              return;
+            }
+          }
+
+          if (req.url === '/api/snapshots/save' && req.method === 'POST') {
+            let body = '';
+            req.on('data', (chunk: any) => { body += chunk; });
+            req.on('end', () => {
+              try {
+                const data = JSON.parse(body);
+                const snapshot = data.snapshot;
+                if (!snapshot || !snapshot.snapshotId) {
+                  res.statusCode = 400;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ success: false, error: 'Invalid snapshot data' }));
+                  return;
+                }
+
+                const rootDir = process.cwd();
+                const snapDir = path.join(rootDir, 'data', 'snapshots');
+                if (!fs.existsSync(snapDir)) {
+                  fs.mkdirSync(snapDir, { recursive: true });
+                }
+
+                const safeId = snapshot.snapshotId.replace(/[^a-zA-Z0-9_-]/g, '_');
+                const filePath = path.join(snapDir, `snapshot_${safeId}.json`);
+                fs.writeFileSync(filePath, JSON.stringify(snapshot, null, 2), 'utf-8');
+
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({ success: true, filePath, snapshotId: snapshot.snapshotId }));
+                return;
+              } catch (err: any) {
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({ success: false, error: err.message }));
+                return;
+              }
             });
             return;
           }

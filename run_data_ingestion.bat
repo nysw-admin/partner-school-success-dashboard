@@ -45,6 +45,7 @@ if %ERRORLEVEL% equ 0 (
     echo  [SUCCESS] DATA INGESTION COMPLETED SUCCESSFULLY!
     echo ===============================================================================
     echo  - Master cohort updated at: data\cohort.json
+    echo  - Incremental accumulator: all historical visits preserved in data\historical_visits.json
     echo  - All 3-bucket rubric scores, completeness statuses, and flags recalculated.
     echo  - Assigned GST team members mapped from Column A of Copy of GST Schedule.
     echo.

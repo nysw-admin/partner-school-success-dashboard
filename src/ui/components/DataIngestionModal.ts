@@ -9,6 +9,20 @@ export interface SourceFileStatus {
   modifiedAt: string | null;
 }
 
+export interface IncrementalFileStatus {
+  name: string;
+  sizeBytes: number;
+  modifiedAt: string | null;
+}
+
+export interface HistoricalMeta {
+  totalCumulativeVisits: number;
+  totalSchoolsTracked: number;
+  newVisitsAddedThisRun: number;
+  historicalVisitsRetained: number;
+  lastUpdated: string | null;
+}
+
 export interface IngestionStatusData {
   success: boolean;
   sliceDirectory: string;
@@ -17,11 +31,14 @@ export interface IngestionStatusData {
   canonicalPath?: string;
   activePath?: string;
   files: SourceFileStatus[];
+  incrementalFiles?: IncrementalFileStatus[];
+  historicalMeta?: HistoricalMeta | null;
   cohortMeta: {
     fileSizeBytes: number;
     lastGeneratedAt: string;
     totalSchools: number;
     flaggedCount: number;
+    ingestionMetadata?: any;
   } | null;
   error?: string;
 }
@@ -132,6 +149,8 @@ export function renderDataIngestionModal(
 
   const totalFiles = files.length;
   const readyFiles = files.filter(f => f.exists).length;
+  const incrementalFiles = statusData?.incrementalFiles || [];
+  const cumulativeVisits = statusData?.historicalMeta?.totalCumulativeVisits ?? statusData?.cohortMeta?.ingestionMetadata?.totalCumulativeVisits ?? 3974;
 
   return `
     <div id="ingest-modal-overlay" class="modal-overlay ingest-modal-overlay">
@@ -150,9 +169,12 @@ export function renderDataIngestionModal(
                 <span class="ingest-status-pill ${isRunning ? 'running' : currentLoadedSchools === 0 ? 'ready' : 'ready'}">
                   ${isRunning ? '⏳ Running Ingestion...' : currentLoadedSchools === 0 ? '🧪 Testing Mode (Cleared)' : '🟢 Ready to Ingest'}
                 </span>
+                <span class="ingest-status-pill" style="background: rgba(16, 185, 129, 0.15); color: #047857; border: 1px solid rgba(16, 185, 129, 0.3);">
+                  📦 Incremental Accumulator Active
+                </span>
               </div>
               <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">
-                Self-Service Data Pipeline for NYSW Operations: Ingest operational spreadsheets, compute 100-point rubric scores, and synchronize dashboard in 1 click.
+                Self-Service Data Pipeline for NYSW Operations: Ingest new bi-weekly spreadsheets, preserve historical records, compute 100-point rubric scores, and synchronize dashboard in 1 click.
               </p>
             </div>
           </div>
@@ -164,12 +186,33 @@ export function renderDataIngestionModal(
 
         <!-- Ingestion Modal Body -->
         <div class="ingest-modal-body">
+          <!-- Incremental Upload Banner -->
+          <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 0.6rem 0.9rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; font-size: 0.82rem; color: #065f46;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.1rem;">📦</span>
+              <span>
+                <strong>Bi-Weekly Incremental Updates Supported:</strong> Drop new Accelo spreadsheets every 1–2 weeks into <code>data/incoming/</code>. The model keeps historical records, merges new visits, and deduplicates overlaps.
+              </span>
+            </div>
+            ${incrementalFiles.length > 0 ? `
+              <span style="background: #10b981; color: white; padding: 0.2rem 0.55rem; border-radius: 12px; font-weight: 600; font-size: 0.75rem; white-space: nowrap;">
+                ${incrementalFiles.length} Incremental File(s) Detected
+              </span>
+            ` : ''}
+          </div>
+
           <!-- Summary Metrics Cards -->
           <div class="ingest-metrics-grid">
             <div class="ingest-metric-card">
               <span class="ingest-metric-label">📁 Spreadsheet Folder</span>
               <span class="ingest-metric-val">data/incoming/</span>
-              <span class="ingest-metric-sub">${readyFiles}/${totalFiles} Spreadsheets Ready</span>
+              <span class="ingest-metric-sub">${readyFiles}/${totalFiles} Base Files Ready</span>
+            </div>
+
+            <div class="ingest-metric-card">
+              <span class="ingest-metric-label">📋 Cumulative Visits Preserved</span>
+              <span class="ingest-metric-val" style="color: #047857;">${cumulativeVisits.toLocaleString()}</span>
+              <span class="ingest-metric-sub">Stored in historical_visits.json</span>
             </div>
 
             <div class="ingest-metric-card">
@@ -179,19 +222,11 @@ export function renderDataIngestionModal(
             </div>
 
             <div class="ingest-metric-card">
-              <span class="ingest-metric-label">🚨 Watchlist Flags Active</span>
-              <span class="ingest-metric-val" style="color: ${currentLoadedSchools === 0 ? 'var(--text-muted)' : 'var(--tier-intervene)'};">
-                ${currentLoadedSchools === 0 ? 0 : (statusData?.cohortMeta?.flaggedCount ?? 388)}
-              </span>
-              <span class="ingest-metric-sub">${currentLoadedSchools === 0 ? 'Cohort is Cleared' : 'Operational Triage Queue'}</span>
-            </div>
-
-            <div class="ingest-metric-card">
               <span class="ingest-metric-label">🕒 Last Ingestion Executed</span>
               <span class="ingest-metric-val" style="font-size: 0.95rem;">
                 ${formatDate(statusData?.cohortMeta?.lastGeneratedAt ?? null)}
               </span>
-              <span class="ingest-metric-sub">Cohort JSON File: ${formatBytes(statusData?.cohortMeta?.fileSizeBytes ?? 0)}</span>
+              <span class="ingest-metric-sub">Cohort JSON: ${formatBytes(statusData?.cohortMeta?.fileSizeBytes ?? 0)}</span>
             </div>
           </div>
 
@@ -229,7 +264,7 @@ export function renderDataIngestionModal(
             </div>
 
             <div class="ingest-action-hint">
-              <span>💡 <em>Drop your 7 spreadsheets into <code>data/incoming/</code> and click the green button!</em></span>
+              <span>💡 <em>Drop new spreadsheets into <code>data/incoming/</code> and click the green button!</em></span>
             </div>
           </div>
 
@@ -279,6 +314,32 @@ export function renderDataIngestionModal(
                     </div>
                   </div>
                 `).join('')}
+
+                ${incrementalFiles.length > 0 ? `
+                  <div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+                    <h4 style="font-size: 0.85rem; font-weight: 700; color: #047857; margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.4rem;">
+                      <span>📥</span> Incremental Spreadsheets Detected (${incrementalFiles.length})
+                    </h4>
+                    ${incrementalFiles.map(inc => `
+                      <div class="ingest-file-item file-exists" style="border-left: 3px solid #10b981;">
+                        <div class="file-item-status">
+                          <span class="file-badge badge-ok">✓ NEW</span>
+                        </div>
+                        <div class="file-item-content">
+                          <div class="file-item-title-row">
+                            <span class="file-label">Incremental Weekly Export</span>
+                          </div>
+                          <div class="file-system-name">📄 <code>${inc.name}</code></div>
+                          <div class="file-meta-row">
+                            <span>📦 ${formatBytes(inc.sizeBytes)}</span>
+                            <span>•</span>
+                            <span>🕒 Modified: ${formatDate(inc.modifiedAt)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    `).join('')}
+                  </div>
+                ` : ''}
               </div>
             </div>
 
@@ -293,23 +354,25 @@ export function renderDataIngestionModal(
 
               <div id="ingest-terminal-window" class="ingest-terminal-box">
                 <pre class="terminal-text">${logOutput || (currentLoadedSchools === 0
-                  ? `[TEST MODE ACTIVE] Dashboard is currently CLEARED (0 partner schools loaded).\n\nSpreadsheets in the established "data/incoming/" folder are safe & intact.\n\nReady to test the pipeline:\n  1. Click "Run Data Ingestion Pipeline Now" above.\n  2. The pipeline will ingest all 7 Excel files and extract Assigned GSTs from Column A.\n  3. Rubric scores and flags will be calculated.\n  4. All 405 schools will populate the dashboard in real time!\n\nWaiting for you to click "Run Data Ingestion Pipeline Now"...`
-                  : `[READY] NY Sun Works Data Ingestion Engine initialized.\n\nEstablished Intake Folder: data/incoming/\nClick "Run Data Ingestion Pipeline Now" to execute the 6-step ingestion workflow:\n  1. School Registry & Cadence Specs\n  2. 53-tab Weekly Schedule & Assigned GSTs from Column A\n  3. 4,007 Accelo Weekly Support Reports\n  4. Health Checks, AM Observations & Teacher Survey\n  5. 100-Point Scoring Engine & Early-Warning Flags\n  6. Master Cohort Serialization to data/cohort.json\n\nWaiting for execution trigger...`
+                  ? `[TEST MODE ACTIVE] Dashboard is currently CLEARED (0 partner schools loaded).\n\nSpreadsheets in the established "data/incoming/" folder are safe & intact.\n\nReady to test the pipeline:\n  1. Click "Run Data Ingestion Pipeline Now" above.\n  2. The pipeline will ingest all Excel files and extract Assigned GSTs from Column A.\n  3. Rubric scores and flags will be calculated.\n  4. All 405 schools will populate the dashboard in real time!\n\nWaiting for you to click "Run Data Ingestion Pipeline Now"...`
+                  : `[READY] NY Sun Works Incremental Data Engine initialized.\n\nEstablished Intake Folder: data/incoming/\nPersistent Visit Storage: data/historical_visits.json (${cumulativeVisits} visits preserved)\n\nClick "Run Data Ingestion Pipeline Now" to execute the 6-step incremental ingestion workflow:\n  1. School Registry & Cadence Specs\n  2. 53-tab Weekly Schedule & Assigned GSTs from Column A\n  3. Incremental Accelo GST Reports (Deduplicating & Preserving History)\n  4. Health Checks, AM Observations & Teacher Survey\n  5. 100-Point Scoring Engine & Early-Warning Flags\n  6. Master Cohort Serialization to data/cohort.json\n\nWaiting for execution trigger...`
                 )}</pre>
               </div>
 
               <!-- Handoff User Guide Box -->
               <div class="ingest-instructions-card">
-                <h4>📘 Where Files Need to Be on Any Computer</h4>
+                <h4>📘 How Incremental Handoff Works (Every 1–2 Weeks)</h4>
                 <p style="margin: 0 0 0.45rem 0; color: #334155; line-height: 1.45;">
-                  All 7 Excel spreadsheets must be placed in this folder inside the project:
-                  <strong style="color: #0f172a; background: #e2e8f0; padding: 0.15rem 0.45rem; border-radius: 4px;"><code>data/incoming/</code></strong>
+                  To update the dashboard with new data every 1–2 weeks:
                 </p>
-                <ol>
-                  <li>Open the <strong><code>data\incoming\</code></strong> folder.</li>
-                  <li>Paste the 7 Excel files in it.</li>
+                <ol style="margin: 0 0 0.5rem 1.2rem; padding: 0; font-size: 0.8rem; color: #334155; line-height: 1.45;">
+                  <li>Export your latest weekly support reports from Accelo.</li>
+                  <li>Drop the new Excel spreadsheet into <strong><code>data\incoming\</code></strong>.</li>
                   <li>Click <strong>"Run Data Ingestion Pipeline Now"</strong> above!</li>
                 </ol>
+                <p style="margin: 0.4rem 0 0 0; font-size: 0.75rem; color: #64748b; line-height: 1.4;">
+                  <em>✨ The model preserves all previous records in <code>data/historical_visits.json</code> and automatically deduplicates overlapping visits.</em>
+                </p>
               </div>
             </div>
           </div>

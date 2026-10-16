@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["nodejs_20", "python310", "python310Packages.pandas", "python310Packages.openpyxl", "python310Packages.xlrd"]
+
+[phases.build]
+cmds = [
+  "python scripts/ingest_real_data.py",
+  "npm run build"
+]
+
+[start]
+cmd = "node server.js"

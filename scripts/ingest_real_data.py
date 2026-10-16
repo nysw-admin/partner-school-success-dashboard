@@ -1,18 +1,14 @@
 """
 NY Sun Works — Partner School Success Dashboard
-Production Data Ingestion Pipeline
+Incremental Data Ingestion Pipeline & Persistent Accumulator
 
-Reads all 7 Excel files and 1 Word doc from '1st slice of data SY 25-26/'
-- Accelo Partner Schools Export.xls
-- GST Schedule SY 25_26 - Visit Cadence.xlsx
-- Copy of GST Schedule SY 25_26.xlsx (53 sheets, one per week)
-- Accelo GST Asset Export Sept-Dec 2025.xlsx (4,007 visit records)
-- Area Manager Asset Sep-Dec 2025.xlsx (82 AM visits)
-- HC Performance Asset Sep25-Jun26.xls (40 health checks)
-- Teacher Survey 25_26.xlsx (111 teacher responses)
-- Partner School Grade Rubric — C1a_C1b Build Specification.docx (Refined period & scoring math)
-
-Compiles a fully scored, typed production cohort into 'data/cohort.json'.
+Capabilities:
+1. Universal Intake: Ingests 7 operational spreadsheets from 'data/incoming/' (or '1st slice of data SY 25-26/').
+2. Incremental Uploads: Supports ongoing spreadsheet uploads every 1-2 weeks.
+3. Persistent Record Keeping: Preserves historical visit records across runs in 'data/historical_visits.json'.
+4. Deduplication Engine: Prevents duplicate records on overlapping uploads using deterministic fingerprints.
+5. Dynamic Scaling: Automatically adjusts elapsed weeks and harvest months as the school year progresses.
+6. Master Serialization: Compiles fully scored cohort into 'data/cohort.json'.
 """
 
 import os, sys, json, re, datetime, math
@@ -22,42 +18,41 @@ from collections import defaultdict, Counter
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INCOMING_DIR = os.path.join(PROJECT_ROOT, 'data', 'incoming')
 LEGACY_DIR = os.path.join(PROJECT_ROOT, '1st slice of data SY 25-26')
+DATA_OUT_DIR = os.path.join(PROJECT_ROOT, 'data')
+COHORT_OUT_FILE = os.path.join(DATA_OUT_DIR, 'cohort.json')
+
+HISTORICAL_VISITS_FILE = os.path.join(DATA_OUT_DIR, 'historical_visits.json')
+HISTORICAL_AMV_FILE = os.path.join(DATA_OUT_DIR, 'historical_amv.json')
+HISTORICAL_HC_FILE = os.path.join(DATA_OUT_DIR, 'historical_hc.json')
+HISTORICAL_SURVEY_FILE = os.path.join(DATA_OUT_DIR, 'historical_surveys.json')
+
+RESET_MODE = '--reset' in sys.argv or '--from-scratch' in sys.argv
 
 # Established intake directory: data/incoming/ (portable across any computer)
-if len(sys.argv) > 1 and os.path.isdir(sys.argv[1]):
+if len(sys.argv) > 1 and not sys.argv[1].startswith('--') and os.path.isdir(sys.argv[1]):
     SLICE_DIR = os.path.abspath(sys.argv[1])
-elif os.path.isdir(INCOMING_DIR) and len([f for f in os.listdir(INCOMING_DIR) if f.endswith(('.xls', '.xlsx'))]) > 0:
+elif os.path.isdir(INCOMING_DIR) and len([f for f in os.listdir(INCOMING_DIR) if f.endswith(('.xls', '.xlsx')) and not f.startswith('~$')]) > 0:
     SLICE_DIR = INCOMING_DIR
-elif os.path.isdir(LEGACY_DIR) and len([f for f in os.listdir(LEGACY_DIR) if f.endswith(('.xls', '.xlsx'))]) > 0:
+elif os.path.isdir(LEGACY_DIR) and len([f for f in os.listdir(LEGACY_DIR) if f.endswith(('.xls', '.xlsx')) and not f.startswith('~$')]) > 0:
     SLICE_DIR = LEGACY_DIR
 else:
     os.makedirs(INCOMING_DIR, exist_ok=True)
     SLICE_DIR = INCOMING_DIR
 
-DATA_OUT_DIR = os.path.join(PROJECT_ROOT, 'data')
-COHORT_OUT_FILE = os.path.join(DATA_OUT_DIR, 'cohort.json')
-
 os.makedirs(DATA_OUT_DIR, exist_ok=True)
 os.makedirs(INCOMING_DIR, exist_ok=True)
 
-if not os.path.exists(SLICE_DIR) or len([f for f in os.listdir(SLICE_DIR) if f.endswith(('.xls', '.xlsx'))]) == 0:
+if not os.path.exists(SLICE_DIR) or len([f for f in os.listdir(SLICE_DIR) if f.endswith(('.xls', '.xlsx')) and not f.startswith('~$')]) == 0:
     print(f"[ERROR] No Excel spreadsheets found in intake directory: {SLICE_DIR}")
-    print(f"Please place the 7 NYSW operational spreadsheets into: {INCOMING_DIR}")
-    print("Files required:")
-    print("  1. Accelo Partner Schools Export.xls")
-    print("  2. GST Schedule SY 25_26 - Visit Cadence.xlsx")
-    print("  3. Copy of GST Schedule SY 25_26.xlsx")
-    print("  4. Accelo GST Asset Export Sept-Dec 2025.xlsx")
-    print("  5. Area Manager Asset Sep-Dec 2025.xlsx")
-    print("  6. HC Performance Asset Sep25-Jun26.xls")
-    print("  7. Teacher Survey 25_26.xlsx")
+    print(f"Please place the NYSW operational spreadsheets into: {INCOMING_DIR}")
     sys.exit(1)
 
 print("=" * 60)
-print("NY SUN WORKS — REAL DATA INGESTION PIPELINE")
+print("NY SUN WORKS — INCREMENTAL DATA INGESTION PIPELINE")
 print("=" * 60)
-print(f"Established Intake Folder : {os.path.relpath(SLICE_DIR, PROJECT_ROOT)}")
-print(f"Full System Path          : {SLICE_DIR}")
+print(f"Intake Directory          : {os.path.relpath(SLICE_DIR, PROJECT_ROOT)}")
+print(f"Operating Mode            : {'RESET / FROM SCRATCH' if RESET_MODE else 'INCREMENTAL ACCUMULATOR (Preserving History)'}")
+print(f"Persistent Visit Store    : {os.path.relpath(HISTORICAL_VISITS_FILE, PROJECT_ROOT)}")
 
 # Helper utilities
 def clamp(val, min_val, max_val):
@@ -115,11 +110,58 @@ def normalize_cadence(cadence_str):
         return 'Monthly', 4.3
     return 'Weekly', 1.0
 
+def parse_date_obj(d_val):
+    if d_val is None or pd.isna(d_val):
+        return None
+    if isinstance(d_val, datetime.datetime):
+        return d_val.date()
+    if isinstance(d_val, datetime.date):
+        return d_val
+    s = str(d_val).split(' ')[0].strip()
+    for fmt in ('%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%Y/%m/%d'):
+        try:
+            return datetime.datetime.strptime(s, fmt).date()
+        except Exception:
+            continue
+    return None
+
+def is_harvest_season_date(d_val):
+    dt = parse_date_obj(d_val)
+    if dt:
+        return dt >= datetime.date(2025, 11, 1)
+    s = str(d_val)
+    return any(k in s for k in ['11/', '12/', '/11/', '/12/', '2025-11', '2025-12', '2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06'])
+
+def find_matching_files(directory, patterns, exclude_patterns=None):
+    if not os.path.isdir(directory):
+        return []
+    exclude_patterns = exclude_patterns or []
+    matches = []
+    search_dirs = [directory]
+    inc_sub = os.path.join(directory, 'incremental')
+    if os.path.isdir(inc_sub):
+        search_dirs.append(inc_sub)
+
+    for d in search_dirs:
+        for fname in os.listdir(d):
+            if not fname.endswith(('.xls', '.xlsx')) or fname.startswith('~$'):
+                continue
+            fname_lower = fname.lower()
+            if any(ex.lower() in fname_lower for ex in exclude_patterns):
+                continue
+            if any(pat.lower() in fname_lower for pat in patterns):
+                matches.append(os.path.join(d, fname))
+    return sorted(list(set(matches)))
+
 # ----------------------------------------------------
 # STEP 1: Build Master Crosswalk from Accelo & Cadence
 # ----------------------------------------------------
 print("\n[1/6] Ingesting School Registry & Cadence Specs...")
-df_schools = pd.read_excel(os.path.join(SLICE_DIR, 'Accelo Partner Schools Export.xls'))
+reg_files = find_matching_files(SLICE_DIR, patterns=['accelo partner schools', 'partner schools export'])
+if not reg_files:
+    reg_files = [os.path.join(SLICE_DIR, 'Accelo Partner Schools Export.xls')]
+
+df_schools = pd.read_excel(reg_files[0])
 registry = {}
 alias_map = {}
 
@@ -169,7 +211,11 @@ for _, r in df_schools.iterrows():
         alias_map[nick.lower()] = canonical_id
 
 # Integrate Cadence
-df_cad = pd.read_excel(os.path.join(SLICE_DIR, 'GST Schedule SY 25_26 - Visit Cadence.xlsx'))
+cad_files = find_matching_files(SLICE_DIR, patterns=['visit cadence', 'gst schedule sy 25_26 - visit cadence'])
+if not cad_files:
+    cad_files = [os.path.join(SLICE_DIR, 'GST Schedule SY 25_26 - Visit Cadence.xlsx')]
+
+df_cad = pd.read_excel(cad_files[0])
 for _, r in df_cad.iterrows():
     c_code = str(r['School Code']).strip()
     c_name = str(r['School Name']).strip()
@@ -226,7 +272,6 @@ def resolve_school_id(raw_str):
         dbn = m.group(1).upper()
         if dbn in registry:
             return dbn
-        # Add to registry if not yet present
         b_guess = 'Manhattan'
         if dbn.startswith('K'): b_guess = 'Brooklyn'
         elif dbn.startswith('X'): b_guess = 'Bronx'
@@ -281,10 +326,14 @@ def resolve_all_school_ids(val_str):
     return []
 
 # ----------------------------------------------------
-# STEP 2: Parse Scheduled Appearances (Weekly Tabs) & Extract Assigned GST from Column A
+# STEP 2: Parse Scheduled Appearances & Extract Assigned GST from Column A
 # ----------------------------------------------------
 print("\n[2/6] Parsing 53-tab Weekly GST Schedule (reading Column A for Assigned GST)...")
-sched_path = os.path.join(SLICE_DIR, 'Copy of GST Schedule SY 25_26.xlsx')
+sched_files = find_matching_files(SLICE_DIR, patterns=['copy of gst schedule', 'gst schedule sy 25_26'])
+if not sched_files:
+    sched_files = [os.path.join(SLICE_DIR, 'Copy of GST Schedule SY 25_26.xlsx')]
+
+sched_path = sched_files[0]
 wb_sched = openpyxl.load_workbook(sched_path, read_only=True)
 fall_sheets = [s for s in wb_sched.sheetnames if any(m in s for m in ['Sept', 'Oct', 'Nov', 'Dec']) and not s.startswith('August')]
 
@@ -316,85 +365,184 @@ for s_name in wb_sched.sheetnames:
                                     'gst': gst,
                                     'raw': val_str
                                 })
-    except Exception as e:
+    except Exception:
         pass
 
 print(f"Assigned GSTs mapped from Column A for {len(schedule_gst_by_school)} schools.")
 print(f"Scheduled appearances tracked for {len(scheduled_by_school)} schools.")
 
 # ----------------------------------------------------
-# STEP 3: Parse Accelo GST Asset Export (4,007 rows)
+# STEP 3: Ingest Accelo GST Support Reports (Incremental Accumulator)
 # ----------------------------------------------------
-print("\n[3/6] Ingesting 4,007 Accelo GST Weekly Support Reports...")
-df_gst = pd.read_excel(os.path.join(SLICE_DIR, 'Accelo GST Asset Export Sept-Dec 2025.xlsx'))
+print("\n[3/6] Ingesting Accelo GST Weekly Support Reports (Incremental Accumulator)...")
 
 visits_by_school = defaultdict(list)
+known_visit_fingerprints = defaultdict(set)
+historical_count = 0
+
+if os.path.exists(HISTORICAL_VISITS_FILE) and not RESET_MODE:
+    try:
+        with open(HISTORICAL_VISITS_FILE, 'r', encoding='utf-8') as f:
+            hist_data = json.load(f)
+            for sc, v_list in hist_data.get('visitsBySchool', {}).items():
+                for v in v_list:
+                    fp = v.get('fingerprint') or f"{sc}|{v.get('date')}|{v.get('gst_member', '')}|{v.get('notes', '')[:40]}".lower()
+                    v['fingerprint'] = fp
+                    visits_by_school[sc].append(v)
+                    known_visit_fingerprints[sc].add(fp)
+                    historical_count += 1
+        print(f"Loaded {historical_count} persistent historical visits across {len(visits_by_school)} schools from {os.path.basename(HISTORICAL_VISITS_FILE)}.")
+    except Exception as e:
+        print(f"[WARN] Could not parse existing historical visits ({e}). Starting fresh.")
+elif RESET_MODE:
+    print("[INFO] Reset mode active (--reset): Rebuilding visit repository from spreadsheets.")
+
+# Discover all GST support report files
+gst_files = find_matching_files(
+    SLICE_DIR,
+    patterns=['gst asset', 'gst_asset', 'weekly support', 'support reports', 'gst support'],
+    exclude_patterns=['copy of gst schedule', 'visit cadence', 'accelo partner schools', 'area manager', 'hc performance', 'teacher survey']
+)
+
+# Also check fallback if no match found
+if not gst_files:
+    def_gst = os.path.join(SLICE_DIR, 'Accelo GST Asset Export Sept-Dec 2025.xlsx')
+    if os.path.exists(def_gst):
+        gst_files = [def_gst]
+
+gst_files = sorted(list(set(gst_files)))
+print(f"Discovered {len(gst_files)} GST weekly support spreadsheet(s):")
+for gf in gst_files:
+    print(f"  • {os.path.relpath(gf, PROJECT_ROOT)}")
+
+new_visits_added = 0
 gst_counter = defaultdict(Counter)
 am_counter = defaultdict(Counter)
 borough_counter = defaultdict(Counter)
 year_counter = defaultdict(Counter)
 
-for _, row in df_gst.iterrows():
-    against = str(row['Against']).strip() if pd.notna(row['Against']) else ''
-    sc = resolve_school_id(against)
-    if not sc:
-        continue
+# Seed counters from existing visits
+for sc, v_list in visits_by_school.items():
+    for v in v_list:
+        gm = v.get('gst_member')
+        if gm: gst_counter[sc][gm] += 1
+        am = v.get('area_manager')
+        if am: am_counter[sc][am] += 1
+        b_val = v.get('borough')
+        if b_val: borough_counter[sc][b_val] += 1
+        inst = v.get('installation_year')
+        if inst: year_counter[sc][inst] += 1
 
-    v_date = row.get('Visit date')
-    sys_offline = str(row.get('Select Systems not running ( if any)', ''))
-    has_offline = pd.notna(row.get('Select Systems not running ( if any)')) and sys_offline.lower() != 'none' and sys_offline.strip() != ''
-    
-    seedlings = str(row.get('Are seedlings planted?', '')).strip().lower() == 'yes'
-    pests = str(row.get('Issues with Pests?', '')).strip().lower() == 'yes'
-    convo = str(row.get('In-person conversation w/ teacher about GHC?', '')).strip().lower() == 'yes'
-    
-    harvest_done = str(row.get('Did you harvest today?', '')).strip().lower() == 'yes' or \
-                   str(row.get('Has there been a harvest (partial or full) since your last visit?', '')).strip().lower() == 'yes'
-    
-    weight_str = str(row.get('Total weight of crops harvested (INCLUDE UNITS: oz, gr, lb)', '')).lower()
-    weight_lbs = 0.0
-    wm = re.search(r'([0-9]+(?:\.[0-9]+)?)\s*(lb|pound|oz|ounce|g|gram)?', weight_str)
-    if wm:
-        val_num = float(wm.group(1))
-        unit = wm.group(2) or 'lb'
-        if 'oz' in unit: weight_lbs = val_num / 16.0
-        elif 'g' in unit: weight_lbs = val_num / 453.59
-        else: weight_lbs = val_num
-        
-    crop_types = str(row.get('Types of crops harvested', '')) if pd.notna(row.get('Types of crops harvested')) else ''
-    notes = str(row.get('General Notes', '')) if pd.notna(row.get('General Notes')) else ''
-    
-    if pd.notna(row.get('AQX PH Level (ph)')) or pd.notna(row.get('Aquaponics Notes')):
-        registry[sc]['hasAquaponics'] = True
-        
-    gst_member = str(row.get('GST Member reporting information', '')).strip()
-    if gst_member and gst_member != 'nan': gst_counter[sc][gst_member] += 1
-        
-    am_val = str(row.get('99.1 Area Manager', '')).strip()
-    if am_val and am_val != 'nan': am_counter[sc][am_val] += 1
-        
-    b_val = str(row.get('1.3 Borough (or State)', '')).strip()
-    if b_val and b_val != 'nan': borough_counter[sc][clean_borough(b_val)] += 1
-        
-    inst_q = str(row.get('4.3 Installation Quarter', '')).strip()
-    if inst_q and inst_q != 'nan':
-        ym = re.search(r'([0-9]{4})', inst_q)
-        if ym: year_counter[sc][ym.group(1)] += 1
-        
-    visits_by_school[sc].append({
-        'date': str(v_date),
-        'has_offline': has_offline,
-        'sys_offline_raw': sys_offline,
-        'seedlings': seedlings,
-        'pests': pests,
-        'teacher_convo': convo,
-        'harvest_done': harvest_done,
-        'weight_lbs': weight_lbs,
-        'crops': crop_types,
-        'notes': notes,
-        'training_session': str(row.get('Select Teacher Training Session Complete', '')),
-        'teachers_trained': str(row.get('Name of the Teachers Trained', ''))
-    })
+for gf in gst_files:
+    try:
+        df_gst = pd.read_excel(gf)
+        file_name = os.path.basename(gf)
+        file_new = 0
+        for _, row in df_gst.iterrows():
+            against = str(row['Against']).strip() if pd.notna(row['Against']) else ''
+            sc = resolve_school_id(against)
+            if not sc:
+                continue
+
+            v_date = row.get('Visit date')
+            sys_offline = str(row.get('Select Systems not running ( if any)', ''))
+            has_offline = pd.notna(row.get('Select Systems not running ( if any)')) and sys_offline.lower() != 'none' and sys_offline.strip() != ''
+            
+            seedlings = str(row.get('Are seedlings planted?', '')).strip().lower() == 'yes'
+            pests = str(row.get('Issues with Pests?', '')).strip().lower() == 'yes'
+            convo = str(row.get('In-person conversation w/ teacher about GHC?', '')).strip().lower() == 'yes'
+            
+            harvest_done = str(row.get('Did you harvest today?', '')).strip().lower() == 'yes' or \
+                           str(row.get('Has there been a harvest (partial or full) since your last visit?', '')).strip().lower() == 'yes'
+            
+            weight_str = str(row.get('Total weight of crops harvested (INCLUDE UNITS: oz, gr, lb)', '')).lower()
+            weight_lbs = 0.0
+            wm = re.search(r'([0-9]+(?:\.[0-9]+)?)\s*(lb|pound|oz|ounce|g|gram)?', weight_str)
+            if wm:
+                val_num = float(wm.group(1))
+                unit = wm.group(2) or 'lb'
+                if 'oz' in unit: weight_lbs = val_num / 16.0
+                elif 'g' in unit: weight_lbs = val_num / 453.59
+                else: weight_lbs = val_num
+                
+            crop_types = str(row.get('Types of crops harvested', '')) if pd.notna(row.get('Types of crops harvested')) else ''
+            notes = str(row.get('General Notes', '')) if pd.notna(row.get('General Notes')) else ''
+            gst_member = str(row.get('GST Member reporting information', '')).strip()
+            title = str(row.get('Title', '')).strip()
+
+            # Deterministic fingerprint to deduplicate overlapping uploads
+            fp = f"{sc}|{v_date}|{gst_member}|{title}|{notes[:40]}".lower()
+
+            if fp in known_visit_fingerprints[sc]:
+                continue
+
+            if pd.notna(row.get('AQX PH Level (ph)')) or pd.notna(row.get('Aquaponics Notes')):
+                registry[sc]['hasAquaponics'] = True
+                
+            if gst_member and gst_member != 'nan': gst_counter[sc][gst_member] += 1
+                
+            am_val = str(row.get('99.1 Area Manager', '')).strip()
+            if am_val and am_val != 'nan': am_counter[sc][am_val] += 1
+                
+            b_val = str(row.get('1.3 Borough (or State)', '')).strip()
+            clean_b = clean_borough(b_val) if b_val and b_val != 'nan' else None
+            if clean_b: borough_counter[sc][clean_b] += 1
+                
+            inst_q = str(row.get('4.3 Installation Quarter', '')).strip()
+            inst_y = None
+            if inst_q and inst_q != 'nan':
+                ym = re.search(r'([0-9]{4})', inst_q)
+                if ym:
+                    inst_y = ym.group(1)
+                    year_counter[sc][inst_y] += 1
+                
+            visit_record = {
+                'date': str(v_date),
+                'has_offline': has_offline,
+                'sys_offline_raw': sys_offline,
+                'seedlings': seedlings,
+                'pests': pests,
+                'teacher_convo': convo,
+                'harvest_done': harvest_done,
+                'weight_lbs': weight_lbs,
+                'crops': crop_types,
+                'notes': notes,
+                'training_session': str(row.get('Select Teacher Training Session Complete', '')),
+                'teachers_trained': str(row.get('Name of the Teachers Trained', '')),
+                'gst_member': gst_member if gst_member != 'nan' else '',
+                'area_manager': am_val if am_val != 'nan' else '',
+                'borough': clean_b,
+                'installation_year': inst_y,
+                'fingerprint': fp,
+                'source_file': file_name
+            }
+            visits_by_school[sc].append(visit_record)
+            known_visit_fingerprints[sc].add(fp)
+            new_visits_added += 1
+            file_new += 1
+        print(f"  -> Ingested '{file_name}': {file_new} new visits added.")
+    except Exception as e:
+        print(f"  [ERROR] Processing {gf}: {e}")
+
+total_cumulative_visits = sum(len(v) for v in visits_by_school.values())
+print(f"Cumulative Visit Repository: {total_cumulative_visits} visits active ({new_visits_added} newly added) across {len(visits_by_school)} schools.")
+
+# Save persistent visit history to disk
+hist_bundle = {
+    'version': '1.0',
+    'lastUpdated': datetime.datetime.now().isoformat(),
+    'totalCumulativeVisits': total_cumulative_visits,
+    'totalSchoolsTracked': len(visits_by_school),
+    'newVisitsAddedThisRun': new_visits_added,
+    'historicalVisitsRetained': historical_count,
+    'sourceFiles': [os.path.basename(f) for f in gst_files],
+    'visitsBySchool': dict(visits_by_school)
+}
+tmp_hist = HISTORICAL_VISITS_FILE + '.tmp'
+with open(tmp_hist, 'w', encoding='utf-8') as f:
+    json.dump(hist_bundle, f, indent=2)
+os.replace(tmp_hist, HISTORICAL_VISITS_FILE)
+print(f"Saved persistent visit history to {os.path.basename(HISTORICAL_VISITS_FILE)}")
 
 for sc in registry:
     # Set assigned GST team member strictly from spreadsheet 'Copy of GST Schedule SY 25_26' Column A
@@ -408,106 +556,181 @@ for sc in registry:
     if borough_counter[sc]: registry[sc]['borough'] = borough_counter[sc].most_common(1)[0][0]
     if year_counter[sc]: registry[sc]['installationDate'] = year_counter[sc].most_common(1)[0][0]
 
-print(f"Aggregated {sum(len(v) for v in visits_by_school.values())} visits across {len(visits_by_school)} schools.")
-
 # ----------------------------------------------------
 # STEP 4: Ingest Area Manager, HC Performance & Survey
 # ----------------------------------------------------
 print("\n[4/6] Parsing Area Manager, HC Performance & Survey Data...")
+
 # AMV
-df_amv = pd.read_excel(os.path.join(SLICE_DIR, 'Area Manager Asset Sep-Dec 2025.xlsx'))
+amv_files = find_matching_files(SLICE_DIR, patterns=['area manager', 'amv'], exclude_patterns=[])
+if not amv_files:
+    def_amv = os.path.join(SLICE_DIR, 'Area Manager Asset Sep-Dec 2025.xlsx')
+    if os.path.exists(def_amv): amv_files = [def_amv]
+
 amv_by_school = defaultdict(list)
-for _, row in df_amv.iterrows():
-    against = str(row['Against']).strip() if pd.notna(row['Against']) else ''
-    sc = resolve_school_id(against)
-    if sc:
-        imp_str = str(row.get('Please rate the your overall impression of the lab:', ''))
-        imp_val = 3.0
-        im = re.search(r'([1-5])', imp_str)
-        if im: imp_val = min(4.0, float(im.group(1)))
-        
-        t_inv_str = str(row.get('Please rate the level of teacher involvement/communication', ''))
-        t_inv_val = 3.0
-        tim = re.search(r'([1-5])', t_inv_str)
-        if tim: t_inv_val = min(4.0, float(tim.group(1)))
-        
-        clean_str = str(row.get('Please rate the level of lab cleanliness/organization', ''))
-        clean_val = 3.0
-        cm = re.search(r'([1-5])', clean_str)
-        if cm: clean_val = min(4.0, float(cm.group(1)))
-        
-        curr_used = 'yes' in str(row.get('Is the teacher using the curriculum?', '')).lower()
-        principal_convo = 'yes' in str(row.get('In-person conversation w/ principal/vice principal?', '')).lower() or \
-                          'yes' in str(row.get('If no, follow-up email sent?', '')).lower()
-                          
-        amv_by_school[sc].append({
-            'date': str(row.get('Visit date')),
-            'lab_impression': imp_val,
-            'teacher_involvement': t_inv_val,
-            'cleanliness': clean_val,
-            'curriculum_used': curr_used,
-            'principal_convo': principal_convo,
-            'notes': str(row.get('General Notes, Comments, or Concerns', ''))
-        })
+known_amv_fps = defaultdict(set)
+
+if os.path.exists(HISTORICAL_AMV_FILE) and not RESET_MODE:
+    try:
+        with open(HISTORICAL_AMV_FILE, 'r', encoding='utf-8') as f:
+            h_amv = json.load(f)
+            for sc, a_list in h_amv.get('amvBySchool', {}).items():
+                for a in a_list:
+                    fp = a.get('fingerprint') or f"{sc}|{a.get('date')}|{a.get('notes', '')[:30]}".lower()
+                    a['fingerprint'] = fp
+                    amv_by_school[sc].append(a)
+                    known_amv_fps[sc].add(fp)
+    except Exception:
+        pass
+
+for af in amv_files:
+    try:
+        df_amv = pd.read_excel(af)
+        for _, row in df_amv.iterrows():
+            against = str(row['Against']).strip() if pd.notna(row['Against']) else ''
+            sc = resolve_school_id(against)
+            if sc:
+                v_date = str(row.get('Visit date'))
+                notes = str(row.get('General Notes, Comments, or Concerns', ''))
+                fp = f"{sc}|{v_date}|{notes[:30]}".lower()
+                if fp in known_amv_fps[sc]:
+                    continue
+
+                imp_str = str(row.get('Please rate the your overall impression of the lab:', ''))
+                imp_val = 3.0
+                im = re.search(r'([1-5])', imp_str)
+                if im: imp_val = min(4.0, float(im.group(1)))
+                
+                t_inv_str = str(row.get('Please rate the level of teacher involvement/communication', ''))
+                t_inv_val = 3.0
+                tim = re.search(r'([1-5])', t_inv_str)
+                if tim: t_inv_val = min(4.0, float(tim.group(1)))
+                
+                clean_str = str(row.get('Please rate the level of lab cleanliness/organization', ''))
+                clean_val = 3.0
+                cm = re.search(r'([1-5])', clean_str)
+                if cm: clean_val = min(4.0, float(cm.group(1)))
+                
+                curr_used = 'yes' in str(row.get('Is the teacher using the curriculum?', '')).lower()
+                principal_convo = 'yes' in str(row.get('In-person conversation w/ principal/vice principal?', '')).lower() or \
+                                  'yes' in str(row.get('If no, follow-up email sent?', '')).lower()
+                                  
+                amv_by_school[sc].append({
+                    'date': v_date,
+                    'lab_impression': imp_val,
+                    'teacher_involvement': t_inv_val,
+                    'cleanliness': clean_val,
+                    'curriculum_used': curr_used,
+                    'principal_convo': principal_convo,
+                    'notes': notes,
+                    'fingerprint': fp,
+                    'source_file': os.path.basename(af)
+                })
+                known_amv_fps[sc].add(fp)
+    except Exception as e:
+        print(f"  [ERROR] AMV file {af}: {e}")
+
+with open(HISTORICAL_AMV_FILE, 'w', encoding='utf-8') as f:
+    json.dump({'lastUpdated': datetime.datetime.now().isoformat(), 'amvBySchool': dict(amv_by_school)}, f, indent=2)
 
 # HC Performance
-df_hc = pd.read_excel(os.path.join(SLICE_DIR, 'HC Performance Asset Sep25-Jun26.xls'))
-hc_by_school = {}
-for _, row in df_hc.iterrows():
-    against = str(row['Against']).strip() if pd.notna(row['Against']) else ''
-    sc = resolve_school_id(against)
-    if sc:
-        custodian_str = str(row.get('Please select the option that best describes the involvement of the custodian at this school', ''))
-        c_val = 3.0
-        cm = re.search(r'([1-4])', custodian_str)
-        if cm: c_val = float(cm.group(1))
-        
-        usability_str = str(row.get("Please select the option that best describes the Hydroponic Classroom's current usability", ''))
-        u_val = 3.0
-        um = re.search(r'([1-4])', usability_str)
-        if um: u_val = float(um.group(1))
-        
-        visitor_str = str(row.get("Please select the option that best describes the Hydroponic Classroom's suitability for external visitors (clean, free of clutter, flexible schedule, good teacher/admin engagement, regularly uses NYSW Curriculum)", ''))
-        v_val = 3.0
-        vm = re.search(r'([1-4])', visitor_str)
-        if vm: v_val = float(vm.group(1))
-        
-        teacher_rel_str = str(row.get("Please select the option that best describes the teacher's relationship with the hydroponic classroom at this school", ''))
-        t_rel_val = 3.0
-        trm = re.search(r'([1-4])', teacher_rel_str)
-        if trm: t_rel_val = float(trm.group(1))
-        
-        stickers = 'yes' in str(row.get('Are there currrently NYSW stickers on the systems?', '')).lower()
-        sign = 'yes' in str(row.get('Is there an NY Sun Works "Partner School" Sign in the Classroom?', '')).lower()
-        concern_str = str(row.get('Has the teacher or other staff expressed concerns related to funding, budgets, or continuing the Hydroponic Classroom Program in the future?', '')).lower()
-        has_budget_concern = 'yes' in concern_str
-        known_issues = str(row.get('Known issues related to lab performance and usability as indicated in the questions above (write n/a or no if nothing to flag)', ''))
-        
-        hc_by_school[sc] = {
-            'custodian_rating': c_val,
-            'usability_rating': u_val,
-            'visitor_rating': v_val,
-            'teacher_rel_rating': t_rel_val,
-            'stickers': stickers,
-            'sign': sign,
-            'has_budget_concern': has_budget_concern,
-            'known_issues': known_issues if 'n/a' not in known_issues.lower() and 'no' != known_issues.strip().lower() else ''
-        }
+hc_files = find_matching_files(SLICE_DIR, patterns=['hc performance', 'health check', 'hc'], exclude_patterns=[])
+if not hc_files:
+    def_hc = os.path.join(SLICE_DIR, 'HC Performance Asset Sep25-Jun26.xls')
+    if os.path.exists(def_hc): hc_files = [def_hc]
 
-# Survey
-df_survey = pd.read_excel(os.path.join(SLICE_DIR, 'Teacher Survey 25_26.xlsx'))
+hc_by_school = {}
+if os.path.exists(HISTORICAL_HC_FILE) and not RESET_MODE:
+    try:
+        with open(HISTORICAL_HC_FILE, 'r', encoding='utf-8') as f:
+            h_hc = json.load(f)
+            hc_by_school = h_hc.get('hcBySchool', {})
+    except Exception:
+        pass
+
+for hf in hc_files:
+    try:
+        df_hc = pd.read_excel(hf)
+        for _, row in df_hc.iterrows():
+            against = str(row['Against']).strip() if pd.notna(row['Against']) else ''
+            sc = resolve_school_id(against)
+            if sc:
+                custodian_str = str(row.get('Please select the option that best describes the involvement of the custodian at this school', ''))
+                c_val = 3.0
+                cm = re.search(r'([1-4])', custodian_str)
+                if cm: c_val = float(cm.group(1))
+                
+                usability_str = str(row.get("Please select the option that best describes the Hydroponic Classroom's current usability", ''))
+                u_val = 3.0
+                um = re.search(r'([1-4])', usability_str)
+                if um: u_val = float(um.group(1))
+                
+                visitor_str = str(row.get("Please select the option that best describes the Hydroponic Classroom's suitability for external visitors (clean, free of clutter, flexible schedule, good teacher/admin engagement, regularly uses NYSW Curriculum)", ''))
+                v_val = 3.0
+                vm = re.search(r'([1-4])', visitor_str)
+                if vm: v_val = float(vm.group(1))
+                
+                teacher_rel_str = str(row.get("Please select the option that best describes the teacher's relationship with the hydroponic classroom at this school", ''))
+                t_rel_val = 3.0
+                trm = re.search(r'([1-4])', teacher_rel_str)
+                if trm: t_rel_val = float(trm.group(1))
+                
+                stickers = 'yes' in str(row.get('Are there currrently NYSW stickers on the systems?', '')).lower()
+                sign = 'yes' in str(row.get('Is there an NY Sun Works "Partner School" Sign in the Classroom?', '')).lower()
+                concern_str = str(row.get('Has the teacher or other staff expressed concerns related to funding, budgets, or continuing the Hydroponic Classroom Program in the future?', '')).lower()
+                has_budget_concern = 'yes' in concern_str
+                known_issues = str(row.get('Known issues related to lab performance and usability as indicated in the questions above (write n/a or no if nothing to flag)', ''))
+                
+                hc_by_school[sc] = {
+                    'custodian_rating': c_val,
+                    'usability_rating': u_val,
+                    'visitor_rating': v_val,
+                    'teacher_rel_rating': t_rel_val,
+                    'stickers': stickers,
+                    'sign': sign,
+                    'has_budget_concern': has_budget_concern,
+                    'known_issues': known_issues if 'n/a' not in known_issues.lower() and 'no' != known_issues.strip().lower() else ''
+                }
+    except Exception as e:
+        print(f"  [ERROR] HC file {hf}: {e}")
+
+with open(HISTORICAL_HC_FILE, 'w', encoding='utf-8') as f:
+    json.dump({'lastUpdated': datetime.datetime.now().isoformat(), 'hcBySchool': hc_by_school}, f, indent=2)
+
+# Teacher Survey
+survey_files = find_matching_files(SLICE_DIR, patterns=['teacher survey', 'survey'], exclude_patterns=[])
+if not survey_files:
+    def_survey = os.path.join(SLICE_DIR, 'Teacher Survey 25_26.xlsx')
+    if os.path.exists(def_survey): survey_files = [def_survey]
+
 survey_by_school = {}
-for idx in range(1, len(df_survey)):
-    row = df_survey.iloc[idx]
-    s_col = str(row.iloc[0]).strip()
-    sc = resolve_school_id(s_col)
-    if sc:
-        survey_by_school[sc] = {
-            'school_col': s_col,
-            'lab_feedback': str(row.iloc[2]) if pd.notna(row.iloc[2]) else '',
-            'curr_feedback': str(row.iloc[3]) if pd.notna(row.iloc[3]) else '',
-            'staff_feedback': str(row.iloc[4]) if pd.notna(row.iloc[4]) else ''
-        }
+if os.path.exists(HISTORICAL_SURVEY_FILE) and not RESET_MODE:
+    try:
+        with open(HISTORICAL_SURVEY_FILE, 'r', encoding='utf-8') as f:
+            h_surv = json.load(f)
+            survey_by_school = h_surv.get('surveyBySchool', {})
+    except Exception:
+        pass
+
+for sf in survey_files:
+    try:
+        df_survey = pd.read_excel(sf)
+        for idx in range(1, len(df_survey)):
+            row = df_survey.iloc[idx]
+            s_col = str(row.iloc[0]).strip()
+            sc = resolve_school_id(s_col)
+            if sc:
+                survey_by_school[sc] = {
+                    'school_col': s_col,
+                    'lab_feedback': str(row.iloc[2]) if pd.notna(row.iloc[2]) else '',
+                    'curr_feedback': str(row.iloc[3]) if pd.notna(row.iloc[3]) else '',
+                    'staff_feedback': str(row.iloc[4]) if pd.notna(row.iloc[4]) else ''
+                }
+    except Exception as e:
+        print(f"  [ERROR] Survey file {sf}: {e}")
+
+with open(HISTORICAL_SURVEY_FILE, 'w', encoding='utf-8') as f:
+    json.dump({'lastUpdated': datetime.datetime.now().isoformat(), 'surveyBySchool': survey_by_school}, f, indent=2)
 
 print(f"AMV: {len(amv_by_school)} schools | HC: {len(hc_by_school)} schools | Survey: {len(survey_by_school)} schools.")
 
@@ -515,6 +738,37 @@ print(f"AMV: {len(amv_by_school)} schools | HC: {len(hc_by_school)} schools | Su
 # STEP 5: Calculate Scores, Build Flags & Cohort
 # ----------------------------------------------------
 print("\n[5/6] Executing 100-Point Scoring Engine & Flag Rules...")
+
+# Determine dynamic calendar span across all accumulated visits
+all_parsed_dates = []
+for v_list in visits_by_school.values():
+    for v in v_list:
+        dt = parse_date_obj(v.get('date'))
+        if dt and dt.year in (2025, 2026):
+            all_parsed_dates.append(dt)
+
+school_year_start = datetime.date(2025, 9, 8)
+nov_1_date = datetime.date(2025, 11, 1)
+
+if all_parsed_dates:
+    min_date = min(all_parsed_dates)
+    max_date = max(all_parsed_dates)
+    effective_start = min(min_date, school_year_start)
+    if max_date > effective_start:
+        elapsed_calendar_weeks = max(16.0, round((max_date - effective_start).days / 7.0, 1))
+    else:
+        elapsed_calendar_weeks = 16.0
+    if max_date > nov_1_date:
+        harvest_months = max(1.0, round((max_date - nov_1_date).days / 30.4375, 1))
+    else:
+        harvest_months = 2.0
+else:
+    min_date = school_year_start
+    max_date = datetime.date(2025, 12, 30)
+    elapsed_calendar_weeks = 16.0
+    harvest_months = 2.0
+
+print(f"Active Horizon: {min_date} to {max_date} (~{elapsed_calendar_weeks:.1f} elapsed school weeks, {harvest_months:.1f} harvest months)")
 
 cohort_schools = []
 flagged_reports = []
@@ -540,12 +794,11 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
     total_visits = len(visits)
     period_len = meta['periodLengthWeeks']
     
-    # Assign curriculum specialist deterministically
     cs = curriculum_specialists[idx % len(curriculum_specialists)]
     meta['curriculumSpecialist'] = cs
     
-    # Fall semester ~ 16 calendar weeks
-    elapsed_periods = max(1, int(round(16.0 / period_len)))
+    # Dynamic elapsed periods based on actual calendar weeks
+    elapsed_periods = max(1, int(round(elapsed_calendar_weeks / period_len)))
     completed_periods = min(elapsed_periods, total_visits)
     
     # --- BUCKET 1: 42 Max Points ---
@@ -582,14 +835,14 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
     c5_score, c5_pct = linear_score(c5_rate, 0.30, 0.85, 2.0)
     
     # C6: Harvest Frequency (6 pts)
-    nov_dec_harvests = sum(1 for v in visits if v['harvest_done'] and ('11/' in v['date'] or '12/' in v['date']))
-    harvests_per_mo = nov_dec_harvests / 2.0
+    nov_onwards_harvests = sum(1 for v in visits if v['harvest_done'] and is_harvest_season_date(v['date']))
+    harvests_per_mo = nov_onwards_harvests / harvest_months
     c6_score, c6_pct = linear_score(harvests_per_mo, 0.5, 3.0, 6.0)
     
     # C7: Harvest Yield (2 pts)
-    nov_dec_lbs = sum(v['weight_lbs'] for v in visits if ('11/' in v['date'] or '12/' in v['date']))
+    nov_onwards_lbs = sum(v['weight_lbs'] for v in visits if is_harvest_season_date(v['date']))
     sys_inst = meta['systemsInstalled'] or 3
-    lbs_per_mo_sys = (nov_dec_lbs / (2.0 * sys_inst))
+    lbs_per_mo_sys = (nov_onwards_lbs / (harvest_months * sys_inst))
     c7_score, c7_pct = linear_score(lbs_per_mo_sys, 0.5, 3.0, 2.0)
     
     # C8: Visitor Readiness (2 pts)
@@ -797,7 +1050,7 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
             'title': 'Consecutive Reports Missing',
             'description': 'Two consecutive weekly support reports are missing. Usually a visit-scheduling problem, not a school failure.',
             'triggerDetail': f'Only {total_visits} reports filed across {elapsed_periods} scheduled periods',
-            'triggeredDate': '2025-12-22',
+            'triggeredDate': str(max_date),
             'weeksActive': 2,
             'severity': 'warning',
             'routing': 'GST Check-in',
@@ -812,7 +1065,7 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
             'title': 'Low Asset Completion Rate (<70%)',
             'description': 'YTD on-time asset completion is below the 70% threshold. Requires GST support check-in.',
             'triggerDetail': f'Completion rate is {round(on_time_rate*100, 1)}% (minimum threshold: 70%)',
-            'triggeredDate': '2025-12-01',
+            'triggeredDate': str(max_date),
             'weeksActive': 3,
             'severity': 'warning',
             'routing': 'Operations / School Page',
@@ -827,7 +1080,7 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
             'title': 'System Offline 3+ Consecutive Reports',
             'description': 'One or more hydroponic systems reported offline for three consecutive reports. Maintenance work order required.',
             'triggerDetail': f'{offline_count} reports noted systems not running',
-            'triggeredDate': '2025-12-15',
+            'triggeredDate': str(max_date),
             'weeksActive': 4,
             'severity': 'critical',
             'routing': 'Maintenance',
@@ -843,7 +1096,7 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
             'title': 'Harvest Deficit (<3 harvests)',
             'description': 'Fewer than 3 total harvests have been logged this school year. Agronomic consultation recommended.',
             'triggerDetail': f'Only {total_harvests} harvest(s) logged to date',
-            'triggeredDate': '2025-12-18',
+            'triggeredDate': str(max_date),
             'weeksActive': 2,
             'severity': 'info',
             'routing': 'Agronomic Support',
@@ -858,7 +1111,7 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
             'title': 'Continuation or Budget Concern',
             'description': 'Teacher or school leadership expressed uncertainty about contract renewal, funding, or program continuation.',
             'triggerDetail': 'Budget/continuation concern flagged in HC Performance Asset',
-            'triggeredDate': '2025-12-10',
+            'triggeredDate': str(max_date),
             'weeksActive': 2,
             'severity': 'critical',
             'routing': 'Development',
@@ -866,12 +1119,11 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
         })
         flag_counts['BUDGET_CONCERN'] += 1
 
-    # Weekly history simulation from visits
+    # Full weekly history sorted by date
     weekly_history = []
     running_harvests = 0
-    # Sort visits by date if possible
     sorted_visits = sorted(visits, key=lambda v: str(v.get('date', '')))
-    for idx_v, v in enumerate(sorted_visits[-8:]): # last 8 visits
+    for idx_v, v in enumerate(sorted_visits):
         if v['harvest_done']: running_harvests += 1
         weekly_history.append({
             'weekEndingDate': str(v['date']),
@@ -954,9 +1206,21 @@ print(f"\nCohort assembled: {len(cohort_schools)} schools | Flagged Watchlist: {
 print("\n[6/6] Writing production cohort to data/cohort.json...")
 cohort_bundle = {
     'generatedAt': datetime.datetime.now().isoformat(),
-    'source': '1st slice of data SY 25-26',
+    'source': os.path.relpath(SLICE_DIR, PROJECT_ROOT),
     'totalSchools': len(cohort_schools),
     'flaggedCount': len(flagged_reports),
+    'ingestionMetadata': {
+        'mode': 'incremental_accumulator',
+        'totalCumulativeVisits': total_cumulative_visits,
+        'newVisitsAddedInLastRun': new_visits_added,
+        'historicalVisitsRetained': historical_count,
+        'earliestVisitDate': str(min_date),
+        'latestVisitDate': str(max_date),
+        'elapsedCalendarWeeks': elapsed_calendar_weeks,
+        'harvestEvaluationMonths': harvest_months,
+        'sourceFiles': [os.path.basename(f) for f in gst_files],
+        'lastRunTimestamp': datetime.datetime.now().isoformat()
+    },
     'schools': cohort_schools,
     'flaggedReports': flagged_reports
 }
@@ -970,9 +1234,12 @@ file_size_kb = os.path.getsize(COHORT_OUT_FILE) / 1024
 print(f"Saved {COHORT_OUT_FILE} ({file_size_kb:.1f} KB)")
 
 print("\n" + "=" * 60)
-print("PRODUCTION INGESTION SUMMARY REPORT")
+print("PRODUCTION INGESTION SUMMARY REPORT (INCREMENTAL)")
 print("=" * 60)
 print(f"Total Partner Schools Evaluated: {len(cohort_schools)}")
+print(f"Cumulative Visits Preserved     : {total_cumulative_visits} ({new_visits_added} added this run)")
+print(f"Active Monitoring Horizon       : {min_date} to {max_date} (~{elapsed_calendar_weeks:.1f} weeks)")
+
 print("\nLetter Grade Distribution:")
 for g in ['A', 'B', 'C', 'D', 'F']:
     cnt = grade_counts[g]

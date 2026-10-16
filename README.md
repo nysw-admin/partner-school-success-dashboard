@@ -166,6 +166,29 @@ While the composite Grade provides a stable, long-term health indicator, the **F
 
 ---
 
+## 📸 End-of-Year Snapshots & Multi-Year Longitudinal Performance Trajectory
+
+The dashboard incorporates a specialized **End-of-Year Snapshot & Longitudinal Trend System** that allows NYSW leadership and operations to archive final school-year performance records and track year-over-year (YoY) growth across multiple academic cycles:
+
+### Key Capabilities:
+1. **📸 Freeze & Archive End-of-Year Cohort:**
+   - One-click snapshot generator captures all 405 schools, overall scores, letter grades, 3-bucket rubric diagnostics, harvest yields, and active early-warning flags.
+   - Customizable school year title (e.g. `SY 2025–2026 (Final)`), archiver names (e.g. `Amanda Low & Megan Roberts`), and qualitative closeout audit notes.
+   - Dual persistence: saved locally in the browser and written to disk under `data/snapshots/snapshot_<id>.json` for compliance, audit safety, and backup.
+
+2. **📁 Historical Archive Library & Read-Only Viewing:**
+   - An interactive **School Year Selector dropdown** in the navigation bar lets users switch between `SY 2025–2026 (Live Cohort)`, `SY 2024–2025 (Final Archive)`, `SY 2023–2024 (Final Baseline)`, and custom archived snapshots.
+   - When an archived year is loaded, a prominent status banner confirms frozen read-only status and provides a 1-click **Return to Live Cohort** button.
+   - The entire dashboard—including KPI ribbons, school directory, search filters, and detail drawers—renders the exact historical state of that school year.
+
+3. **📈 Multi-Year Longitudinal Performance Trajectory:**
+   - Every school drawer features an interactive **Multi-Year Longitudinal Performance Trajectory** card.
+   - Compares up to 3 school years (`SY 2023–2024`, `SY 2024–2025`, `SY 2025–2026`).
+   - Surfaces **Year-over-Year (YoY) point deltas** (e.g. `↗️ Significant Growth (+5.8 pts YoY)`, `📈 Steady Growth (+2.4 pts YoY)`, `🚨 High-Risk Decline`), **2-Year Net Growth**, and visual bucket score mini-bars for Maintenance, Engagement, and Admin Support.
+   - Enables NYSW to verify program sustainability, measure the long-term impact of field interventions, and provide longitudinal growth narratives to institutional donors and DOE district superintendents.
+
+---
+
 ## 📅 Milestones & Timeline
 
 | Date / Phase | Milestone | Deliverable |

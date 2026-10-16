@@ -9,6 +9,14 @@ import { addLogEntry, deleteLogEntry } from './services/flagLogStore.ts';
 import { renderAIAgentModal, type AIMessage } from './ui/components/AIAgentModal.ts';
 import { generateSchoolExecutiveReport, askSchoolCopilot } from './services/aiAgent.ts';
 import { renderDataIngestionModal, type IngestionStatusData } from './ui/components/DataIngestionModal.ts';
+import { renderSnapshotModal } from './ui/components/SnapshotModal.ts';
+import {
+  getAllSnapshots,
+  compileCurrentCohortAsSnapshot,
+  convertSnapshotToSchoolWithData,
+  deleteUserSnapshot,
+} from './services/snapshotService.ts';
+import type { EndOfYearSnapshot } from './types/snapshot.ts';
 
 interface AppState {
   activeTab: 'directory' | 'watchlist';
@@ -25,6 +33,13 @@ interface AppState {
   ingestLogOutput: string | null;
   ingestError: string | null;
   ingestSuccessToast: string | null;
+  isSnapshotModalOpen: boolean;
+  activeSnapshotId: string | null;
+  snapshotSaveSuccess: string | null;
+  isSavingSnapshot: boolean;
+  availableSnapshots: EndOfYearSnapshot[];
+  liveSchoolsBackup: SchoolWithData[];
+  liveFlaggedBackup: FlaggedSchoolReport[];
 }
 
 const cohort = generateRealisticCohort();
@@ -80,6 +95,13 @@ const state: AppState = {
     : null,
   ingestError: null,
   ingestSuccessToast: null,
+  isSnapshotModalOpen: false,
+  activeSnapshotId: null,
+  snapshotSaveSuccess: null,
+  isSavingSnapshot: false,
+  availableSnapshots: getAllSnapshots(cohort.schools),
+  liveSchoolsBackup: isTestingCleared ? [] : cohort.schools,
+  liveFlaggedBackup: isTestingCleared ? [] : cohort.flaggedReports,
 };
 
 function renderApp() {
@@ -90,9 +112,13 @@ function renderApp() {
     ? state.schools.find(s => s.school.dbn === state.selectedSchoolDbn) || null
     : null;
 
+  const currentSnapshot = state.activeSnapshotId
+    ? state.availableSnapshots.find(s => s.snapshotId === state.activeSnapshotId) || null
+    : null;
+
   app.innerHTML = `
     <div class="app-container">
-      ${renderNavbar(state.schools.length)}
+      ${renderNavbar(state.schools.length, state.availableSnapshots, state.activeSnapshotId)}
 
       <!-- Navigation Tabs -->
       <nav class="view-tabs" aria-label="Dashboard Views">
@@ -120,6 +146,35 @@ function renderApp() {
 
       <!-- Main Body Container -->
       <main class="main-content">
+        ${currentSnapshot ? `
+          <div class="archived-snapshot-banner" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #ffffff; border-radius: var(--radius-lg); padding: 1rem 1.4rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm); flex-wrap: wrap; gap: 0.85rem; border: 1px solid #334155;">
+            <div style="display: flex; align-items: center; gap: 0.85rem;">
+              <span style="font-size: 1.75rem;">📁</span>
+              <div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                  <strong style="font-family: var(--font-heading); font-size: 1.05rem; color: #ffffff;">
+                    VIEWING ARCHIVED RECORD: ${currentSnapshot.schoolYear}
+                  </strong>
+                  <span class="status-pill" style="background: rgba(255,255,255,0.15); color: #e2e8f0; font-size: 0.68rem; border: none; font-weight: 700;">
+                    FROZEN HISTORICAL SNAPSHOT (READ-ONLY)
+                  </span>
+                </div>
+                <p style="font-size: 0.8rem; color: #94a3b8; margin: 0.2rem 0 0 0;">
+                  Archived by <strong>${currentSnapshot.archivedBy || 'NYSW Operations'}</strong> on ${new Date(currentSnapshot.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })} · <strong>${currentSnapshot.totalSchools}</strong> partner schools recorded · Network Avg: <strong>${currentSnapshot.networkSummary.averageOverallScore.toFixed(1)}/100</strong>
+                </p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <button id="banner-open-snapshot-btn" class="filter-select" style="background: #334155; color: #ffffff; border: 1px solid #475569; padding: 0.45rem 0.85rem; font-size: 0.78rem; cursor: pointer;">
+                📸 Snapshot Archives
+              </button>
+              <button id="banner-switch-to-live-btn" class="ingest-run-btn" style="background: #10b981; border: none; padding: 0.45rem 1rem; font-size: 0.8rem;">
+                <span>↩️</span> Return to Live SY 2025–2026 Cohort
+              </button>
+            </div>
+          </div>
+        ` : ''}
+
         ${renderMetricsRibbon(state.schools, state.flaggedReports)}
 
         <div id="view-container">
@@ -131,13 +186,16 @@ function renderApp() {
       </main>
 
       <!-- Detail Drawer Modal -->
-      ${selectedSchool ? renderSchoolDrawer(selectedSchool) : ''}
+      ${selectedSchool ? renderSchoolDrawer(selectedSchool, state.availableSnapshots) : ''}
 
       <!-- AI Copilot Modal -->
       ${state.isAIAgentOpen ? renderAIAgentModal(state.schools, state.aiFocusSchoolDbn, state.aiMessages) : ''}
 
       <!-- Data Ingestion Hub Modal -->
       ${state.isIngestModalOpen ? renderDataIngestionModal(state.ingestStatusData, state.isIngesting, state.ingestLogOutput, state.ingestError, state.schools.length) : ''}
+
+      <!-- End-of-Year Snapshot Hub Modal -->
+      ${state.isSnapshotModalOpen ? renderSnapshotModal(state.liveSchoolsBackup.length > 0 ? state.liveSchoolsBackup : state.schools, state.availableSnapshots, state.isSavingSnapshot, state.snapshotSaveSuccess, state.activeSnapshotId) : ''}
     </div>
   `;
 
@@ -413,10 +471,150 @@ function attachEventListeners() {
     }
   });
 
+  // Open Snapshot modal from Navbar or Banner
+  document.getElementById('open-snapshot-modal-btn')?.addEventListener('click', () => {
+    state.isSnapshotModalOpen = true;
+    state.snapshotSaveSuccess = null;
+    renderApp();
+  });
+
+  document.getElementById('banner-open-snapshot-btn')?.addEventListener('click', () => {
+    state.isSnapshotModalOpen = true;
+    state.snapshotSaveSuccess = null;
+    renderApp();
+  });
+
+  // Close Snapshot modal
+  document.getElementById('close-snapshot-modal-btn')?.addEventListener('click', () => {
+    state.isSnapshotModalOpen = false;
+    renderApp();
+  });
+
+  document.getElementById('footer-close-snapshot-btn')?.addEventListener('click', () => {
+    state.isSnapshotModalOpen = false;
+    renderApp();
+  });
+
+  const snapOverlay = document.getElementById('snapshot-modal-overlay');
+  snapOverlay?.addEventListener('click', (e) => {
+    if (e.target === snapOverlay) {
+      state.isSnapshotModalOpen = false;
+      renderApp();
+    }
+  });
+
+  // Interactive School Year dropdown selector in Navbar
+  const sySelect = document.getElementById('navbar-sy-select') as HTMLSelectElement | null;
+  sySelect?.addEventListener('change', () => {
+    const val = sySelect.value;
+    if (val === 'live') {
+      switchToLiveCohort();
+    } else {
+      switchToSnapshot(val);
+    }
+  });
+
+  // Switch back to live cohort buttons
+  document.getElementById('banner-switch-to-live-btn')?.addEventListener('click', () => {
+    switchToLiveCohort();
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.switch-to-live-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchToLiveCohort();
+    });
+  });
+
+  // View snapshot button inside modal list
+  document.querySelectorAll<HTMLButtonElement>('.view-snapshot-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const snapId = btn.getAttribute('data-snapshot-id');
+      if (snapId) {
+        switchToSnapshot(snapId);
+      }
+    });
+  });
+
+  // Export JSON buttons
+  document.querySelectorAll<HTMLButtonElement>('.export-snapshot-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const snapId = btn.getAttribute('data-snapshot-id');
+      if (snapId) {
+        const snap = state.availableSnapshots.find(s => s.snapshotId === snapId);
+        if (snap) {
+          downloadJsonFile(snap, `nysw_snapshot_${snap.schoolYear.replace(/[^a-zA-Z0-9]/g, '_')}.json`);
+        }
+      }
+    });
+  });
+
+  document.getElementById('download-snapshot-json-btn')?.addEventListener('click', () => {
+    const sourceCohort = state.liveSchoolsBackup.length > 0 ? state.liveSchoolsBackup : state.schools;
+    const tempSnap = compileCurrentCohortAsSnapshot('SY 2025–2026', 'Manual JSON backup', sourceCohort);
+    downloadJsonFile(tempSnap, `nysw_cohort_SY25_26_${Date.now()}.json`);
+  });
+
+  // Save new End-of-Year snapshot form
+  const saveSnapForm = document.getElementById('save-snapshot-form') as HTMLFormElement | null;
+  saveSnapForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const syInput = document.getElementById('snapshot-school-year') as HTMLInputElement | null;
+    const archInput = document.getElementById('snapshot-archived-by') as HTMLInputElement | null;
+    const notesInput = document.getElementById('snapshot-notes') as HTMLTextAreaElement | null;
+
+    const syVal = syInput?.value.trim() || 'SY 2025–2026 (Final)';
+    const archVal = archInput?.value.trim() || 'NYSW Operations';
+    const notesVal = notesInput?.value.trim() || 'Official End-of-Year final snapshot.';
+
+    state.isSavingSnapshot = true;
+    renderApp();
+
+    const sourceCohort = state.liveSchoolsBackup.length > 0 ? state.liveSchoolsBackup : state.schools;
+    const newSnapshot = compileCurrentCohortAsSnapshot(syVal, notesVal, sourceCohort);
+    newSnapshot.archivedBy = archVal;
+
+    try {
+      await fetch('/api/snapshots/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ snapshot: newSnapshot }),
+      });
+    } catch {}
+
+    state.availableSnapshots = getAllSnapshots(sourceCohort);
+    state.isSavingSnapshot = false;
+    state.snapshotSaveSuccess = `Successfully archived "${newSnapshot.schoolYear}" with ${newSnapshot.totalSchools} partner schools. Persisted to local records & data/snapshots/.`;
+    renderApp();
+  });
+
+  // Delete snapshot
+  document.querySelectorAll<HTMLButtonElement>('.delete-snapshot-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const snapId = btn.getAttribute('data-snapshot-id');
+      const yearName = btn.getAttribute('data-year') || 'this snapshot';
+      if (!snapId) return;
+      if (confirm(`Are you sure you want to delete the archived snapshot "${yearName}"?`)) {
+        deleteUserSnapshot(snapId);
+        if (state.activeSnapshotId === snapId) {
+          switchToLiveCohort();
+        } else {
+          const sourceCohort = state.liveSchoolsBackup.length > 0 ? state.liveSchoolsBackup : state.schools;
+          state.availableSnapshots = getAllSnapshots(sourceCohort);
+          renderApp();
+        }
+      }
+    });
+  });
+
   // Escape key to close modal
   window.onkeydown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
-      if (state.isAIAgentOpen) {
+      if (state.isSnapshotModalOpen) {
+        state.isSnapshotModalOpen = false;
+        renderApp();
+      } else if (state.isAIAgentOpen) {
         state.isAIAgentOpen = false;
         renderApp();
       } else if (state.selectedSchoolDbn) {
@@ -428,6 +626,43 @@ function attachEventListeners() {
 
   // Wire up flag log forms and deletion buttons
   attachFlagLogListeners();
+}
+
+function switchToLiveCohort() {
+  state.activeSnapshotId = null;
+  state.schools = state.liveSchoolsBackup.length > 0 ? state.liveSchoolsBackup : cohort.schools;
+  state.flaggedReports = state.liveFlaggedBackup.length > 0 ? state.liveFlaggedBackup : cohort.flaggedReports;
+  state.selectedSchoolDbn = null;
+  state.isSnapshotModalOpen = false;
+  renderApp();
+}
+
+function switchToSnapshot(snapshotId: string) {
+  const snap = state.availableSnapshots.find(s => s.snapshotId === snapshotId);
+  if (!snap) return;
+  if (!state.activeSnapshotId && state.schools.length > 0) {
+    state.liveSchoolsBackup = [...state.schools];
+    state.liveFlaggedBackup = [...state.flaggedReports];
+  }
+  const converted = convertSnapshotToSchoolWithData(snap);
+  state.activeSnapshotId = snapshotId;
+  state.schools = converted.schools;
+  state.flaggedReports = converted.flaggedReports;
+  state.selectedSchoolDbn = null;
+  state.isSnapshotModalOpen = false;
+  renderApp();
+}
+
+function downloadJsonFile(data: any, filename: string) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 async function handleUserQuery(query: string) {
@@ -593,6 +828,9 @@ async function triggerDataIngestion() {
         sessionStorage.setItem('nysw_test_cleared', 'false');
         state.schools = data.cohort.schools;
         state.flaggedReports = data.cohort.flaggedReports;
+        state.liveSchoolsBackup = [...data.cohort.schools];
+        state.liveFlaggedBackup = [...data.cohort.flaggedReports];
+        state.availableSnapshots = getAllSnapshots(data.cohort.schools);
       }
       await fetchIngestStatus(false);
 

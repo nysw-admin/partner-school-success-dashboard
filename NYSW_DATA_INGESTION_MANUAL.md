@@ -64,6 +64,18 @@ Regardless of what computer this project runs on, all operational spreadsheets m
 
 ---
 
+### 📦 Bi-Weekly Incremental Data Uploads (Every 1–2 Weeks)
+
+When new field reports are exported from Accelo throughout the school year:
+1. Drop your new Excel export directly into **`data/incoming/`** (e.g. `Accelo GST Asset Export Jan 2026.xlsx`).
+2. The pipeline's **Persistent Incremental Accumulator**:
+   * **Preserves all previous records:** Historical visit logs remain safe in `data/historical_visits.json`.
+   * **Intelligently merges & deduplicates:** New visits are added to each school's history without duplicating overlapping rows.
+   * **Dynamically scales time horizons:** Elapsed school weeks and harvest months dynamically update to reflect the latest active calendar week.
+3. Click **🚀 Run Data Ingestion Pipeline Now** in the dashboard or double-click `run_data_ingestion.bat` to refresh the network!
+
+---
+
 ### Method B: Double-Click Desktop Runner (No Browser Needed)
 
 If the dashboard is closed or you want to pre-process data before launching:
