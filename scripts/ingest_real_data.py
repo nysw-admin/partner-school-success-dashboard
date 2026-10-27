@@ -253,7 +253,7 @@ for _, r in df_cad.iterrows():
             'dbn': new_id, 'code': new_id, 'name': c_name, 'client_name': c_name,
             'borough': b_guess, 'programYear': 'Op Y2+', 'rawStatus': 'Operation Y2+',
             'labType': 'Classroom', 'cadence': cad, 'periodLengthWeeks': period_len,
-            'assignedGst': 'TBD', 'areaManager': 'TBD', 'curriculumSpecialist': 'Heather Holz',
+            'assignedGst': 'Unassigned', 'areaManager': 'TBD', 'curriculumSpecialist': 'Unassigned',
             'installationDate': '2019', 'systemsInstalled': 3, 'hasAquaponics': False
         }
         alias_map[new_id.lower()] = new_id
@@ -281,7 +281,7 @@ def resolve_school_id(raw_str):
             'dbn': dbn, 'code': dbn, 'name': s, 'client_name': s,
             'borough': b_guess, 'programYear': 'Op Y2+', 'rawStatus': 'Operation Y2+',
             'labType': 'Classroom', 'cadence': 'Weekly', 'periodLengthWeeks': 1.0,
-            'assignedGst': 'TBD', 'areaManager': 'TBD', 'curriculumSpecialist': 'Heather Holz',
+            'assignedGst': 'Unassigned', 'areaManager': 'TBD', 'curriculumSpecialist': 'Unassigned',
             'installationDate': '2019', 'systemsInstalled': 3, 'hasAquaponics': False
         }
         alias_map[dbn.lower()] = dbn
@@ -545,11 +545,11 @@ os.replace(tmp_hist, HISTORICAL_VISITS_FILE)
 print(f"Saved persistent visit history to {os.path.basename(HISTORICAL_VISITS_FILE)}")
 
 for sc in registry:
-    # Set assigned GST team member strictly from spreadsheet 'Copy of GST Schedule SY 25_26' Column A
-    if schedule_gst_by_school[sc]:
-        registry[sc]['assignedGst'] = schedule_gst_by_school[sc].most_common(1)[0][0]
-    elif gst_counter[sc]:
+    # Set GST Team member primarily from spreadsheet 'Accelo GST Asset Export Sept-Dec 2025.xlsx' Column L
+    if gst_counter[sc]:
         registry[sc]['assignedGst'] = gst_counter[sc].most_common(1)[0][0]
+    elif schedule_gst_by_school[sc]:
+        registry[sc]['assignedGst'] = schedule_gst_by_school[sc].most_common(1)[0][0]
     else:
         registry[sc]['assignedGst'] = 'Unassigned'
     if am_counter[sc]: registry[sc]['areaManager'] = am_counter[sc].most_common(1)[0][0]
@@ -734,6 +734,61 @@ with open(HISTORICAL_SURVEY_FILE, 'w', encoding='utf-8') as f:
 
 print(f"AMV: {len(amv_by_school)} schools | HC: {len(hc_by_school)} schools | Survey: {len(survey_by_school)} schools.")
 
+# Ingest Curriculum Training Asset & Ed Team Specialists (Column L)
+print("\n[4b/6] Ingesting Curriculum Training Asset (Ed Team Specialists from Column L)...")
+ct_files = find_matching_files(SLICE_DIR, patterns=['curriculum training', 'curriculum', 'ed team'], exclude_patterns=[])
+if not ct_files:
+    def_ct = os.path.join(SLICE_DIR, 'Curriculum Training Asset Sep2025-Jun2026.xlsx')
+    if os.path.exists(def_ct):
+        ct_files = [def_ct]
+if not ct_files:
+    legacy_ct = os.path.join(LEGACY_DIR, 'Curriculum Training Asset Sep2025-Jun2026.xlsx')
+    if os.path.exists(legacy_ct):
+        ct_files = [legacy_ct]
+
+ed_team_by_school = defaultdict(Counter)
+ed_team_group_by_school = defaultdict(Counter)
+known_individuals = {'Heather Holz', 'Julia Levine', 'Tanairi Taylor', 'Vanessa Graves', 'Ryan Myrie', 'Liz McKoy'}
+
+for cf in ct_files:
+    try:
+        df_ct = pd.read_excel(cf)
+        for _, row in df_ct.iterrows():
+            against = str(row['Against']).strip() if pd.notna(row.get('Against')) else ''
+            sc = resolve_school_id(against)
+            if not sc:
+                continue
+
+            # Column L (index 11): NYSW Curriculum Specialist
+            spec = row.get('NYSW Curriculum Specialist')
+            if pd.isna(spec) or not str(spec).strip() or str(spec).strip().lower() == 'nan':
+                if len(row) > 11 and pd.notna(row.iloc[11]):
+                    spec = row.iloc[11]
+
+            if pd.notna(spec) and str(spec).strip() and str(spec).strip().lower() != 'nan':
+                spec_str = str(spec).strip()
+                if ',' in spec_str:
+                    ed_team_group_by_school[sc][spec_str] += 1
+                else:
+                    ed_team_by_school[sc][spec_str] += 1
+    except Exception as e:
+        print(f"  [ERROR] Curriculum Training file {cf}: {e}")
+
+ed_team_assigned_count = 0
+for sc in registry:
+    if ed_team_by_school[sc]:
+        registry[sc]['curriculumSpecialist'] = ed_team_by_school[sc].most_common(1)[0][0]
+        ed_team_assigned_count += 1
+    elif ed_team_group_by_school[sc]:
+        group_str = ed_team_group_by_school[sc].most_common(1)[0][0]
+        names = [n.strip() for n in group_str.split(',') if n.strip() in known_individuals]
+        registry[sc]['curriculumSpecialist'] = names[0] if names else group_str.split(',')[0].strip()
+        ed_team_assigned_count += 1
+    else:
+        registry[sc]['curriculumSpecialist'] = 'Unassigned'
+
+print(f"Ed Team Specialists assigned from Column L: {ed_team_assigned_count} schools across NYSW.")
+
 # ----------------------------------------------------
 # STEP 5: Calculate Scores, Build Flags & Cohort
 # ----------------------------------------------------
@@ -777,13 +832,6 @@ grade_counts = Counter()
 tier_counts = Counter()
 flag_counts = Counter()
 
-curriculum_specialists = [
-    'Heather Holz',
-    'Becky Fox',
-    'Shakira Provasoli',
-    'Megan Roberts'
-]
-
 for idx, (sc, meta) in enumerate(sorted(registry.items())):
     visits = visits_by_school.get(sc, [])
     scheduled = scheduled_by_school.get(sc, [])
@@ -793,9 +841,6 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
     
     total_visits = len(visits)
     period_len = meta['periodLengthWeeks']
-    
-    cs = curriculum_specialists[idx % len(curriculum_specialists)]
-    meta['curriculumSpecialist'] = cs
     
     # Dynamic elapsed periods based on actual calendar weeks
     elapsed_periods = max(1, int(round(elapsed_calendar_weeks / period_len)))

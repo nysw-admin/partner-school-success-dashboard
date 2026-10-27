@@ -42,8 +42,8 @@ export function generateSchoolExecutiveReport(item: SchoolWithData): string {
 * **Operational Risk Level:** **${flagSeverity}** (${flags.length} active trigger${flags.length === 1 ? '' : 's'})
 
 ### Key Staffing & Operations Assignments:
-* **Assigned GST (Field Technician):** ${school.assignedGst}
-* **Curriculum Specialist (Ed Team):** ${school.curriculumSpecialist || 'Heather Holz'}
+* **GST Team (Field Technician):** ${school.assignedGst || 'Unassigned'}
+* **Curriculum Specialist (Ed Team):** ${school.curriculumSpecialist || 'Unassigned'}
 * **Area Manager (Supervision):** ${school.areaManager}
 
 ---
@@ -118,7 +118,7 @@ ${school.hasAquaponics ? `* **Aquaponics Live Status:** ${snapshot.aquaponicsNot
 
 ## 6. Prescriptive Action Plan & Next Steps
 1. **GST Action Item:** ${b1Pct < 70 ? `Prioritize hardware inspection, flush nutrient reservoirs, and resolve "${flags[0]?.title || 'maintenance concerns'}".` : 'Maintain standard bi-weekly visit cadence and verify seeding replenishment.'}
-2. **Ed Team Action Item:** ${b2Pct < 70 ? `Curriculum Specialist ${school.curriculumSpecialist || 'Heather Holz'} to schedule 1-on-1 pedagogical check-in with lead teacher.` : 'Invite lead teacher to present student projects at the upcoming NYSW Youth STEM Conference.'}
+2. **Ed Team Action Item:** ${b2Pct < 70 ? `Curriculum Specialist ${school.curriculumSpecialist || 'Unassigned'} to schedule 1-on-1 pedagogical check-in with lead teacher.` : 'Invite lead teacher to present student projects at the upcoming NYSW Youth STEM Conference.'}
 3. **Admin / Management Action Item:** ${flags.length > 0 ? `Area Manager ${school.areaManager} to follow up on unresolved ${flags[0]?.title} before end of week.` : 'Standard quarterly check-in with principal.'}
 `;
 
@@ -606,11 +606,18 @@ export async function askSchoolCopilot(
     cleanQ.includes('workload') ||
     cleanQ.includes('gst')
   ) {
+    const uniqueEdSpecialists = Array.from(
+      new Set(allSchools.map(s => s.school.curriculumSpecialist).filter((cs): cs is string => Boolean(cs && cs !== 'Unassigned')))
+    ).sort();
+
     let queriedSpecialist: string | null = null;
-    if (cleanQ.includes('heather')) queriedSpecialist = 'Heather Holz';
-    else if (cleanQ.includes('becky')) queriedSpecialist = 'Becky Fox';
-    else if (cleanQ.includes('shakira')) queriedSpecialist = 'Shakira Provasoli';
-    else if (cleanQ.includes('megan')) queriedSpecialist = 'Megan Roberts';
+    for (const spec of uniqueEdSpecialists) {
+      const parts = spec.toLowerCase().split(' ');
+      if (parts.some(p => p.length >= 3 && cleanQ.includes(p))) {
+        queriedSpecialist = spec;
+        break;
+      }
+    }
 
     if (queriedSpecialist) {
       const assigned = allSchools.filter(s => s.school.curriculumSpecialist === queriedSpecialist);
@@ -622,7 +629,7 @@ export async function askSchoolCopilot(
         `* **Assigned Portfolio:** **${assigned.length} partner schools**\n` +
         `* **Portfolio Average Score:** **${avg} / 100**\n` +
         `* **Schools with Active Alerts:** **${flagCount} flags**\n\n` +
-        `| School Name | DBN | Borough | Grade | Score | Active Flags | Assigned GST |\n` +
+        `| School Name | DBN | Borough | Grade | Score | Active Flags | GST Team |\n` +
         `| :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n`;
 
       assigned.forEach(s => {
@@ -639,14 +646,13 @@ export async function askSchoolCopilot(
         ]
       };
     } else {
-      // Overview of all 4 Ed Team Specialists
-      const specialists = ['Heather Holz', 'Becky Fox', 'Shakira Provasoli', 'Megan Roberts'];
+      // Overview of all real Ed Team Specialists
       let answer = `### 👥 Ed Team Curriculum Specialists Portfolio Distribution\n\n` +
         `The New York Sun Works Education Team supports partner schools through teacher training, portal tracking, and curriculum implementation:\n\n` +
         `| Specialist | Assigned Schools | Average Score | Active Flags | Key Focus Area |\n` +
         `| :--- | :--- | :--- | :--- | :--- |\n`;
 
-      specialists.forEach(spec => {
+      uniqueEdSpecialists.forEach(spec => {
         const list = allSchools.filter(s => s.school.curriculumSpecialist === spec);
         const avg = list.length > 0 ? (list.reduce((acc, s) => acc + s.score.overallScore, 0) / list.length).toFixed(1) : '0';
         const flags = list.reduce((acc, s) => acc + s.flags.length, 0);
@@ -657,12 +663,7 @@ export async function askSchoolCopilot(
 
       return {
         answer,
-        suggestedFollowUps: [
-          'Show schools assigned to Heather Holz',
-          'Show schools assigned to Becky Fox',
-          'Show schools assigned to Shakira Provasoli',
-          'Show schools assigned to Megan Roberts'
-        ]
+        suggestedFollowUps: uniqueEdSpecialists.map(s => `Show schools assigned to ${s}`)
       };
     }
   }

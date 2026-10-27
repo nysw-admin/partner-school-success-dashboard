@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "lastUpdated": "2026-10-15T20:11:08.888443",
+  "lastUpdated": "2026-10-26T13:49:00.625426",
   "totalCumulativeVisits": 3974,
   "totalSchoolsTracked": 310,
-  "newVisitsAddedThisRun": 3974,
-  "historicalVisitsRetained": 0,
+  "newVisitsAddedThisRun": 0,
+  "historicalVisitsRetained": 3974,
   "sourceFiles": [
     "Accelo GST Asset Export Sept-Dec 2025.xlsx"
   ],

@@ -39,9 +39,9 @@ export function renderNavbar(
           <span>EOY Snapshots</span>
         </button>
 
-        <button id="open-ingest-modal-btn" class="ingest-nav-btn" title="Data Ingestion & Pipeline Hub">
+        <button id="open-ingest-modal-btn" class="ingest-nav-btn" title="Data Intake & Pipeline Hub">
           <span class="ingest-icon">🔄</span>
-          <span>Data Ingestion</span>
+          <span>Data Intake</span>
         </button>
 
         <button id="open-ai-agent-btn" class="ai-agent-nav-btn" title="Launch NYSW AI School Copilot">

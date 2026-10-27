@@ -68,8 +68,8 @@ Select any quick action chip above or type your question below!`,
   ]
 };
 
-// Testing mode initialized as cleared per user instruction ("lets clear the dashboard on the testing mode")
-const isTestingCleared = sessionStorage.getItem('nysw_test_cleared') !== 'false';
+// Live cohort is fully loaded and displayed by default (all partner schools, scores & flags)
+const isTestingCleared = false;
 
 const state: AppState = {
   activeTab: 'directory',
@@ -91,7 +91,7 @@ const state: AppState = {
   ingestStatusData: null,
   isIngesting: false,
   ingestLogOutput: isTestingCleared
-    ? `[TEST MODE ACTIVE] Dashboard is CLEARED (0 partner schools loaded).\n\nSpreadsheets in "data/incoming/" are safe & intact.\n\nReady to test the pipeline:\n  1. Click "Run Data Ingestion Pipeline Now" above.\n  2. The pipeline will ingest all 7 Excel files and extract Assigned GSTs from Column A.\n  3. Rubric scores and flags will be calculated.\n  4. All 405 schools will populate the dashboard in real time!\n\nWaiting for you to click "Run Data Ingestion Pipeline Now"...`
+    ? `[TEST MODE ACTIVE] Dashboard is CLEARED (0 partner schools loaded).\n\nSpreadsheets in "data/incoming/" are safe & intact.\n\nReady to test the pipeline:\n  1. Click "Run Data Intake Pipeline Now" above.\n  2. The pipeline will ingest all 7 Excel files and extract Assigned GSTs from Column A.\n  3. Rubric scores and flags will be calculated.\n  4. All 405 schools will populate the dashboard in real time!\n\nWaiting for you to click "Run Data Intake Pipeline Now"...`
     : null,
   ingestError: null,
   ingestSuccessToast: null,
@@ -136,7 +136,7 @@ function renderApp() {
           <div class="toast-content">
             <span class="toast-icon">✅</span>
             <div class="toast-body">
-              <strong class="toast-title">Data Ingestion Complete!</strong>
+              <strong class="toast-title">Data Intake Complete!</strong>
               <span class="toast-desc">${state.ingestSuccessToast}</span>
             </div>
           </div>
@@ -267,7 +267,7 @@ function attachEventListeners() {
     state.schools = [];
     state.flaggedReports = [];
     state.selectedSchoolDbn = null;
-    state.ingestLogOutput = `[TEST MODE ACTIVE] Dashboard successfully CLEARED (0 partner schools active).\n\nSpreadsheets in "data/incoming/" are completely safe and untouched.\n\nNow click "Run Data Ingestion Pipeline Now" to verify that the automated pipeline repopulates all 405 schools!`;
+    state.ingestLogOutput = `[TEST MODE ACTIVE] Dashboard successfully CLEARED (0 partner schools active).\n\nSpreadsheets in "data/incoming/" are completely safe and untouched.\n\nNow click "Run Data Intake Pipeline Now" to verify that the automated pipeline repopulates all 405 schools!`;
     renderApp();
   });
 
@@ -838,7 +838,7 @@ async function triggerDataIngestion() {
       state.isIngestModalOpen = false;
       state.selectedSchoolDbn = null;
       state.activeTab = 'directory';
-      showIngestSuccessToast(`Data ingestion complete! Evaluated ${state.schools.length} partner schools with active rubric scores and early-warning flags.`);
+      showIngestSuccessToast(`Data intake complete! Evaluated ${state.schools.length} partner schools with active rubric scores and early-warning flags.`);
     } else {
       state.ingestError = data.error || 'Ingestion encountered an issue.';
       state.ingestLogOutput = (data.stdout || '') + '\n' + (data.stderr || data.error || '');

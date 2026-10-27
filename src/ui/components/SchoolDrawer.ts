@@ -21,7 +21,7 @@ export function renderSchoolDrawer(item: SchoolWithData, allSnapshots?: EndOfYea
               <code style="background: var(--bg-card-alt); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">${school.dbn}</code>
             </div>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
-              ${school.borough} · ${school.programYear} · Installed ${school.installationDate} · Assigned GST: <strong>${school.assignedGst}</strong> · Ed Team: <strong>${school.curriculumSpecialist || 'Heather Holz'}</strong>
+              ${school.borough} · ${school.programYear} · Installed ${school.installationDate} · GST Team: <strong>${school.assignedGst || 'Unassigned'}</strong> · Ed Team: <strong>${school.curriculumSpecialist || 'Unassigned'}</strong>
             </p>
           </div>
           <div style="display: flex; align-items: center; gap: 0.75rem;">

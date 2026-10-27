@@ -66,6 +66,13 @@ export default defineConfig({
                   required: true,
                 },
                 {
+                  id: 'curriculum',
+                  name: 'Curriculum Training Asset Sep2025-Jun2026.xlsx',
+                  label: 'Curriculum Training & Ed Team Asset',
+                  description: 'Ed Team specialists (Column L), teacher training sessions, domains & pedagogical support',
+                  required: true,
+                },
+                {
                   id: 'amv',
                   name: 'Area Manager Asset Sep-Dec 2025.xlsx',
                   label: 'Area Manager Observation Visits',

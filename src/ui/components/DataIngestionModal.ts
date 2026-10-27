@@ -164,7 +164,7 @@ export function renderDataIngestionModal(
             <div>
               <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                 <h2 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; margin: 0; color: var(--text-main);">
-                  NY Sun Works — Data Ingestion & Pipeline Hub
+                  NY Sun Works — Data Intake & Pipeline Hub
                 </h2>
                 <span class="ingest-status-pill ${isRunning ? 'running' : currentLoadedSchools === 0 ? 'ready' : 'ready'}">
                   ${isRunning ? '⏳ Running Ingestion...' : currentLoadedSchools === 0 ? '🧪 Testing Mode (Cleared)' : '🟢 Ready to Ingest'}
@@ -180,7 +180,7 @@ export function renderDataIngestionModal(
           </div>
 
           <div class="ingest-header-actions">
-            <button id="close-ingest-modal-btn" class="close-btn" title="Close Data Ingestion Hub">✕</button>
+            <button id="close-ingest-modal-btn" class="close-btn" title="Close Data Intake Hub">✕</button>
           </div>
         </div>
 
@@ -239,7 +239,7 @@ export function renderDataIngestionModal(
                 ${isRunning ? 'disabled' : ''}
               >
                 <span>${isRunning ? '⏳' : '🚀'}</span>
-                <span>${isRunning ? 'Running Data Ingestion Pipeline...' : 'Run Data Ingestion Pipeline Now'}</span>
+                <span>${isRunning ? 'Running Data Intake Pipeline...' : 'Run Data Intake Pipeline Now'}</span>
               </button>
 
               <button
@@ -354,8 +354,8 @@ export function renderDataIngestionModal(
 
               <div id="ingest-terminal-window" class="ingest-terminal-box">
                 <pre class="terminal-text">${logOutput || (currentLoadedSchools === 0
-                  ? `[TEST MODE ACTIVE] Dashboard is currently CLEARED (0 partner schools loaded).\n\nSpreadsheets in the established "data/incoming/" folder are safe & intact.\n\nReady to test the pipeline:\n  1. Click "Run Data Ingestion Pipeline Now" above.\n  2. The pipeline will ingest all Excel files and extract Assigned GSTs from Column A.\n  3. Rubric scores and flags will be calculated.\n  4. All 405 schools will populate the dashboard in real time!\n\nWaiting for you to click "Run Data Ingestion Pipeline Now"...`
-                  : `[READY] NY Sun Works Incremental Data Engine initialized.\n\nEstablished Intake Folder: data/incoming/\nPersistent Visit Storage: data/historical_visits.json (${cumulativeVisits} visits preserved)\n\nClick "Run Data Ingestion Pipeline Now" to execute the 6-step incremental ingestion workflow:\n  1. School Registry & Cadence Specs\n  2. 53-tab Weekly Schedule & Assigned GSTs from Column A\n  3. Incremental Accelo GST Reports (Deduplicating & Preserving History)\n  4. Health Checks, AM Observations & Teacher Survey\n  5. 100-Point Scoring Engine & Early-Warning Flags\n  6. Master Cohort Serialization to data/cohort.json\n\nWaiting for execution trigger...`
+                  ? `[TEST MODE ACTIVE] Dashboard is currently CLEARED (0 partner schools loaded).\n\nSpreadsheets in the established "data/incoming/" folder are safe & intact.\n\nReady to test the pipeline:\n  1. Click "Run Data Intake Pipeline Now" above.\n  2. The pipeline will ingest all Excel files and extract Assigned GSTs from Column A.\n  3. Rubric scores and flags will be calculated.\n  4. All 405 schools will populate the dashboard in real time!\n\nWaiting for you to click "Run Data Intake Pipeline Now"...`
+                  : `[READY] NY Sun Works Incremental Data Engine initialized.\n\nEstablished Intake Folder: data/incoming/\nPersistent Visit Storage: data/historical_visits.json (${cumulativeVisits} visits preserved)\n\nClick "Run Data Intake Pipeline Now" to execute the 6-step incremental ingestion workflow:\n  1. School Registry & Cadence Specs\n  2. 53-tab Weekly Schedule & Assigned GSTs from Column A\n  3. Incremental Accelo GST Reports (Deduplicating & Preserving History)\n  4. Health Checks, AM Observations & Teacher Survey\n  5. 100-Point Scoring Engine & Early-Warning Flags\n  6. Master Cohort Serialization to data/cohort.json\n\nWaiting for execution trigger...`
                 )}</pre>
               </div>
 
@@ -367,8 +367,8 @@ export function renderDataIngestionModal(
                 </p>
                 <ol style="margin: 0 0 0.5rem 1.2rem; padding: 0; font-size: 0.8rem; color: #334155; line-height: 1.45;">
                   <li>Export your latest weekly support reports from Accelo.</li>
-                  <li>Drop the new Excel spreadsheet into <strong><code>data\incoming\</code></strong>.</li>
-                  <li>Click <strong>"Run Data Ingestion Pipeline Now"</strong> above!</li>
+                  <li>Drop the new Excel spreadsheet into <strong><code>data/incoming/</code></strong>.</li>
+                  <li>Click <strong>"Run Data Intake Pipeline Now"</strong> above!</li>
                 </ol>
                 <p style="margin: 0.4rem 0 0 0; font-size: 0.75rem; color: #64748b; line-height: 1.4;">
                   <em>✨ The model preserves all previous records in <code>data/historical_visits.json</code> and automatically deduplicates overlapping visits.</em>

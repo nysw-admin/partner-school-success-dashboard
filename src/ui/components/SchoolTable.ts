@@ -22,12 +22,12 @@ export function renderSchoolTable(
         </h2>
         <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 580px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
           The active dashboard cohort has been cleared for testing. Your underlying operational spreadsheets are safe and intact in <code>1st slice of data SY 25-26/</code>.
-          Click the button below to open the <strong>Data Ingestion Hub</strong> and click <strong>"Run Data Ingestion Pipeline Now"</strong> to populate all 405 schools!
+          Click the button below to open the <strong>Data Intake Hub</strong> and click <strong>"Run Data Intake Pipeline Now"</strong> to populate all 405 schools!
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
           <button id="table-open-ingest-btn" class="ingest-run-btn" style="padding: 0.75rem 1.75rem; font-size: 1rem; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);">
             <span>🚀</span>
-            <span>Open Data Ingestion Hub & Run Pipeline</span>
+            <span>Open Data Intake Hub & Run Pipeline</span>
           </button>
         </div>
       </div>
@@ -137,8 +137,8 @@ export function renderSchoolTable(
             <th style="min-width: 180px;">School / DBN</th>
             <th style="width: 100px;">Borough</th>
             <th style="width: 130px;">Status</th>
-            <th style="width: 125px;">Assigned GST</th>
-            <th style="width: 140px;">Ed Team Member</th>
+            <th style="width: 125px;">GST Team</th>
+            <th style="width: 140px;">Ed Team</th>
             <th style="width: 115px;">Gate Status</th>
             <th style="width: 135px;">3-Bucket Breakdown</th>
             <th style="min-width: 140px;">Active Flags</th>
@@ -212,13 +212,13 @@ function renderSchoolRow(item: SchoolWithData): string {
       </td>
 
       <td>
-        <span style="font-weight: 500;">${school.assignedGst}</span>
+        <span style="font-weight: 500;">${school.assignedGst || 'Unassigned'}</span>
       </td>
 
       <td>
         <div style="display: flex; align-items: center; gap: 0.35rem;">
-          <span style="font-size: 0.85rem;" title="NYSW Curriculum Specialist">🎓</span>
-          <span style="font-weight: 500; color: var(--text-main);">${escapeHtml(school.curriculumSpecialist || 'Heather Holz')}</span>
+          <span style="font-size: 0.85rem;" title="NYSW Ed Team Specialist">🎓</span>
+          <span style="font-weight: 500; color: ${school.curriculumSpecialist && school.curriculumSpecialist !== 'Unassigned' ? 'var(--text-main)' : 'var(--text-muted)'};">${escapeHtml(school.curriculumSpecialist || 'Unassigned')}</span>
         </div>
       </td>
 
