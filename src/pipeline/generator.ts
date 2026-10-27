@@ -23,13 +23,26 @@ export interface SchoolWithData {
   };
 }
 
+const GRADE_ORDER: Record<string, number> = { A: 5, B: 4, C: 3, D: 2, F: 1 };
+
+export function sortSchoolsByGradeDesc(a: SchoolWithData, b: SchoolWithData): number {
+  const gradeDiff = (GRADE_ORDER[b.score.letterGrade] || 0) - (GRADE_ORDER[a.score.letterGrade] || 0);
+  if (gradeDiff !== 0) return gradeDiff;
+  const scoreDiff = b.score.overallScore - a.score.overallScore;
+  if (scoreDiff !== 0) return scoreDiff;
+  return a.school.name.localeCompare(b.school.name);
+}
+
 export function generateRealisticCohort(): {
   schools: SchoolWithData[];
   flaggedReports: FlaggedSchoolReport[];
 } {
   if (realCohortData && realCohortData.schools && realCohortData.schools.length > 0) {
+    const sortedSchools = (realCohortData.schools as unknown as SchoolWithData[])
+      .slice()
+      .sort(sortSchoolsByGradeDesc);
     return {
-      schools: realCohortData.schools as unknown as SchoolWithData[],
+      schools: sortedSchools,
       flaggedReports: realCohortData.flaggedReports as unknown as FlaggedSchoolReport[],
     };
   }
@@ -439,6 +452,7 @@ export function generateRealisticCohort(): {
     });
   });
 
+  schoolsWithData.sort(sortSchoolsByGradeDesc);
   return { schools: schoolsWithData, flaggedReports };
 }
 

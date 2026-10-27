@@ -1243,6 +1243,17 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
             'highestSeverity': highest_sev
         })
 
+# Sort schools by higher grade levels to lower grade levels (A -> B -> C -> D -> F)
+# Within the same grade, sort by overallScore descending, then school name ascending.
+GRADE_PRIORITY = {'A': 5, 'B': 4, 'C': 3, 'D': 2, 'F': 1}
+cohort_schools.sort(
+    key=lambda s: (
+        -GRADE_PRIORITY.get(s['score']['letterGrade'], 0),
+        -s['score']['overallScore'],
+        s['school']['name']
+    )
+)
+
 print(f"\nCohort assembled: {len(cohort_schools)} schools | Flagged Watchlist: {len(flagged_reports)} schools")
 
 # ----------------------------------------------------

@@ -73,6 +73,17 @@ export function renderSchoolTable(
     return true;
   });
 
+  // Sort by higher grade levels to lower grade levels (A -> B -> C -> D -> F)
+  // Within the same grade, sort by overallScore descending, then school name ascending.
+  const GRADE_ORDER: Record<string, number> = { A: 5, B: 4, C: 3, D: 2, F: 1 };
+  filtered.sort((a, b) => {
+    const gradeDiff = (GRADE_ORDER[b.score.letterGrade] || 0) - (GRADE_ORDER[a.score.letterGrade] || 0);
+    if (gradeDiff !== 0) return gradeDiff;
+    const scoreDiff = b.score.overallScore - a.score.overallScore;
+    if (scoreDiff !== 0) return scoreDiff;
+    return a.school.name.localeCompare(b.school.name);
+  });
+
   const uniqueGsts = Array.from(new Set(schools.map(s => s.school.assignedGst))).sort();
   const uniqueEdTeam = Array.from(
     new Set(schools.map(s => s.school.curriculumSpecialist).filter(Boolean))
@@ -133,7 +144,7 @@ export function renderSchoolTable(
       <table class="school-table">
         <thead>
           <tr>
-            <th style="width: 105px;">Grade & Score</th>
+            <th style="width: 115px;" title="Sorted by highest to lowest grade (A → F)">Grade &amp; Score <span style="font-size: 0.72rem; color: var(--accent-emerald); font-weight: bold;">▼</span></th>
             <th style="min-width: 180px;">School / DBN</th>
             <th style="width: 100px;">Borough</th>
             <th style="width: 130px;">Status</th>

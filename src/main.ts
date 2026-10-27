@@ -1,4 +1,4 @@
-import { generateRealisticCohort, type SchoolWithData } from './pipeline/generator.ts';
+import { generateRealisticCohort, sortSchoolsByGradeDesc, type SchoolWithData } from './pipeline/generator.ts';
 import type { FlaggedSchoolReport } from './types/flags.ts';
 import { renderNavbar } from './ui/components/Navbar.ts';
 import { renderMetricsRibbon } from './ui/components/MetricsRibbon.ts';
@@ -826,11 +826,12 @@ async function triggerDataIngestion() {
       state.ingestError = null;
       if (data.cohort && data.cohort.schools) {
         sessionStorage.setItem('nysw_test_cleared', 'false');
-        state.schools = data.cohort.schools;
+        const sorted = [...data.cohort.schools].sort(sortSchoolsByGradeDesc);
+        state.schools = sorted;
         state.flaggedReports = data.cohort.flaggedReports;
-        state.liveSchoolsBackup = [...data.cohort.schools];
+        state.liveSchoolsBackup = [...sorted];
         state.liveFlaggedBackup = [...data.cohort.flaggedReports];
-        state.availableSnapshots = getAllSnapshots(data.cohort.schools);
+        state.availableSnapshots = getAllSnapshots(sorted);
       }
       await fetchIngestStatus(false);
 
