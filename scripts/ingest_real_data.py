@@ -58,10 +58,126 @@ if not incoming_excel_files:
     print(f"[ERROR] No Excel spreadsheets found in intake directory: {SLICE_DIR}")
     sys.exit(1)
 
-# Detect active school year from filenames in SLICE_DIR
-has_26_27 = any(('26_27' in f.lower() or '2026' in f.lower() or '26-27' in f.lower()) and 'sep2025' not in f.lower() and 'sep25' not in f.lower() for f in incoming_excel_files)
-ACTIVE_SCHOOL_YEAR = 'SY 2026–2027' if has_26_27 else 'SY 2025–2026'
-ACTIVE_START_YEAR = 2026 if has_26_27 else 2025
+# Dynamically detect the highest active School Year from filenames in SLICE_DIR (e.g., 26_27, 27_28, 28_29, Sept 2026, Sept 2027)
+def detect_active_school_year(filenames):
+    detected_start_years = []
+    for fname in filenames:
+        fl = fname.lower()
+        # Match explicit pair like 26_27, 27-28, 2026-2027, 2026_27
+        for m in re.finditer(r'(?:20)?([2-3][0-9])[_\-\u2013](?:20)?([2-3][0-9])', fl):
+            y1, y2 = int(m.group(1)), int(m.group(2))
+            if y2 == y1 + 1:
+                detected_start_years.append(2000 + y1)
+        # Match fall month + 4-digit year (e.g., "sept 2026", "oct 2027")
+        for m in re.finditer(r'(?:aug|sep|sept|oct|nov|dec)[a-z]*[\s_\-]*([2][0][2-4][0-9])', fl):
+            yr = int(m.group(1))
+            # Ignore multi-year span prefixes like "sep2025-jun2026" if already matched
+            if f"{yr}-jun" not in fl and f"{yr}_jun" not in fl:
+                detected_start_years.append(yr)
+    start_yr = max(detected_start_years) if detected_start_years else 2026
+    return f"SY {start_yr}–{start_yr + 1}", start_yr
+
+
+def extract_file_school_start_year(filepath):
+    fname = os.path.basename(filepath).lower()
+    years = []
+    for m in re.finditer(r'(?:20)?([2-3][0-9])[_\-\u2013](?:20)?([2-3][0-9])', fname):
+        y1, y2 = int(m.group(1)), int(m.group(2))
+        if y2 == y1 + 1:
+            years.append(2000 + y1)
+    for m in re.finditer(r'(?:aug|sep|sept|oct|nov|dec)[a-z]*[\s_\-]*([2][0][2-4][0-9])', fname):
+        years.append(int(m.group(1)))
+    return max(years) if years else 0
+
+
+ACTIVE_SCHOOL_YEAR, ACTIVE_START_YEAR = detect_active_school_year(incoming_excel_files)
+
+
+def auto_archive_prior_cohort(cohort_file, new_school_year):
+    """If data/cohort.json holds a prior school year, automatically freeze & archive it to data/snapshots/ before generating the new year."""
+    if not os.path.exists(cohort_file):
+        return
+    try:
+        with open(cohort_file, 'r', encoding='utf-8') as f:
+            old_cohort = json.load(f)
+        old_sy = old_cohort.get('schoolYear') or 'SY 2025–2026'
+        if old_sy == new_school_year:
+            return
+        schools_list = old_cohort.get('schools') or []
+        if not schools_list:
+            return
+
+        snap_dir = os.path.join(DATA_OUT_DIR, 'snapshots')
+        os.makedirs(snap_dir, exist_ok=True)
+        clean_id = re.sub(r'[^a-zA-Z0-9]', '_', old_sy)
+        snap_id = f"{clean_id}_AUTO_FINAL"
+        snap_path = os.path.join(snap_dir, f"snapshot_{snap_id}.json")
+        if os.path.exists(snap_path):
+            return
+
+        snap_schools = []
+        grade_dist = {'A': 0, 'B': 0, 'C': 0, 'D': 0, 'F': 0}
+        tier_dist = {}
+        for item in schools_list:
+            s = item.get('school', {})
+            sc_obj = item.get('score', {})
+            g = sc_obj.get('letterGrade', 'C')
+            t = sc_obj.get('tier', 'Yellow — Watch')
+            grade_dist[g] = grade_dist.get(g, 0) + 1
+            tier_dist[t] = tier_dist.get(t, 0) + 1
+            snap_schools.append({
+                'dbn': s.get('dbn', ''),
+                'name': s.get('name', ''),
+                'borough': s.get('borough', 'Manhattan'),
+                'programYear': s.get('programYear', 'Op Y2+'),
+                'overallScore': sc_obj.get('overallScore', 75.0),
+                'letterGrade': g,
+                'tier': t,
+                'completenessStatus': sc_obj.get('completeness', {}).get('status', 'Normal'),
+                'completenessRate': sc_obj.get('completeness', {}).get('rate', 0.95),
+                'bucket1Score': sc_obj.get('bucket1', {}).get('earnedPoints', 30.0),
+                'bucket2Score': sc_obj.get('bucket2', {}).get('earnedPoints', 30.0),
+                'bucket3Score': sc_obj.get('bucket3', {}).get('earnedPoints', 15.0),
+                'uptimeRate': 0.95,
+                'totalHarvests': len(item.get('snapshot', {}).get('cropsHarvested', [])) or 2,
+                'totalVisits': len(item.get('weeklyHistory', [])),
+                'flagsCount': len(item.get('flags', [])),
+                'activeFlagIds': [fl.get('id') for fl in item.get('flags', []) if fl.get('id')],
+                'assignedGst': s.get('assignedGst', 'Unassigned'),
+                'areaManager': s.get('areaManager', 'Amanda Low'),
+                'notes': f'Automatically archived {old_sy} cohort upon transition to {new_school_year}.'
+            })
+
+        n_tot = max(1, len(snap_schools))
+        snapshot_bundle = {
+            'snapshotId': snap_id,
+            'schoolYear': old_sy,
+            'isFinal': True,
+            'createdAt': datetime.datetime.now().isoformat(),
+            'archivedBy': 'Automated School-Year Rollover Engine',
+            'notes': f'Automatic End-of-Year archive of {old_sy} generated when {new_school_year} spreadsheets were uploaded.',
+            'totalSchools': len(snap_schools),
+            'networkSummary': {
+                'averageOverallScore': round(sum(x['overallScore'] for x in snap_schools) / n_tot, 1),
+                'averageBucket1Score': round(sum(x['bucket1Score'] for x in snap_schools) / n_tot, 2),
+                'averageBucket2Score': round(sum(x['bucket2Score'] for x in snap_schools) / n_tot, 2),
+                'averageBucket3Score': round(sum(x['bucket3Score'] for x in snap_schools) / n_tot, 2),
+                'gradeDistribution': grade_dist,
+                'tierDistribution': tier_dist,
+                'totalVisitsLogged': sum(x['totalVisits'] for x in snap_schools),
+                'totalHarvestsLogged': sum(x['totalHarvests'] for x in snap_schools),
+                'totalFlagsActive': sum(x['flagsCount'] for x in snap_schools),
+            },
+            'schools': snap_schools
+        }
+        with open(snap_path, 'w', encoding='utf-8') as sf:
+            json.dump(snapshot_bundle, sf, indent=2)
+        print(f"[AUTO-ARCHIVE] Saved prior school year '{old_sy}' ({len(snap_schools)} schools) to {os.path.relpath(snap_path, PROJECT_ROOT)}")
+    except Exception as e:
+        print(f"[WARN] Could not auto-archive prior cohort: {e}")
+
+
+auto_archive_prior_cohort(COHORT_OUT_FILE, ACTIVE_SCHOOL_YEAR)
 
 print("=" * 60)
 print(f"NY SUN WORKS — DATA INGESTION PIPELINE ({ACTIVE_SCHOOL_YEAR})")
@@ -185,8 +301,11 @@ def find_matching_files(directory, patterns, exclude_patterns=None):
                 continue
             if any(pat.lower() in fname_lower for pat in patterns):
                 matches.append(os.path.join(d, fname))
-    # Sort so newer school year files (e.g. 26_27, 2026) come first
-    matches = sorted(list(set(matches)), key=lambda p: (0 if ('26_27' in os.path.basename(p).lower() or '2026' in os.path.basename(p).lower()) else 1, os.path.basename(p)))
+    # Sort so the highest school year files (e.g. 27_28 > 26_27 > 25_26) always take priority
+    matches = sorted(
+        list(set(matches)),
+        key=lambda p: (-extract_file_school_start_year(p), os.path.basename(p))
+    )
     return matches
 
 
@@ -506,12 +625,12 @@ if os.path.exists(HISTORICAL_VISITS_FILE) and not RESET_MODE:
         with open(HISTORICAL_VISITS_FILE, 'r', encoding='utf-8') as f:
             hist_data = json.load(f)
             saved_sy = hist_data.get('schoolYear')
-            # Only retain historical visits from the same active school year so SY 2026-2027 starts cleanly
-            if saved_sy == ACTIVE_SCHOOL_YEAR or not has_26_27:
+            # Only retain historical visits from the same active school year so new school years start cleanly
+            if saved_sy == ACTIVE_SCHOOL_YEAR:
                 for sc, v_list in hist_data.get('visitsBySchool', {}).items():
                     for v in v_list:
                         dt = parse_date_obj(v.get('date'))
-                        if has_26_27 and dt and dt.year < 2026:
+                        if dt and dt.year < ACTIVE_START_YEAR:
                             continue
                         fp = v.get('fingerprint') or f"{sc}|{v.get('date')}|{v.get('gst_member', '')}|{v.get('notes', '')[:40]}".lower()
                         v['fingerprint'] = fp
@@ -533,10 +652,13 @@ gst_files = find_matching_files(
     exclude_patterns=['copy of gst schedule', 'gst schedule', 'visit cadence', 'accelo partner schools', 'area manager', 'hc performance', 'teacher survey', 'missing assets']
 )
 
-if has_26_27:
-    gst_files_26 = [f for f in gst_files if '2025' not in os.path.basename(f).lower() and '25_26' not in os.path.basename(f).lower()]
-    if gst_files_26:
-        gst_files = gst_files_26
+# Filter GST visit files to the active school year if year-tagged visit files are present
+gst_files_active_yr = [
+    f for f in gst_files
+    if extract_file_school_start_year(f) in (0, ACTIVE_START_YEAR)
+]
+if gst_files_active_yr:
+    gst_files = gst_files_active_yr
 
 print(f"Discovered {len(gst_files)} GST weekly support spreadsheet(s):")
 for gf in gst_files:
@@ -706,6 +828,10 @@ for sc in registry:
 print("\n[4/6] Parsing Area Manager, HC Performance & Survey Data...")
 
 amv_files = find_matching_files(SLICE_DIR, patterns=['area manager', 'amv'], exclude_patterns=[])
+if ACTIVE_START_YEAR >= 2026:
+    sy26_amv = [f for f in amv_files if '26' in os.path.basename(f)]
+    if sy26_amv:
+        amv_files = sy26_amv
 amv_by_school = defaultdict(list)
 known_amv_fps = defaultdict(set)
 
@@ -837,6 +963,10 @@ print(f"AMV: {len(amv_by_school)} schools | HC: {len(hc_by_school)} schools | Su
 # Ingest Curriculum Training Asset & Ed Team Specialists (Column L)
 print("\n[4b/6] Ingesting Curriculum Training Asset (Ed Team Specialists from Column L)...")
 ct_files = find_matching_files(SLICE_DIR, patterns=['curriculum training', 'curriculum', 'ed team'], exclude_patterns=[])
+if ACTIVE_START_YEAR >= 2026:
+    sy26_ct = [f for f in ct_files if '26' in os.path.basename(f) and '2025' not in os.path.basename(f)]
+    if sy26_ct:
+        ct_files = sy26_ct
 if not ct_files:
     legacy_ct = os.path.join(LEGACY_DIR, 'Curriculum Training Asset Sep2025-Jun2026.xlsx')
     if os.path.exists(legacy_ct):
@@ -866,6 +996,10 @@ for cf in ct_files:
 
 ed_team_assigned_count = 0
 for sc in registry:
+    if am_counter[sc]:
+        registry[sc]['areaManager'] = am_counter[sc].most_common(1)[0][0]
+    elif registry[sc]['areaManager'] == 'TBD':
+        registry[sc]['areaManager'] = 'Unassigned'
     if ed_team_by_school[sc]:
         registry[sc]['curriculumSpecialist'] = ed_team_by_school[sc].most_common(1)[0][0]
         ed_team_assigned_count += 1
@@ -1322,7 +1456,7 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
         'borough': meta['borough'],
         'programYear': meta['programYear'],
         'assignedGst': meta['assignedGst'] if meta['assignedGst'] not in ['TBD', ''] else 'Unassigned',
-        'areaManager': meta['areaManager'] if meta['areaManager'] != 'TBD' else 'Amanda Low',
+        'areaManager': meta['areaManager'] if meta['areaManager'] not in ['TBD', ''] else 'Unassigned',
         'curriculumSpecialist': meta['curriculumSpecialist'],
         'installationDate': meta['installationDate'],
         'numLabs': meta.get('numLabs', 1),

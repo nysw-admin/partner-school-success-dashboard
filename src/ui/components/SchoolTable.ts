@@ -5,6 +5,7 @@ export interface FilterState {
   borough: string;
   gradeTier: string;
   completeness: string;
+  areaManager?: string;
   gst: string;
   edTeam?: string;
 }
@@ -45,6 +46,7 @@ export function renderSchoolTable(
       const match =
         s.name.toLowerCase().includes(q) ||
         s.dbn.toLowerCase().includes(q) ||
+        (s.areaManager && s.areaManager.toLowerCase().includes(q)) ||
         s.assignedGst.toLowerCase().includes(q) ||
         (s.curriculumSpecialist && s.curriculumSpecialist.toLowerCase().includes(q));
       if (!match) return false;
@@ -59,6 +61,10 @@ export function renderSchoolTable(
     }
 
     if (filters.completeness && filters.completeness !== 'all' && sc.completeness.status !== filters.completeness) {
+      return false;
+    }
+
+    if (filters.areaManager && filters.areaManager !== 'all' && s.areaManager !== filters.areaManager) {
       return false;
     }
 
@@ -84,6 +90,9 @@ export function renderSchoolTable(
     return a.school.name.localeCompare(b.school.name);
   });
 
+  const uniqueAreaManagers = Array.from(
+    new Set(schools.map(s => s.school.areaManager).filter(Boolean))
+  ).sort() as string[];
   const uniqueGsts = Array.from(new Set(schools.map(s => s.school.assignedGst))).sort();
   const uniqueEdTeam = Array.from(
     new Set(schools.map(s => s.school.curriculumSpecialist).filter(Boolean))
@@ -97,7 +106,7 @@ export function renderSchoolTable(
           type="text"
           id="school-search-input"
           class="search-input"
-          placeholder="Search by school name, DBN, GST, or Ed Team..."
+          placeholder="Search by school name, DBN, Area Manager, GST, or Ed Team..."
           value="${escapeHtml(filters.searchQuery)}"
         />
       </div>
@@ -128,6 +137,11 @@ export function renderSchoolTable(
           <option value="Incomplete" ${filters.completeness === 'Incomplete' ? 'selected' : ''}>Incomplete (<70%)</option>
         </select>
 
+        <select id="areamanager-filter" class="filter-select">
+          <option value="all" ${(!filters.areaManager || filters.areaManager === 'all') ? 'selected' : ''}>All Area Managers</option>
+          ${uniqueAreaManagers.map(am => `<option value="${escapeHtml(am)}" ${filters.areaManager === am ? 'selected' : ''}>${escapeHtml(am)}</option>`).join('')}
+        </select>
+
         <select id="gst-filter" class="filter-select">
           <option value="all" ${filters.gst === 'all' ? 'selected' : ''}>All GST Staff</option>
           ${uniqueGsts.map(gst => `<option value="${gst}" ${filters.gst === gst ? 'selected' : ''}>${gst}</option>`).join('')}
@@ -148,6 +162,7 @@ export function renderSchoolTable(
             <th style="min-width: 180px;">School / DBN</th>
             <th style="width: 100px;">Borough</th>
             <th style="width: 130px;">Status</th>
+            <th style="width: 120px;">Area Manager</th>
             <th style="width: 125px;">GST Team</th>
             <th style="width: 140px;">Ed Team</th>
             <th style="width: 115px;">Gate Status</th>
@@ -157,7 +172,7 @@ export function renderSchoolTable(
         </thead>
         <tbody>
           ${filtered.length === 0
-            ? `<tr><td colspan="9" style="text-align: center; padding: 2rem; color: var(--text-muted);">No schools match the selected filters.</td></tr>`
+            ? `<tr><td colspan="10" style="text-align: center; padding: 2rem; color: var(--text-muted);">No schools match the selected filters.</td></tr>`
             : filtered.map(item => renderSchoolRow(item)).join('')
           }
         </tbody>
@@ -220,6 +235,10 @@ function renderSchoolRow(item: SchoolWithData): string {
           <span class="program-status-badge ${getProgramYearClass(school.programYear)}">${school.programYear}</span>
           <span style="font-size: 0.72rem; color: var(--text-muted);">Installed ${school.installationDate}</span>
         </div>
+      </td>
+
+      <td>
+        <span style="font-weight: 500; color: ${school.areaManager && school.areaManager !== 'Unassigned' ? 'var(--text-main)' : 'var(--text-muted)'};">${escapeHtml(school.areaManager || 'Unassigned')}</span>
       </td>
 
       <td>

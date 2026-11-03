@@ -82,6 +82,7 @@ const state: AppState = {
     completeness: 'all',
     gst: 'all',
     edTeam: 'all',
+    areaManager: 'all',
   },
   selectedSchoolDbn: null,
   schools: isTestingCleared ? [] : cohort.schools,
@@ -403,6 +404,7 @@ function attachEventListeners() {
   const compFilter = document.getElementById('completeness-filter') as HTMLSelectElement | null;
   const gstFilter = document.getElementById('gst-filter') as HTMLSelectElement | null;
   const edTeamFilter = document.getElementById('edteam-filter') as HTMLSelectElement | null;
+  const areaManagerFilter = document.getElementById('areamanager-filter') as HTMLSelectElement | null;
 
   searchInput?.addEventListener('input', (e) => {
     state.filters.searchQuery = (e.target as HTMLInputElement).value;
@@ -431,6 +433,11 @@ function attachEventListeners() {
 
   edTeamFilter?.addEventListener('change', (e) => {
     state.filters.edTeam = (e.target as HTMLSelectElement).value;
+    updateTableViewOnly();
+  });
+
+  areaManagerFilter?.addEventListener('change', (e) => {
+    state.filters.areaManager = (e.target as HTMLSelectElement).value;
     updateTableViewOnly();
   });
 

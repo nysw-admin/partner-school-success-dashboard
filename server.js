@@ -48,9 +48,9 @@ function getExpectedFiles(sliceDir) {
     },
     {
       id: 'weekly_reports',
-      patterns: ['GST Asset Sept 2026.xls', 'Accelo GST Asset Export Sept-Dec 2025.xlsx'],
+      patterns: ['GST Asset Nov 2026.xls', 'GST Asset Sept 2026.xls', 'Accelo GST Asset Export Sept-Dec 2025.xlsx'],
       label: 'Accelo GST Weekly Support Reports (SY 26–27)',
-      description: 'Field visit logs, system uptime, seedlings, pests, harvests & crop weights',
+      description: 'Field visit logs, system uptime, seedlings, pests, harvests, crop weights & Area Managers',
       required: true,
     },
     {
@@ -62,14 +62,14 @@ function getExpectedFiles(sliceDir) {
     },
     {
       id: 'curriculum',
-      patterns: ['Curriculum Training Asset Sep2025-Jun2026.xlsx'],
+      patterns: ['Ed Team Assets 9.1.26-11.3.26.xls', 'Curriculum Training Asset Sep2025-Jun2026.xlsx'],
       label: 'Curriculum Training & Ed Team Asset',
       description: 'Ed Team specialists (Column L), teacher training sessions & domains',
       required: false,
     },
     {
       id: 'amv',
-      patterns: ['Area Manager Asset Sep-Dec 2025.xlsx'],
+      patterns: ['Area Manager Assets 9.1.26-11.3.26.xls', 'Area Manager Asset Sep-Dec 2025.xlsx'],
       label: 'Area Manager Observation Visits',
       description: 'Lab impression, cleanliness, teacher involvement & curriculum confirmation',
       required: false,

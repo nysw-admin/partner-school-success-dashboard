@@ -107,12 +107,12 @@ export function renderDataIngestionModal(
     },
     {
       id: 'weekly_reports',
-      name: 'GST Asset Sept 2026.xls',
+      name: 'GST Asset Nov 2026.xls',
       label: 'Accelo GST Weekly Support Reports (SY 26–27)',
-      description: 'Field visit logs, system uptime, seedlings, pests, harvests & crop weights',
+      description: 'Field visit logs, system uptime, seedlings, pests, harvests, crop weights & Area Managers',
       required: true,
       exists: true,
-      sizeBytes: 584192,
+      sizeBytes: 2219520,
       modifiedAt: null,
     },
     {
@@ -127,7 +127,7 @@ export function renderDataIngestionModal(
     },
     {
       id: 'curriculum',
-      name: 'Curriculum Training Asset Sep2025-Jun2026.xlsx',
+      name: 'Ed Team Assets 9.1.26-11.3.26.xls',
       label: 'Curriculum Training & Ed Team Asset',
       description: 'Ed Team specialists (Column L), teacher training sessions & domains',
       required: false,
@@ -137,7 +137,7 @@ export function renderDataIngestionModal(
     },
     {
       id: 'amv',
-      name: 'Area Manager Asset Sep-Dec 2025.xlsx',
+      name: 'Area Manager Assets 9.1.26-11.3.26.xls',
       label: 'Area Manager Observation Visits',
       description: 'Lab impression, cleanliness, teacher involvement & curriculum confirmation',
       required: false,
