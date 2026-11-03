@@ -3,7 +3,8 @@ import type { EndOfYearSnapshot } from '../../types/snapshot.ts';
 export function renderNavbar(
   activeSchoolCount?: number,
   availableSnapshots: EndOfYearSnapshot[] = [],
-  activeSnapshotId: string | null = null
+  activeSnapshotId: string | null = null,
+  activeSchoolYear: string = 'SY 2026–2027'
 ): string {
   const isTestingMode = typeof activeSchoolCount === 'number' && activeSchoolCount === 0;
   const isViewingArchive = Boolean(activeSnapshotId);
@@ -53,7 +54,7 @@ export function renderNavbar(
         <div class="sy-selector-wrapper" style="display: flex; align-items: center; gap: 0.35rem; background: ${isViewingArchive ? '#fef3c7' : '#ffffff'}; border: 1px solid ${isViewingArchive ? '#fde68a' : '#cbd5e1'}; border-radius: 9999px; padding: 0.25rem 0.75rem;">
           <span style="font-size: 0.85rem;">📅</span>
           <select id="navbar-sy-select" style="background: transparent; border: none; font-size: 0.78rem; font-weight: 700; color: ${isViewingArchive ? '#92400e' : 'var(--text-main)'}; cursor: pointer; outline: none;" title="Switch School Year">
-            <option value="live" ${!activeSnapshotId ? 'selected' : ''}>SY 2025–2026 (Live Cohort)</option>
+            <option value="live" ${!activeSnapshotId ? 'selected' : ''}>${activeSchoolYear} (Live Cohort)</option>
             ${availableSnapshots.map(s => `
               <option value="${s.snapshotId}" ${activeSnapshotId === s.snapshotId ? 'selected' : ''}>
                 ${s.schoolYear} (Final Archive)

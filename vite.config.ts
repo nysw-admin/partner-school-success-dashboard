@@ -3,6 +3,123 @@ import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
+function getExpectedFiles(sliceDir: string) {
+  const candidates = [
+    {
+      id: 'registry',
+      patterns: ['Accelo Partner Schools Export.xls'],
+      label: 'Accelo Partner Schools Master Registry',
+      description: 'Canonical school identifiers, boroughs, program years & addresses',
+      required: true,
+    },
+    {
+      id: 'cadence',
+      patterns: ['GST Schedule SY 26_27 - Visit Cadence.xlsx', 'GST Schedule SY 25_26 - Visit Cadence.xlsx'],
+      label: 'GST Schedule — Visit Cadence (SY 26–27)',
+      description: 'Scheduled visit frequency (weekly, twice-weekly, bi-weekly, monthly)',
+      required: true,
+    },
+    {
+      id: 'schedule',
+      patterns: ['GST Schedule SY 26_27.xlsx', 'Copy of GST Schedule SY 25_26.xlsx'],
+      label: 'Weekly GST Schedule (SY 26–27)',
+      description: 'Weekly calendar tabs; maps Column A assigned GSTs & expected appearances',
+      required: true,
+    },
+    {
+      id: 'weekly_reports',
+      patterns: ['GST Asset Sept 2026.xls', 'Accelo GST Asset Export Sept-Dec 2025.xlsx'],
+      label: 'Accelo GST Weekly Support Reports (SY 26–27)',
+      description: 'Field visit logs, system uptime, seedlings, pests, harvests & crop weights',
+      required: true,
+    },
+    {
+      id: 'missing_assets',
+      patterns: ['Missing Assets 26_27.xlsx'],
+      label: 'Missing Assets Performance Report (SY 26–27)',
+      description: 'Weekly Completed, Missing & Late Assets tracker for C1a & C1b scoring',
+      required: true,
+    },
+    {
+      id: 'curriculum',
+      patterns: ['Curriculum Training Asset Sep2025-Jun2026.xlsx'],
+      label: 'Curriculum Training & Ed Team Asset',
+      description: 'Ed Team specialists (Column L), teacher training sessions & domains',
+      required: false,
+    },
+    {
+      id: 'amv',
+      patterns: ['Area Manager Asset Sep-Dec 2025.xlsx'],
+      label: 'Area Manager Observation Visits',
+      description: 'Lab impression, cleanliness, teacher involvement & curriculum confirmation',
+      required: false,
+    },
+    {
+      id: 'hc',
+      patterns: ['HC Performance Asset Sep25-Jun26.xls'],
+      label: 'Health Check Performance Assets',
+      description: 'Custodian ratings, usability, visitor readiness & budget/continuation flags',
+      required: false,
+    },
+    {
+      id: 'survey',
+      patterns: ['Teacher Survey 25_26.xlsx'],
+      label: 'Annual Teacher Satisfaction Survey',
+      description: 'Curriculum comprehension, ease of use, GST staff rating & teacher feedback',
+      required: false,
+    },
+  ];
+
+  return candidates.map(c => {
+    let matchedName = c.patterns[0];
+    let exists = false;
+    let sizeBytes = 0;
+    let modifiedAt: string | null = null;
+    for (const pat of c.patterns) {
+      const fp = path.join(sliceDir, pat);
+      if (fs.existsSync(fp)) {
+        matchedName = pat;
+        exists = true;
+        const stat = fs.statSync(fp);
+        sizeBytes = stat.size;
+        modifiedAt = stat.mtime.toISOString();
+        break;
+      }
+    }
+    return {
+      id: c.id,
+      name: matchedName,
+      label: c.label,
+      description: c.description,
+      required: c.required,
+      exists,
+      sizeBytes,
+      modifiedAt,
+    };
+  });
+}
+
+function runPythonIngestion(rootDir: string, scriptPath: string, callback: (err: Error | null, stdout: string, stderr: string) => void) {
+  const commands = process.platform === 'win32'
+    ? [`py "${scriptPath}"`, `python "${scriptPath}"`, `python3 "${scriptPath}"`]
+    : [`/opt/venv/bin/python "${scriptPath}"`, `python3 "${scriptPath}"`, `python "${scriptPath}"`];
+
+  const tryNext = (idx: number) => {
+    if (idx >= commands.length) {
+      callback(new Error('Could not find a working Python interpreter.'), '', '');
+      return;
+    }
+    exec(commands[idx], { cwd: rootDir, maxBuffer: 1024 * 1024 * 15 }, (error, stdout, stderr) => {
+      if (error && idx + 1 < commands.length) {
+        tryNext(idx + 1);
+      } else {
+        callback(error, stdout, stderr);
+      }
+    });
+  };
+  tryNext(0);
+}
+
 export default defineConfig({
   server: {
     port: 5173,
@@ -16,18 +133,28 @@ export default defineConfig({
       name: 'nysw-data-ingestion-api',
       configureServer(server: ViteDevServer) {
         server.middlewares.use((req, res, next) => {
+          if (req.url === '/api/cohort' && req.method === 'GET') {
+            const cohortFile = path.join(process.cwd(), 'data', 'cohort.json');
+            res.setHeader('Content-Type', 'application/json');
+            if (fs.existsSync(cohortFile)) {
+              fs.createReadStream(cohortFile).pipe(res);
+            } else {
+              res.statusCode = 404;
+              res.end(JSON.stringify({ success: false, error: 'cohort.json not found' }));
+            }
+            return;
+          }
+
           if (req.url === '/api/ingest-status' && req.method === 'GET') {
             try {
               const rootDir = process.cwd();
               const incomingDir = path.join(rootDir, 'data', 'incoming');
               const legacyDir = path.join(rootDir, '1st slice of data SY 25-26');
 
-              // Ensure data/incoming folder always exists on any computer
               if (!fs.existsSync(incomingDir)) {
                 fs.mkdirSync(incomingDir, { recursive: true });
               }
 
-              // Prioritize data/incoming if populated with Excel files, otherwise fallback to legacy slice folder
               let sliceDir = incomingDir;
               const hasIncomingFiles = fs.existsSync(incomingDir) && fs.readdirSync(incomingDir).some(f => f.endsWith('.xls') || f.endsWith('.xlsx'));
               if (!hasIncomingFiles && fs.existsSync(legacyDir)) {
@@ -35,83 +162,7 @@ export default defineConfig({
               }
 
               const cohortFile = path.join(rootDir, 'data', 'cohort.json');
-
-              const expectedFiles = [
-                {
-                  id: 'registry',
-                  name: 'Accelo Partner Schools Export.xls',
-                  label: 'Accelo Partner Schools Master Registry',
-                  description: 'Canonical school identifiers, boroughs, program years & addresses',
-                  required: true,
-                },
-                {
-                  id: 'cadence',
-                  name: 'GST Schedule SY 25_26 - Visit Cadence.xlsx',
-                  label: 'GST Schedule — Visit Cadence',
-                  description: 'Scheduled visit frequency (weekly, twice-weekly, bi-weekly)',
-                  required: true,
-                },
-                {
-                  id: 'schedule',
-                  name: 'Copy of GST Schedule SY 25_26.xlsx',
-                  label: 'Copy of GST Schedule SY 25_26',
-                  description: '53-tab weekly calendar; maps Column A assigned GSTs & expected appearances',
-                  required: true,
-                },
-                {
-                  id: 'weekly_reports',
-                  name: 'Accelo GST Asset Export Sept-Dec 2025.xlsx',
-                  label: 'Accelo GST Asset Support Reports',
-                  description: 'Field visit logs, system uptime, seedlings, pests, harvests & crop weights',
-                  required: true,
-                },
-                {
-                  id: 'curriculum',
-                  name: 'Curriculum Training Asset Sep2025-Jun2026.xlsx',
-                  label: 'Curriculum Training & Ed Team Asset',
-                  description: 'Ed Team specialists (Column L), teacher training sessions, domains & pedagogical support',
-                  required: true,
-                },
-                {
-                  id: 'amv',
-                  name: 'Area Manager Asset Sep-Dec 2025.xlsx',
-                  label: 'Area Manager Observation Visits',
-                  description: 'Lab impression, cleanliness, teacher involvement & curriculum confirmation',
-                  required: false,
-                },
-                {
-                  id: 'hc',
-                  name: 'HC Performance Asset Sep25-Jun26.xls',
-                  label: 'Health Check Performance Assets',
-                  description: 'Custodian ratings, usability, visitor readiness & budget/continuation flags',
-                  required: false,
-                },
-                {
-                  id: 'survey',
-                  name: 'Teacher Survey 25_26.xlsx',
-                  label: 'Annual Teacher Satisfaction Survey',
-                  description: 'Curriculum comprehension, ease of use, GST staff rating & teacher feedback',
-                  required: false,
-                },
-              ];
-
-              const filesStatus = expectedFiles.map(f => {
-                const filePath = path.join(sliceDir, f.name);
-                const exists = fs.existsSync(filePath);
-                let sizeBytes = 0;
-                let modifiedAt: string | null = null;
-                if (exists) {
-                  const stat = fs.statSync(filePath);
-                  sizeBytes = stat.size;
-                  modifiedAt = stat.mtime.toISOString();
-                }
-                return {
-                  ...f,
-                  exists,
-                  sizeBytes,
-                  modifiedAt,
-                };
-              });
+              const filesStatus = getExpectedFiles(sliceDir);
 
               let cohortMeta = null;
               if (fs.existsSync(cohortFile)) {
@@ -119,15 +170,14 @@ export default defineConfig({
                   const stat = fs.statSync(cohortFile);
                   const raw = JSON.parse(fs.readFileSync(cohortFile, 'utf-8'));
                   cohortMeta = {
+                    schoolYear: raw.schoolYear || 'SY 2026–2027',
                     fileSizeBytes: stat.size,
                     lastGeneratedAt: raw.generatedAt || stat.mtime.toISOString(),
                     totalSchools: raw.totalSchools || raw.schools?.length || 0,
                     flaggedCount: raw.flaggedCount || raw.flaggedReports?.length || 0,
                     ingestionMetadata: raw.ingestionMetadata || null,
                   };
-                } catch {
-                  // ignore
-                }
+                } catch {}
               }
 
               let historicalMeta = null;
@@ -136,22 +186,20 @@ export default defineConfig({
                 try {
                   const rawHist = JSON.parse(fs.readFileSync(histFile, 'utf-8'));
                   historicalMeta = {
+                    schoolYear: rawHist.schoolYear || 'SY 2026–2027',
                     totalCumulativeVisits: rawHist.totalCumulativeVisits || 0,
                     totalSchoolsTracked: rawHist.totalSchoolsTracked || 0,
                     newVisitsAddedThisRun: rawHist.newVisitsAddedThisRun || 0,
                     historicalVisitsRetained: rawHist.historicalVisitsRetained || 0,
                     lastUpdated: rawHist.lastUpdated || null,
                   };
-                } catch {
-                  // ignore
-                }
+                } catch {}
               }
 
-              // Scan for incremental spreadsheets in sliceDir
               const allFiles = fs.readdirSync(sliceDir);
               const incrementalFiles = allFiles
                 .filter(f => (f.endsWith('.xls') || f.endsWith('.xlsx')) && !f.startsWith('~$'))
-                .filter(f => !expectedFiles.some(ef => ef.name.toLowerCase() === f.toLowerCase()))
+                .filter(f => !filesStatus.some(ef => ef.name.toLowerCase() === f.toLowerCase()))
                 .map(f => {
                   const stat = fs.statSync(path.join(sliceDir, f));
                   return {
@@ -220,8 +268,15 @@ export default defineConfig({
             const scriptPath = path.join(rootDir, 'scripts', 'ingest_real_data.py');
             const cohortFile = path.join(rootDir, 'data', 'cohort.json');
 
-            exec(`python "${scriptPath}"`, { cwd: rootDir, maxBuffer: 1024 * 1024 * 10 }, (error, stdout, stderr) => {
-              if (error) {
+            runPythonIngestion(rootDir, scriptPath, (error, stdout, stderr) => {
+              let cohortData: any = null;
+              try {
+                if (fs.existsSync(cohortFile)) {
+                  cohortData = JSON.parse(fs.readFileSync(cohortFile, 'utf-8'));
+                }
+              } catch {}
+
+              if (error && !cohortData) {
                 res.statusCode = 500;
                 res.setHeader('Content-Type', 'application/json');
                 res.end(
@@ -235,21 +290,13 @@ export default defineConfig({
                 return;
               }
 
-              let cohortData = null;
-              try {
-                if (fs.existsSync(cohortFile)) {
-                  cohortData = JSON.parse(fs.readFileSync(cohortFile, 'utf-8'));
-                }
-              } catch {
-                // ignore
-              }
-
               res.setHeader('Content-Type', 'application/json');
               res.end(
                 JSON.stringify({
                   success: true,
                   output: stdout,
                   stderr,
+                  schoolYear: cohortData?.schoolYear || 'SY 2026–2027',
                   totalSchools: cohortData?.totalSchools || cohortData?.schools?.length || 0,
                   flaggedCount: cohortData?.flaggedCount || cohortData?.flaggedReports?.length || 0,
                   cohort: cohortData,

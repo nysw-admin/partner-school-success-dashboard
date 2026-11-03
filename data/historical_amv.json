@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-27T12:44:15.138256",
+  "lastUpdated": "2026-11-02T19:44:11.745758",
   "amvBySchool": {
     "K214": [
       {
@@ -48,8 +48,8 @@
         "cleanliness": 4.0,
         "curriculum_used": true,
         "principal_convo": true,
-        "notes": "nan",
-        "fingerprint": "m293|12/10/2025|nan",
+        "notes": "",
+        "fingerprint": "m293|12/10/2025|",
         "source_file": "Area Manager Asset Sep-Dec 2025.xlsx"
       }
     ],
@@ -61,8 +61,8 @@
         "cleanliness": 3.0,
         "curriculum_used": true,
         "principal_convo": false,
-        "notes": "nan",
-        "fingerprint": "k644|12/09/2025|nan",
+        "notes": "",
+        "fingerprint": "k644|12/09/2025|",
         "source_file": "Area Manager Asset Sep-Dec 2025.xlsx"
       }
     ],
@@ -189,8 +189,8 @@
         "cleanliness": 3.0,
         "curriculum_used": true,
         "principal_convo": true,
-        "notes": "nan",
-        "fingerprint": "k394|11/19/2025|nan",
+        "notes": "",
+        "fingerprint": "k394|11/19/2025|",
         "source_file": "Area Manager Asset Sep-Dec 2025.xlsx"
       }
     ],
@@ -404,8 +404,8 @@
         "cleanliness": 3.0,
         "curriculum_used": false,
         "principal_convo": true,
-        "notes": "nan",
-        "fingerprint": "q475|09/12/2025|nan",
+        "notes": "",
+        "fingerprint": "q475|09/12/2025|",
         "source_file": "Area Manager Asset Sep-Dec 2025.xlsx"
       }
     ],
@@ -573,8 +573,8 @@
         "cleanliness": 4.0,
         "curriculum_used": true,
         "principal_convo": false,
-        "notes": "nan",
-        "fingerprint": "m311|10/21/2025|nan",
+        "notes": "",
+        "fingerprint": "m311|10/21/2025|",
         "source_file": "Area Manager Asset Sep-Dec 2025.xlsx"
       }
     ],
@@ -612,8 +612,8 @@
         "cleanliness": 4.0,
         "curriculum_used": false,
         "principal_convo": true,
-        "notes": "nan",
-        "fingerprint": "x215|10/14/2025|nan",
+        "notes": "",
+        "fingerprint": "x215|10/14/2025|",
         "source_file": "Area Manager Asset Sep-Dec 2025.xlsx"
       }
     ],

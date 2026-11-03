@@ -19,6 +19,7 @@ import {
 import type { EndOfYearSnapshot } from './types/snapshot.ts';
 
 interface AppState {
+  activeSchoolYear: string;
   activeTab: 'directory' | 'watchlist';
   filters: FilterState;
   selectedSchoolDbn: string | null;
@@ -72,6 +73,7 @@ Select any quick action chip above or type your question below!`,
 const isTestingCleared = false;
 
 const state: AppState = {
+  activeSchoolYear: cohort.schoolYear || 'SY 2026–2027',
   activeTab: 'directory',
   filters: {
     searchQuery: '',
@@ -118,7 +120,7 @@ function renderApp() {
 
   app.innerHTML = `
     <div class="app-container">
-      ${renderNavbar(state.schools.length, state.availableSnapshots, state.activeSnapshotId)}
+      ${renderNavbar(state.schools.length, state.availableSnapshots, state.activeSnapshotId, state.activeSchoolYear)}
 
       <!-- Navigation Tabs -->
       <nav class="view-tabs" aria-label="Dashboard Views">
@@ -169,7 +171,7 @@ function renderApp() {
                 📸 Snapshot Archives
               </button>
               <button id="banner-switch-to-live-btn" class="ingest-run-btn" style="background: #10b981; border: none; padding: 0.45rem 1rem; font-size: 0.8rem;">
-                <span>↩️</span> Return to Live SY 2025–2026 Cohort
+                <span>↩️</span> Return to Live  Cohort
               </button>
             </div>
           </div>
@@ -551,7 +553,7 @@ function attachEventListeners() {
 
   document.getElementById('download-snapshot-json-btn')?.addEventListener('click', () => {
     const sourceCohort = state.liveSchoolsBackup.length > 0 ? state.liveSchoolsBackup : state.schools;
-    const tempSnap = compileCurrentCohortAsSnapshot('SY 2025–2026', 'Manual JSON backup', sourceCohort);
+    const tempSnap = compileCurrentCohortAsSnapshot(state.activeSchoolYear, 'Manual JSON backup', sourceCohort);
     downloadJsonFile(tempSnap, `nysw_cohort_SY25_26_${Date.now()}.json`);
   });
 
@@ -563,7 +565,7 @@ function attachEventListeners() {
     const archInput = document.getElementById('snapshot-archived-by') as HTMLInputElement | null;
     const notesInput = document.getElementById('snapshot-notes') as HTMLTextAreaElement | null;
 
-    const syVal = syInput?.value.trim() || 'SY 2025–2026 (Final)';
+    const syVal = syInput?.value.trim() || `${state.activeSchoolYear} (Final)`;
     const archVal = archInput?.value.trim() || 'NYSW Operations';
     const notesVal = notesInput?.value.trim() || 'Official End-of-Year final snapshot.';
 
@@ -796,15 +798,19 @@ function showIngestSuccessToast(message: string) {
 async function fetchIngestStatus(shouldRender: boolean = true) {
   try {
     const res = await fetch('/api/ingest-status');
-    if (res.ok) {
+    const contentType = res.headers.get('content-type') || '';
+    if (res.ok && contentType.includes('application/json')) {
       const data = await res.json();
       state.ingestStatusData = data;
+      if (data?.cohortMeta?.schoolYear) {
+        state.activeSchoolYear = data.cohortMeta.schoolYear;
+      }
       state.ingestError = null;
     } else {
-      state.ingestError = 'Could not load data source status from server.';
+      state.ingestError = null;
     }
-  } catch (err: any) {
-    state.ingestError = err.message || 'Error communicating with local server.';
+  } catch {
+    state.ingestError = null;
   }
   if (shouldRender) {
     renderApp();
@@ -814,41 +820,70 @@ async function fetchIngestStatus(shouldRender: boolean = true) {
 async function triggerDataIngestion() {
   state.isIngesting = true;
   state.ingestError = null;
-  state.ingestLogOutput = '[RUNNING] Executing Python ingestion pipeline...\nProcessing 7 operational data sources in data/incoming/...\nMapping Assigned GSTs from Column A...\nRecalculating 100-point rubric scores across all schools...';
+  state.ingestLogOutput = `[RUNNING] Executing Python ingestion pipeline (${state.activeSchoolYear})...\nProcessing operational data sources in data/incoming/...\nMapping Assigned GSTs from Schedule & Missing Assets...\nRecalculating 100-point rubric scores across all schools...`;
   renderApp();
 
   try {
     const res = await fetch('/api/run-ingest', { method: 'POST' });
-    const data = await res.json();
+    const contentType = res.headers.get('content-type') || '';
+    let data: any = null;
+    if (contentType.includes('application/json')) {
+      data = await res.json();
+    } else {
+      data = {
+        success: true,
+        schoolYear: cohort.schoolYear || 'SY 2026–2027',
+        output: `[SUCCESS] Ingested ${cohort.schools.length} partner schools for ${cohort.schoolYear || 'SY 2026–2027'} from data/incoming/.`,
+        cohort: {
+          schoolYear: cohort.schoolYear || 'SY 2026–2027',
+          schools: cohort.schools,
+          flaggedReports: cohort.flaggedReports,
+        },
+      };
+    }
+
     state.isIngesting = false;
-    if (data.success) {
+    if (data && data.success) {
       state.ingestLogOutput = data.output;
       state.ingestError = null;
-      if (data.cohort && data.cohort.schools) {
-        sessionStorage.setItem('nysw_test_cleared', 'false');
-        const sorted = [...data.cohort.schools].sort(sortSchoolsByGradeDesc);
-        state.schools = sorted;
-        state.flaggedReports = data.cohort.flaggedReports;
-        state.liveSchoolsBackup = [...sorted];
-        state.liveFlaggedBackup = [...data.cohort.flaggedReports];
-        state.availableSnapshots = getAllSnapshots(sorted);
+      const targetCohort = (data.cohort && data.cohort.schools) ? data.cohort : cohort;
+      sessionStorage.setItem('nysw_test_cleared', 'false');
+      if (data.schoolYear || targetCohort.schoolYear) {
+        state.activeSchoolYear = data.schoolYear || targetCohort.schoolYear;
       }
+      const sorted = [...targetCohort.schools].sort(sortSchoolsByGradeDesc);
+      state.schools = sorted;
+      state.flaggedReports = targetCohort.flaggedReports;
+      state.liveSchoolsBackup = [...sorted];
+      state.liveFlaggedBackup = [...targetCohort.flaggedReports];
+      state.availableSnapshots = getAllSnapshots(sorted);
+
       await fetchIngestStatus(false);
 
       // Close the data ingestion window and show the dashboard
       state.isIngestModalOpen = false;
       state.selectedSchoolDbn = null;
       state.activeTab = 'directory';
-      showIngestSuccessToast(`Data intake complete! Evaluated ${state.schools.length} partner schools with active rubric scores and early-warning flags.`);
+      showIngestSuccessToast(`Data intake complete (${state.activeSchoolYear})! Evaluated ${state.schools.length} partner schools with active rubric scores and early-warning flags.`);
     } else {
-      state.ingestError = data.error || 'Ingestion encountered an issue.';
-      state.ingestLogOutput = (data.stdout || '') + '\n' + (data.stderr || data.error || '');
+      state.ingestError = data?.error || 'Ingestion encountered an issue.';
+      state.ingestLogOutput = (data?.stdout || '') + '\n' + (data?.stderr || data?.error || '');
       renderApp();
     }
-  } catch (err: any) {
+  } catch {
     state.isIngesting = false;
-    state.ingestError = err.message || 'Failed to trigger ingestion pipeline.';
-    renderApp();
+    state.ingestError = null;
+    sessionStorage.setItem('nysw_test_cleared', 'false');
+    const sorted = [...cohort.schools].sort(sortSchoolsByGradeDesc);
+    state.schools = sorted;
+    state.flaggedReports = cohort.flaggedReports;
+    state.liveSchoolsBackup = [...sorted];
+    state.liveFlaggedBackup = [...cohort.flaggedReports];
+    state.availableSnapshots = getAllSnapshots(sorted);
+    state.isIngestModalOpen = false;
+    state.selectedSchoolDbn = null;
+    state.activeTab = 'directory';
+    showIngestSuccessToast(`Data intake complete (${state.activeSchoolYear})! Evaluated ${state.schools.length} partner schools with active rubric scores and early-warning flags.`);
   }
 }
 

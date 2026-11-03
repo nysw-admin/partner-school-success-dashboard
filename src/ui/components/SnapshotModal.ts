@@ -115,9 +115,9 @@ export function renderSnapshotModal(
                     id="snapshot-school-year"
                     class="filter-select"
                     style="width: 100%; font-size: 0.85rem;"
-                    value="SY 2025–2026 (Final)"
+                    value="SY 2026–2027 (Final)"
                     required
-                    placeholder="e.g. SY 2025–2026 (Final)"
+                    placeholder="e.g. SY 2026–2027 (Final)"
                   />
                 </div>
                 <div>
@@ -188,7 +188,7 @@ export function renderSnapshotModal(
                 </span>
               ` : `
                 <span class="status-pill pill-healthy" style="font-size: 0.75rem;">
-                  Viewing Live SY 2025–2026
+                  Viewing Live SY 2026–2027
                 </span>
               `}
             </div>
@@ -198,7 +198,7 @@ export function renderSnapshotModal(
               ${allSnapshots.map(snap => {
                 const isActive = activeSnapshotId === snap.snapshotId;
                 const dateStr = new Date(snap.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-                const isCustom = !snap.snapshotId.startsWith('SY24_25_') && !snap.snapshotId.startsWith('SY23_24_');
+                const isCustom = !snap.snapshotId.startsWith('SY25_26_') && !snap.snapshotId.startsWith('SY24_25_') && !snap.snapshotId.startsWith('SY23_24_');
 
                 return `
                   <div style="background: ${isActive ? '#f0fdf4' : '#f8fafc'}; border: 1px solid ${isActive ? '#86efac' : '#e2e8f0'}; border-radius: var(--radius-md); padding: 1rem 1.15rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">

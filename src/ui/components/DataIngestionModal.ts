@@ -87,32 +87,52 @@ export function renderDataIngestionModal(
     },
     {
       id: 'cadence',
-      name: 'GST Schedule SY 25_26 - Visit Cadence.xlsx',
-      label: 'GST Schedule — Visit Cadence',
-      description: 'Scheduled visit frequency (weekly, twice-weekly, bi-weekly)',
+      name: 'GST Schedule SY 26_27 - Visit Cadence.xlsx',
+      label: 'GST Schedule — Visit Cadence (SY 26–27)',
+      description: 'Scheduled visit frequency (weekly, twice-weekly, bi-weekly, monthly)',
       required: true,
       exists: true,
-      sizeBytes: 22059,
+      sizeBytes: 44265,
       modifiedAt: null,
     },
     {
       id: 'schedule',
-      name: 'Copy of GST Schedule SY 25_26.xlsx',
-      label: 'Copy of GST Schedule SY 25_26',
-      description: '53-tab weekly calendar; maps Column A assigned GSTs & expected appearances',
+      name: 'GST Schedule SY 26_27.xlsx',
+      label: 'Weekly GST Schedule (SY 26–27)',
+      description: 'Weekly calendar tabs; maps Column A assigned GSTs & expected appearances',
       required: true,
       exists: true,
-      sizeBytes: 587002,
+      sizeBytes: 167742,
       modifiedAt: null,
     },
     {
       id: 'weekly_reports',
-      name: 'Accelo GST Asset Export Sept-Dec 2025.xlsx',
-      label: 'Accelo GST Asset Support Reports',
+      name: 'GST Asset Sept 2026.xls',
+      label: 'Accelo GST Weekly Support Reports (SY 26–27)',
       description: 'Field visit logs, system uptime, seedlings, pests, harvests & crop weights',
       required: true,
       exists: true,
-      sizeBytes: 606788,
+      sizeBytes: 584192,
+      modifiedAt: null,
+    },
+    {
+      id: 'missing_assets',
+      name: 'Missing Assets 26_27.xlsx',
+      label: 'Missing Assets Performance Report (SY 26–27)',
+      description: 'Weekly Completed, Missing & Late Assets tracker for C1a & C1b scoring',
+      required: true,
+      exists: true,
+      sizeBytes: 1018406,
+      modifiedAt: null,
+    },
+    {
+      id: 'curriculum',
+      name: 'Curriculum Training Asset Sep2025-Jun2026.xlsx',
+      label: 'Curriculum Training & Ed Team Asset',
+      description: 'Ed Team specialists (Column L), teacher training sessions & domains',
+      required: false,
+      exists: true,
+      sizeBytes: 188915,
       modifiedAt: null,
     },
     {
@@ -150,7 +170,7 @@ export function renderDataIngestionModal(
   const totalFiles = files.length;
   const readyFiles = files.filter(f => f.exists).length;
   const incrementalFiles = statusData?.incrementalFiles || [];
-  const cumulativeVisits = statusData?.historicalMeta?.totalCumulativeVisits ?? statusData?.cohortMeta?.ingestionMetadata?.totalCumulativeVisits ?? 3974;
+  const cumulativeVisits = statusData?.historicalMeta?.totalCumulativeVisits ?? statusData?.cohortMeta?.ingestionMetadata?.totalCumulativeVisits ?? 749;
 
   return `
     <div id="ingest-modal-overlay" class="modal-overlay ingest-modal-overlay">
@@ -282,7 +302,7 @@ export function renderDataIngestionModal(
                 <h3 class="panel-title">
                   <span>📊</span> Operational Data Sources (${readyFiles}/${totalFiles})
                 </h3>
-                <span class="panel-subtitle">Assigned GSTs automatically read from <strong>Copy of GST Schedule SY 25_26 Column A</strong></span>
+                <span class="panel-subtitle">Assigned GSTs automatically read from <strong>GST Schedule SY 26_27 Column A</strong></span>
               </div>
 
               <div class="ingest-files-list">

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-27T12:44:15.260642",
+  "lastUpdated": "2026-11-02T19:44:11.763623",
   "surveyBySchool": {
     "K151": {
       "school_col": "K151 PS 151 Lyndon B Johnson",
@@ -39,9 +39,9 @@
     },
     "Q620": {
       "school_col": "Q620 Thomas A Edison Career & Technical Education HS",
-      "lab_feedback": "",
-      "curr_feedback": "",
-      "staff_feedback": ""
+      "lab_feedback": "NA",
+      "curr_feedback": "NA",
+      "staff_feedback": "NA"
     },
     "M361": {
       "school_col": "M361 The Children's Workshop School",
@@ -123,8 +123,8 @@
     },
     "K299": {
       "school_col": "K299 PS 299 Thomas Warren Field",
-      "lab_feedback": "",
-      "curr_feedback": "",
+      "lab_feedback": "N/A",
+      "curr_feedback": "N/A",
       "staff_feedback": ""
     },
     "K344": {
@@ -145,7 +145,7 @@
       "curr_feedback": "",
       "staff_feedback": ""
     },
-    "BCNY The Boys' Club of New York": {
+    "NA": {
       "school_col": "BCNY The Boys' Club of New York",
       "lab_feedback": "",
       "curr_feedback": "",
@@ -160,7 +160,7 @@
     "Q099": {
       "school_col": "Q099 PS 099 Kew Gardens",
       "lab_feedback": "We only had two systems running since it was so close to the end of the school year.",
-      "curr_feedback": "",
+      "curr_feedback": "n/a",
       "staff_feedback": "Hannah is fantastic!"
     },
     "M655": {
@@ -195,8 +195,8 @@
     },
     "Q166": {
       "school_col": "Q166 PS 166 Henry Gradstein",
-      "lab_feedback": "",
-      "curr_feedback": "",
+      "lab_feedback": "N/A",
+      "curr_feedback": "N/A",
       "staff_feedback": "Not at this time"
     },
     "X434": {
@@ -489,7 +489,7 @@
     },
     "K214": {
       "school_col": "K214 PS 214 Michael Friedsam",
-      "lab_feedback": "",
+      "lab_feedback": "N/A",
       "curr_feedback": "differentiation of lesson for varied learners",
       "staff_feedback": "Trevor was excellent"
     },

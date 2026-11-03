@@ -16,7 +16,8 @@ export function getDeterministicOffset(str: string): number {
 }
 
 export function buildHistoricalBaselineSnapshots(liveSchools: SchoolWithData[]): EndOfYearSnapshot[] {
-  // Build SY 2024-2025 and SY 2023-2024 baseline records from live cohort
+  // Build SY 2025-2026, SY 2024-2025, and SY 2023-2024 baseline records from live cohort
+  const schools25_26: SchoolYearSnapshotRecord[] = [];
   const schools24_25: SchoolYearSnapshotRecord[] = [];
   const schools23_24: SchoolYearSnapshotRecord[] = [];
 
@@ -25,6 +26,37 @@ export function buildHistoricalBaselineSnapshots(liveSchools: SchoolWithData[]):
     const currentScore = item.score.overallScore;
     const instYear = parseInt(s.installationDate, 10) || 2019;
     const offset = getDeterministicOffset(s.dbn);
+
+    // SY 2025-2026: Applicable for schools installed in 2025 or earlier
+    if (instYear <= 2025) {
+      const delta25_26 = (offset - 4.5) * 0.9;
+      const score25_26 = Math.max(52.0, Math.min(97.0, Math.round((currentScore - delta25_26) * 10) / 10));
+      const grade25_26 = score25_26 >= 90 ? 'A' : score25_26 >= 80 ? 'B' : score25_26 >= 65 ? 'C' : score25_26 >= 50 ? 'D' : 'F';
+      const tier25_26 = score25_26 >= 90 ? 'Green — Thriving' : score25_26 >= 80 ? 'Green — Healthy' : score25_26 >= 65 ? 'Yellow — Watch' : score25_26 >= 50 ? 'Red — Intervene' : 'Red — At Risk';
+
+      schools25_26.push({
+        dbn: s.dbn,
+        name: s.name,
+        borough: s.borough,
+        programYear: s.programYear,
+        overallScore: score25_26,
+        letterGrade: grade25_26,
+        tier: tier25_26,
+        completenessStatus: 'Normal',
+        completenessRate: 0.94,
+        bucket1Score: Math.round((score25_26 * 0.42) * 100) / 100,
+        bucket2Score: Math.round((score25_26 * 0.40) * 100) / 100,
+        bucket3Score: Math.round((score25_26 * 0.18) * 100) / 100,
+        uptimeRate: 0.94,
+        totalHarvests: Math.max(1, Math.round(score25_26 / 17)),
+        totalVisits: Math.round(30 + (offset % 5)),
+        flagsCount: score25_26 < 65 ? 2 : (score25_26 < 80 ? 1 : 0),
+        activeFlagIds: score25_26 < 65 ? ['SYSTEM_DOWN_3X', 'ASSET_COMPLETION_LOW'] : [],
+        assignedGst: s.assignedGst,
+        areaManager: s.areaManager,
+        notes: 'End-of-Year Final Snapshot SY 2025–2026 archived June 26, 2026.',
+      });
+    }
 
     // SY 2024-2025: Applicable for schools installed in 2024 or earlier
     if (instYear <= 2024) {
@@ -117,6 +149,18 @@ export function buildHistoricalBaselineSnapshots(liveSchools: SchoolWithData[]):
     };
   };
 
+  const snap25_26: EndOfYearSnapshot = {
+    snapshotId: 'SY25_26_FINAL',
+    schoolYear: 'SY 2025–2026',
+    isFinal: true,
+    createdAt: '2026-06-26T18:00:00.000Z',
+    archivedBy: 'NYSW Operations (Amanda Low & Megan Roberts)',
+    notes: 'Official End-of-Year Cohort Closure SY 2025–2026. Final grading archive across 405 partner public schools.',
+    totalSchools: schools25_26.length,
+    networkSummary: calcNetworkSummary(schools25_26),
+    schools: schools25_26,
+  };
+
   const snap24_25: EndOfYearSnapshot = {
     snapshotId: 'SY24_25_FINAL',
     schoolYear: 'SY 2024–2025',
@@ -141,7 +185,7 @@ export function buildHistoricalBaselineSnapshots(liveSchools: SchoolWithData[]):
     schools: schools23_24,
   };
 
-  return [snap24_25, snap23_24];
+  return [snap25_26, snap24_25, snap23_24];
 }
 
 export function getSavedUserSnapshots(): EndOfYearSnapshot[] {
@@ -209,9 +253,9 @@ export function calculateSchoolMultiYearTrend(
     }
   }
 
-  // Append current live SY 2025-2026 record
+  // Append current live SY 2026-2027 record
   records.push({
-    schoolYear: 'SY 2025–2026 (Current)',
+    schoolYear: 'SY 2026–2027 (Current)',
     overallScore: liveItem.score.overallScore,
     letterGrade: liveItem.score.letterGrade,
     tier: liveItem.score.tier,

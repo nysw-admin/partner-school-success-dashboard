@@ -34,6 +34,7 @@ export function sortSchoolsByGradeDesc(a: SchoolWithData, b: SchoolWithData): nu
 }
 
 export function generateRealisticCohort(): {
+  schoolYear: string;
   schools: SchoolWithData[];
   flaggedReports: FlaggedSchoolReport[];
 } {
@@ -42,6 +43,7 @@ export function generateRealisticCohort(): {
       .slice()
       .sort(sortSchoolsByGradeDesc);
     return {
+      schoolYear: (realCohortData as any).schoolYear || 'SY 2026–2027',
       schools: sortedSchools,
       flaggedReports: realCohortData.flaggedReports as unknown as FlaggedSchoolReport[],
     };
@@ -453,7 +455,7 @@ export function generateRealisticCohort(): {
   });
 
   schoolsWithData.sort(sortSchoolsByGradeDesc);
-  return { schools: schoolsWithData, flaggedReports };
+  return { schoolYear: 'SY 2026–2027', schools: schoolsWithData, flaggedReports };
 }
 
 function scoreChangeSim(archetype: string): number {
