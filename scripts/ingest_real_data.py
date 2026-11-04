@@ -801,6 +801,11 @@ for gf in gst_files:
                     inst_y = ym.group(1)
                     year_counter[sc][inst_y] += 1
 
+            cpf_fund = str(row.get('5.4 CPF Funding') or '').strip()
+            nypa_fund = str(row.get('5.5 NYPA 26/27') or row.get('5.5 NYPA 24/25') or '').strip()
+            imp_fund = str(row.get('5.5 Implementation Type II Funding') or '').strip()
+            has_funding_doc = (not is_na(cpf_fund)) or (not is_na(nypa_fund)) or (not is_na(imp_fund))
+
             visit_record = {
                 'date': str(v_date),
                 'has_offline': has_offline,
@@ -812,12 +817,13 @@ for gf in gst_files:
                 'weight_lbs': weight_lbs,
                 'crops': crop_types,
                 'notes': notes,
-                'training_session': str(row.get('Select Teacher Training Session Complete') or ''),
-                'teachers_trained': str(row.get('Name of the Teachers Trained') or ''),
+                'training_session': str(row.get('Select Teacher Training Session Complete') or '') if not is_na(row.get('Select Teacher Training Session Complete')) else '',
+                'teachers_trained': str(row.get('Name of the Teachers Trained') or '') if not is_na(row.get('Name of the Teachers Trained')) else '',
                 'gst_member': gst_member if not is_na(gst_member) else '',
                 'area_manager': am_val if not is_na(am_val) else '',
                 'borough': clean_b,
                 'installation_year': inst_y,
+                'has_funding_doc': has_funding_doc,
                 'fingerprint': fp,
                 'source_file': file_name
             }
@@ -933,21 +939,82 @@ for hf in hc_files:
             against = str(row.get('Against') or '').strip()
             sc = resolve_school_id(against)
             if sc:
-                custodian_str = str(row.get('Please select the option that best describes the involvement of the custodian at this school') or '')
+                custodian_str = str(row.get('Please select the option that best describes the involvement of the custodian at this school') or '').strip()
+                c_low = custodian_str.lower()
                 cm = re.search(r'([1-4])', custodian_str)
-                c_val = float(cm.group(1)) if cm else 3.0
+                if cm:
+                    c_val = float(cm.group(1))
+                elif 'consistently' in c_low:
+                    c_val = 4.0
+                elif 'inconsistent' in c_low:
+                    c_val = 2.5
+                elif 'does not support' in c_low or 'not support' in c_low:
+                    c_val = 1.0
+                else:
+                    c_val = 3.0
 
-                usability_str = str(row.get("Please select the option that best describes the Hydroponic Classroom's current usability") or '')
+                usability_str = str(row.get("Please select the option that best describes the Hydroponic Classroom's current usability") or '').strip()
+                u_low = usability_str.lower()
                 um = re.search(r'([1-4])', usability_str)
-                u_val = float(um.group(1)) if um else 3.0
+                if um:
+                    u_val = float(um.group(1))
+                elif 'no barriers' in u_low:
+                    u_val = 4.0
+                elif 'some barriers' in u_low:
+                    u_val = 2.5
+                elif 'significant barriers' in u_low:
+                    u_val = 1.0
+                else:
+                    u_val = 3.0
 
-                visitor_str = str(row.get("Please select the option that best describes the Hydroponic Classroom's suitability for external visitors (clean, free of clutter, flexible schedule, good teacher/admin engagement, regularly uses NYSW Curriculum)") or '')
+                visitor_str = str(row.get("Please select the option that best describes the Hydroponic Classroom's suitability for external visitors (clean, free of clutter, flexible schedule, good teacher/admin engagement, regularly uses NYSW Curriculum)") or '').strip()
+                v_low = visitor_str.lower()
                 vm = re.search(r'([1-4])', visitor_str)
-                v_val = float(vm.group(1)) if vm else 3.0
+                if vm:
+                    v_val = float(vm.group(1))
+                elif 'not well suited' in v_low:
+                    v_val = 1.5
+                elif 'may be well suited' in v_low or 'extra work' in v_low:
+                    v_val = 3.0
+                elif 'well suited' in v_low:
+                    v_val = 4.0
+                else:
+                    v_val = 3.0
 
-                teacher_rel_str = str(row.get("Please select the option that best describes the teacher's relationship with the hydroponic classroom at this school") or '')
+                teacher_rel_str = str(row.get("Please select the option that best describes the teacher's relationship with the hydroponic classroom at this school") or '').strip()
+                teacher_eng_str = str(row.get('Please select the option that best reflects teacher engagement at this school') or '').strip()
+                teacher_comm_str = str(row.get('Please select the option that best describes communication outside of visit times with the teacher at this school') or '').strip()
+
+                rel_scores = []
                 trm = re.search(r'([1-4])', teacher_rel_str)
-                t_rel_val = float(trm.group(1)) if trm else 3.0
+                if trm:
+                    rel_scores.append(float(trm.group(1)))
+                elif 'does not have a designated' in teacher_rel_str.lower():
+                    rel_scores.append(1.0)
+                elif 'does not devote sufficient' in teacher_rel_str.lower():
+                    rel_scores.append(2.0)
+                elif 'designated teacher' in teacher_rel_str.lower():
+                    rel_scores.append(4.0)
+
+                if 'consistently focused' in teacher_eng_str.lower():
+                    rel_scores.append(4.0)
+                elif 'sometimes focused' in teacher_eng_str.lower():
+                    rel_scores.append(2.8)
+                elif 'rarely or never' in teacher_eng_str.lower():
+                    rel_scores.append(1.5)
+
+                comm_rate = None
+                if 'weekly' in teacher_comm_str.lower():
+                    rel_scores.append(4.0)
+                    comm_rate = 0.92
+                elif '1 to 3' in teacher_comm_str.lower():
+                    rel_scores.append(3.2)
+                    comm_rate = 0.80
+                elif 'less than once' in teacher_comm_str.lower():
+                    rel_scores.append(2.0)
+                    comm_rate = 0.55
+
+                t_rel_val = round(sum(rel_scores) / len(rel_scores), 2) if rel_scores else 3.0
 
                 stickers = 'yes' in str(row.get('Are there currrently NYSW stickers on the systems?') or '').lower()
                 sign = 'yes' in str(row.get('Is there an NY Sun Works "Partner School" Sign in the Classroom?') or '').lower()
@@ -960,6 +1027,7 @@ for hf in hc_files:
                     'usability_rating': u_val,
                     'visitor_rating': v_val,
                     'teacher_rel_rating': t_rel_val,
+                    'comm_rate': comm_rate,
                     'stickers': stickers,
                     'sign': sign,
                     'has_budget_concern': has_budget_concern,
@@ -1013,6 +1081,13 @@ if not ct_files:
 
 ed_team_by_school = defaultdict(Counter)
 ed_team_group_by_school = defaultdict(Counter)
+ct_sessions_by_school = defaultdict(list)
+ct_pd_by_school = defaultdict(int)
+ct_noshow_by_school = defaultdict(int)
+ct_rubric_evals_by_school = defaultdict(list)
+ct_curr_rubric_by_school = defaultdict(list)
+ct_engagement_by_school = defaultdict(set)
+ct_teachers_trained_by_school = defaultdict(set)
 known_individuals = {'Heather Holz', 'Julia Levine', 'Tanairi Taylor', 'Vanessa Graves', 'Ryan Myrie', 'Liz McKoy'}
 
 for cf in ct_files:
@@ -1030,6 +1105,56 @@ for cf in ct_files:
                     ed_team_group_by_school[sc][spec_str] += 1
                 else:
                     ed_team_by_school[sc][spec_str] += 1
+
+            title_str = str(row.get('Title') or '').strip()
+            comments_str = str(row.get('Comments and observations') or '').strip()
+            sess_completed = str(row.get('Select the Teacher Training Session Completed') or '').strip()
+            is_no_show = ('no show' in title_str.lower()) or ('no show' in comments_str.lower()) or ('no-show' in title_str.lower())
+
+            if is_no_show:
+                ct_noshow_by_school[sc] += 1
+            else:
+                if not is_na(sess_completed) and sess_completed:
+                    if sess_completed.upper() == 'PD' or 'pd' in title_str.lower():
+                        ct_pd_by_school[sc] += 1
+                    else:
+                        ct_sessions_by_school[sc].append(sess_completed)
+                elif 'pd' in title_str.lower():
+                    ct_pd_by_school[sc] += 1
+
+            t_names = row.get('Name of Teachers Trained')
+            if not is_na(t_names) and not is_no_show:
+                for tn in str(t_names).split(','):
+                    if tn.strip():
+                        ct_teachers_trained_by_school[sc].add(tn.strip())
+
+            eng_raw = row.get('Teacher Engagement')
+            if not is_na(eng_raw):
+                for tag in str(eng_raw).lower().split(','):
+                    if tag.strip():
+                        ct_engagement_by_school[sc].add(tag.strip())
+                        if 'attended a pd' in tag:
+                            ct_pd_by_school[sc] += 1
+
+            rubric_cols = [
+                'Rubric: Knowledge',
+                'Rubric: Skills',
+                'Rubric: Farmer Scientist Identity',
+                'Rubric: Global Citizen Identity',
+                'Rubric: Curriculum'
+            ]
+            r_vals = []
+            for rc in rubric_cols:
+                rv = row.get(rc)
+                if not is_na(rv):
+                    m_rv = re.search(r'([1-4](?:\.[0-9]+)?)', str(rv))
+                    if m_rv:
+                        val_f = float(m_rv.group(1))
+                        r_vals.append(val_f)
+                        if rc == 'Rubric: Curriculum':
+                            ct_curr_rubric_by_school[sc].append(val_f)
+            if r_vals:
+                ct_rubric_evals_by_school[sc].append(sum(r_vals) / len(r_vals))
     except Exception as e:
         print(f"  [ERROR] Curriculum Training file {cf}: {e}")
 
@@ -1149,23 +1274,62 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
     uptime_rate = (total_visits - offline_count) / total_visits if total_visits > 0 else 0.95
     c2_score, c2_pct = linear_score(uptime_rate, 0.60, 1.0, 6.0)
 
-    # C3: Branding (4 pts)
-    stickers_present = hc.get('stickers', True)
-    sign_present = hc.get('sign', True)
-    c3_score = (2.0 if stickers_present else 0.0) + (2.0 if sign_present else 0.0)
-    c3_pct = c3_score / 4.0
+    # C3: Branding (4 pts) — reads from HC Performance when uploaded; shows Pending HC otherwise
+    if hc:
+        stickers_present = hc.get('stickers', True)
+        sign_present = hc.get('sign', True)
+        c3_score = (2.0 if stickers_present else 0.0) + (2.0 if sign_present else 0.0)
+        c3_pct = c3_score / 4.0
+        if stickers_present and sign_present:
+            c3_actual_str = 'Stickers & Sign Present'
+        elif stickers_present or sign_present:
+            c3_actual_str = 'Partial (1 of 2)'
+        else:
+            c3_actual_str = 'Missing Branding'
+    else:
+        c3_score = 4.0
+        c3_pct = 1.0
+        c3_actual_str = 'Pending HC (Default)'
 
-    # C4: Lab Usability (2 pts)
+    # C4: Lab Usability (2 pts) — reads from HC & AMV
     usability_vals = []
     if 'usability_rating' in hc:
         usability_vals.append(hc['usability_rating'])
     for a in amvs:
         usability_vals.append(a['lab_impression'])
-    c4_avg = sum(usability_vals) / len(usability_vals) if usability_vals else 3.5
+    if usability_vals:
+        c4_avg = sum(usability_vals) / len(usability_vals)
+        c4_actual_str = f"{round(c4_avg, 2)} / 4.0"
+    else:
+        c4_avg = 3.5
+        c4_actual_str = 'Pending HC/AMV (3.5)'
     c4_score, c4_pct = linear_score(c4_avg, 1.0, 4.0, 2.0)
 
-    # C5: GST Support (2 pts)
-    c5_rate = 0.85 if sc in survey else 0.75
+    # C5: GST Support Staff Rating (2 pts) — reads from Teacher Survey staff feedback & HC communication
+    if survey and survey.get('staff_feedback'):
+        fb_low = survey['staff_feedback'].lower()
+        pos_words = ['wonderful', 'great', 'helpful', 'amazing', 'excellent', 'thank', 'love', 'supportive', 'fantastic', 'awesome', 'good', 'best', 'above and beyond', 'always']
+        neg_words = ['issue', 'late', 'rarely', 'never', 'concern', 'difficult', 'unresponsive', 'missing', 'cancel']
+        pos_hits = sum(1 for w in pos_words if w in fb_low)
+        neg_hits = sum(1 for w in neg_words if w in fb_low)
+        if neg_hits > pos_hits:
+            c5_rate = 0.60
+        elif pos_hits >= 2:
+            c5_rate = 0.95
+        elif pos_hits == 1:
+            c5_rate = 0.90
+        else:
+            c5_rate = 0.85
+        c5_actual_str = f"{round(c5_rate*100, 1)}% (Survey)"
+    elif survey:
+        c5_rate = 0.85
+        c5_actual_str = '85.0% (Survey)'
+    elif hc and hc.get('comm_rate') is not None:
+        c5_rate = hc['comm_rate']
+        c5_actual_str = f"{round(c5_rate*100, 1)}% (HC Comm)"
+    else:
+        c5_rate = 0.75
+        c5_actual_str = 'Pending Survey (75%)'
     c5_score, c5_pct = linear_score(c5_rate, 0.30, 0.85, 2.0)
 
     # C6: Harvest Frequency (6 pts) — clock starts Nov 1; before Nov 1 use all logged harvests or neutral early-fall benchmark
@@ -1186,13 +1350,18 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
     lbs_per_mo_sys = nov_onwards_lbs / (harvest_months * sys_inst)
     c7_score, c7_pct = linear_score(lbs_per_mo_sys, 0.5, 3.0, 2.0)
 
-    # C8: Visitor Readiness (2 pts)
+    # C8: Visitor Readiness (2 pts) — reads from HC & AMV
     visitor_vals = []
     if 'visitor_rating' in hc:
         visitor_vals.append(hc['visitor_rating'])
     for a in amvs:
         visitor_vals.append(a['cleanliness'])
-    c8_avg = sum(visitor_vals) / len(visitor_vals) if visitor_vals else 3.5
+    if visitor_vals:
+        c8_avg = sum(visitor_vals) / len(visitor_vals)
+        c8_actual_str = f"{round(c8_avg, 2)} / 4.0"
+    else:
+        c8_avg = 3.5
+        c8_actual_str = 'Pending HC/AMV (3.5)'
     c8_score, c8_pct = linear_score(c8_avg, 1.0, 4.0, 2.0)
 
     # C9: Seedlings Present Rate (1 pt)
@@ -1209,24 +1378,144 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
     b1_grade, b1_tier = get_grade_and_tier(round(b1_pts / 42.0 * 100, 2))
 
     # --- BUCKET 2: 40 Max Points ---
-    t1_score, t1_pct = linear_score(0.75, 0.30, 0.85, 6.0)
-    t2_score, t2_pct = linear_score(0.75, 0.30, 0.85, 2.0)
-    t3_score, t3_pct = linear_score(0.70, 0.25, 0.80, 2.0)
+    eng_tags = ct_engagement_by_school.get(sc, set())
+    curr_rubric_vals = ct_curr_rubric_by_school.get(sc, [])
+    rubric_evals = ct_rubric_evals_by_school.get(sc, [])
 
-    amv_curr_count = sum(1 for a in amvs if a['curriculum_used'])
-    amv_curr_rate = amv_curr_count / len(amvs) if amvs else 0.80
+    # T1: Curriculum Usage & Ease (6 pts) — reads from Teacher Survey, Ed Team Assets & AMV
+    t1_signals = []
+    if survey and survey.get('curr_feedback'):
+        cf_low = survey['curr_feedback'].lower()
+        if any(w in cf_low for w in ['easy', 'love', 'great', 'helpful', 'appreciate', 'connect', 'good', 'useful', 'engage']):
+            t1_signals.append(0.90)
+        elif any(w in cf_low for w in ['hard', 'difficult', 'confusing', 'not using', 'lack']):
+            t1_signals.append(0.55)
+        else:
+            t1_signals.append(0.82)
+    if 'using the curriculum' in eng_tags:
+        t1_signals.append(0.90)
+    if curr_rubric_vals:
+        avg_cr = sum(curr_rubric_vals) / len(curr_rubric_vals)
+        t1_signals.append(clamp(0.45 + (avg_cr / 4.0) * 0.50, 0.30, 0.95))
+    if amvs:
+        amv_c = sum(1 for a in amvs if a['curriculum_used']) / len(amvs)
+        t1_signals.append(clamp(0.50 + amv_c * 0.40, 0.40, 0.90))
+
+    if t1_signals:
+        t1_val = round(sum(t1_signals) / len(t1_signals), 3)
+        t1_actual_str = f"{round(t1_val*100, 1)}% (Verified)"
+    else:
+        t1_val = 0.75
+        t1_actual_str = 'Pending Survey (75%)'
+    t1_score, t1_pct = linear_score(t1_val, 0.30, 0.85, 6.0)
+
+    # T2: Helpfulness & Confidence (2 pts) — reads from Survey & Ed Team Rubric/Engagement
+    t2_signals = []
+    if survey:
+        t2_signals.append(0.85 if survey.get('curr_feedback') else 0.80)
+    if rubric_evals:
+        avg_re = sum(rubric_evals) / len(rubric_evals)
+        t2_signals.append(clamp(0.45 + (avg_re / 4.0) * 0.50, 0.35, 0.95))
+    if 'responsive to outreach' in eng_tags:
+        t2_signals.append(0.85)
+    if t2_signals:
+        t2_val = round(sum(t2_signals) / len(t2_signals), 3)
+        t2_actual_str = f"{round(t2_val*100, 1)}% (Verified)"
+    else:
+        t2_val = 0.75
+        t2_actual_str = 'Pending Survey (75%)'
+    t2_score, t2_pct = linear_score(t2_val, 0.30, 0.85, 2.0)
+
+    # T3: Materials & Digital Adoption (2 pts) — reads from Survey & Ed Team Engagement
+    t3_signals = []
+    if survey and survey.get('curr_feedback'):
+        t3_signals.append(0.82)
+    if 'students engaged' in eng_tags or 'interested in events' in eng_tags:
+        t3_signals.append(0.85)
+    if curr_rubric_vals:
+        avg_cr = sum(curr_rubric_vals) / len(curr_rubric_vals)
+        t3_signals.append(clamp(0.40 + (avg_cr / 4.0) * 0.50, 0.30, 0.90))
+    if t3_signals:
+        t3_val = round(sum(t3_signals) / len(t3_signals), 3)
+        t3_actual_str = f"{round(t3_val*100, 1)}% (Verified)"
+    else:
+        t3_val = 0.70
+        t3_actual_str = 'Pending Survey (70%)'
+    t3_score, t3_pct = linear_score(t3_val, 0.25, 0.80, 2.0)
+
+    # T4: Curriculum Confirmed via AMV (3 pts)
+    if amvs:
+        amv_curr_count = sum(1 for a in amvs if a['curriculum_used'])
+        amv_curr_rate = amv_curr_count / len(amvs)
+        t4_actual_str = f"{round(amv_curr_rate*100, 1)}% ({amv_curr_count}/{len(amvs)} AMV)"
+    else:
+        amv_curr_rate = 0.80
+        t4_actual_str = 'Pending AMV (80%)'
     t4_score, t4_pct = linear_score(amv_curr_rate, 0.50, 1.0, 3.0)
 
-    t5_score, t5_pct = linear_score(3.0, 1.5, 3.5, 5.0)
-    t6_score, t6_pct = linear_score(0.5, 0.0, 0.75, 2.0)
-
-    prog_yr = meta['programYear']
-    if prog_yr in ['Implementation', 'Op Y1']:
-        t7_score, t7_pct = linear_score(0.85, 0.40, 1.0, 10.0)
+    # T5: Pedagogical Rubric Level (5 pts) — reads from Ed Team Assets Rubric columns (Knowledge, Skills, Farmer Scientist, Global Citizen, Curriculum)
+    if rubric_evals:
+        t5_val = round(sum(rubric_evals) / len(rubric_evals), 2)
+        t5_actual_str = f"Level {t5_val:.1f} (Ed Team)"
     else:
+        t5_val = 3.0
+        t5_actual_str = 'Pending Eval (Lvl 3.0)'
+    t5_score, t5_pct = linear_score(t5_val, 1.5, 3.5, 5.0)
+
+    # T6: Rubric Growth (2 pts) — reads from Ed Team Assets rubric progression
+    if len(rubric_evals) >= 2:
+        t6_val = round(max(0.0, rubric_evals[-1] - rubric_evals[0]), 2)
+        t6_actual_str = f"+{t6_val:.2f} (Verified)"
+    elif len(rubric_evals) == 1:
+        t6_val = round(max(0.25, (rubric_evals[0] - 1.0) * 0.35), 2)
+        t6_actual_str = f"+{t6_val:.2f} (1st Eval)"
+    else:
+        t6_val = 0.50
+        t6_actual_str = 'Pending 2nd Eval (+0.50)'
+    t6_score, t6_pct = linear_score(t6_val, 0.0, 0.75, 2.0)
+
+    # T7: Training Completion (10 pts) — reads completed training sessions from Ed Team Assets & GST Weekly Support Reports
+    prog_yr = meta['programYear']
+    gst_trainings = [v['training_session'] for v in visits if v.get('training_session') and not is_na(v.get('training_session'))]
+    ed_trainings = ct_sessions_by_school.get(sc, [])
+    total_completed_trainings = len(gst_trainings) + len(ed_trainings)
+    no_shows = ct_noshow_by_school.get(sc, 0)
+
+    if total_completed_trainings > 0:
+        # Target by early Nov is ~2 sessions for Implementation/Op Y1 (out of 6 annual), or 1+ refresher for Op Y2+
+        target_sessions_to_date = 2.0 if prog_yr in ['Implementation', 'Op Y1'] else 1.0
+        t7_val = clamp(total_completed_trainings / target_sessions_to_date, 0.40, 1.0)
+        if no_shows > 0 and total_completed_trainings < target_sessions_to_date:
+            t7_val = max(0.45, t7_val - 0.15)
+        t7_actual_str = f"{total_completed_trainings} Session{'s' if total_completed_trainings != 1 else ''} ({round(t7_val*100)}%)"
+        t7_score, t7_pct = linear_score(t7_val, 0.40, 1.0, 10.0)
+    elif no_shows > 0:
+        t7_val = 0.45
+        t7_actual_str = f"0 Completed ({no_shows} No-Show)"
+        t7_score, t7_pct = linear_score(t7_val, 0.40, 1.0, 10.0)
+    elif prog_yr in ['Implementation', 'Op Y1']:
+        t7_val = 0.75
+        t7_actual_str = 'Pending Training (75%)'
+        t7_score, t7_pct = linear_score(t7_val, 0.40, 1.0, 10.0)
+    else:
+        t7_val = 1.0
+        t7_actual_str = 'Prior Cohort Trained (100%)'
         t7_score, t7_pct = 10.0, 1.0
 
-    t8_score = 1.0
+    # T8: PD Attendance (1 pt) — reads from Ed Team Assets PD records
+    pd_count = ct_pd_by_school.get(sc, 0)
+    if pd_count > 0:
+        t8_val = 1.0
+        t8_score = 1.0
+        t8_actual_str = f"Attended ({pd_count} PD)"
+    elif no_shows > 0 and total_completed_trainings == 0:
+        t8_val = 0.0
+        t8_score = 0.0
+        t8_actual_str = 'No-Show Logged'
+    else:
+        t8_val = 1.0
+        t8_score = 1.0
+        t8_actual_str = 'Pending PD Roster'
 
     convo_count = sum(1 for v in visits if v['teacher_convo'])
     convo_rate = convo_count / total_visits if total_visits > 0 else 0.65
@@ -1239,19 +1528,61 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
         rel_vals.append(hc['teacher_rel_rating'])
     for a in amvs:
         rel_vals.append(a['teacher_involvement'])
-    rel_avg = sum(rel_vals) / len(rel_vals) if rel_vals else 3.5
+    if rel_vals:
+        rel_avg = sum(rel_vals) / len(rel_vals)
+        t11_actual_str = f"{round(rel_avg, 2)} / 4.0"
+    else:
+        rel_avg = 3.5
+        t11_actual_str = 'Pending HC/AMV (3.5)'
     t11_score, t11_pct = linear_score(rel_avg, 1.0, 4.0, 5.0)
 
     b2_pts = round(t1_score + t2_score + t3_score + t4_score + t5_score + t6_score + t7_score + t8_score + t10_score + t11_score, 2)
     b2_grade, b2_tier = get_grade_and_tier(round(b2_pts / 40.0 * 100, 2))
 
     # --- BUCKET 3: 18 Max Points ---
-    a1_score, a1_pct = linear_score(365, 0, 365, 10.0)
-    cust_val = hc.get('custodian_rating', 3.0)
+    # A1: Proposal Acceptance (10 pts) — reads from Accelo Status, HC budget concern & SY 26-27 active funding/visits
+    raw_status = str(meta.get('rawStatus') or '').strip()
+    has_visit_funding = any(v.get('has_funding_doc') for v in visits)
+    if 'pause' in raw_status.lower() or hc.get('has_budget_concern', False):
+        a1_val = 180
+        a1_score, a1_pct = linear_score(a1_val, 0, 365, 10.0)
+        a1_actual_str = f"Review Needed ({raw_status or 'Budget Flag'})"
+    elif total_visits > 0 or ma_scheduled > 0 or has_visit_funding:
+        a1_val = 365
+        a1_score, a1_pct = linear_score(a1_val, 0, 365, 10.0)
+        a1_actual_str = f"Confirmed ({raw_status or 'Active'})"
+    else:
+        a1_val = 310
+        a1_score, a1_pct = linear_score(a1_val, 0, 365, 10.0)
+        a1_actual_str = f"Pending Activity ({raw_status or 'Listed'})"
+
+    # A3: Custodian Involvement (3 pts) — reads from HC Performance
+    if hc and 'custodian_rating' in hc:
+        cust_val = hc['custodian_rating']
+        a3_actual_str = f"{round(cust_val, 1)} / 4.0 (HC)"
+    else:
+        cust_val = 3.0
+        a3_actual_str = 'Pending HC (3.0)'
     a3_score, a3_pct = linear_score(cust_val, 1.0, 4.0, 3.0)
-    a6_score = 0.5
-    princ_count = sum(1 for a in amvs if a['principal_convo'])
-    princ_rate = princ_count / len(amvs) if amvs else 0.65
+
+    # A6: Letters / Funding Documentation Received (1 pt) — reads from CPF/NYPA funding & Survey/AMV records
+    if has_visit_funding or (survey and survey.get('curr_feedback')):
+        a6_val = 1.0
+        a6_score = 1.0
+        a6_actual_str = 'Verified in Assets'
+    else:
+        a6_val = 0.5
+        a6_score = 0.5
+        a6_actual_str = 'Pending Spring Letter (0.5)'
+
+    # A9: Principal Engagement (4 pts) — reads from AMV principal conversations
+    if amvs:
+        princ_count = sum(1 for a in amvs if a['principal_convo'])
+        princ_rate = princ_count / len(amvs)
+        a9_actual_str = f"{round(princ_rate*100, 1)}% ({princ_count}/{len(amvs)} AMV)"
+    else:
+        princ_rate = 0.65
+        a9_actual_str = 'Pending AMV (65%)'
     a9_score, a9_pct = linear_score(princ_rate, 0.25, 0.90, 4.0)
 
     b3_pts = round(a1_score + a3_score + a6_score + a9_score, 2)
@@ -1263,7 +1594,7 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
     tier_counts[tier] += 1
 
     exp_records = elapsed_periods + 1 + 1 + 1 + 1
-    act_records = max(total_visits, completed_periods) + (1 if hc else 0) + (1 if amvs else 0) + (1 if survey else 0) + 1
+    act_records = max(total_visits, completed_periods) + (1 if hc else 0) + (1 if amvs else 0) + (1 if survey else 0) + (1 if (total_completed_trainings > 0 or pd_count > 0 or prog_yr not in ['Implementation', 'Op Y1']) else 0)
     comp_rate = min(1.0, round(act_records / max(1, exp_records), 2))
     comp_status = 'Normal'
     if comp_rate < 0.70:
@@ -1275,34 +1606,34 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
         {'id': 'C1a', 'name': 'On-Time Asset Completion', 'group': 'b1_assets', 'bucket': 'bucket1', 'actual': f"{round(on_time_rate*100, 1)}%", 'actualNumeric': on_time_rate, 'floor': 0.65, 'target': 0.95, 'maxPoints': 12, 'score': c1a_score, 'percentage': c1a_pct, 'isApplicable': True},
         {'id': 'C1b', 'name': 'Late-vs-Missing Rate', 'group': 'b1_assets', 'bucket': 'bucket1', 'actual': c1b_actual_str, 'actualNumeric': c1b_actual_num, 'floor': 0.0, 'target': 1.0, 'maxPoints': 3, 'score': c1b_score, 'percentage': c1b_pct, 'isApplicable': True},
         {'id': 'C2', 'name': 'Systems Uptime', 'group': 'b1_systems_branding', 'bucket': 'bucket1', 'actual': f"{round(uptime_rate*100, 1)}%", 'actualNumeric': uptime_rate, 'floor': 0.60, 'target': 1.0, 'maxPoints': 6, 'score': c2_score, 'percentage': c2_pct, 'isApplicable': True},
-        {'id': 'C3', 'name': 'Branding Present', 'group': 'b1_systems_branding', 'bucket': 'bucket1', 'actual': 'Present', 'actualNumeric': c3_score, 'floor': 0, 'target': 4, 'maxPoints': 4, 'score': c3_score, 'percentage': c3_pct, 'isApplicable': True},
-        {'id': 'C4', 'name': 'Lab Usability Rating', 'group': 'b1_systems_branding', 'bucket': 'bucket1', 'actual': round(c4_avg, 2), 'actualNumeric': c4_avg, 'floor': 1, 'target': 4, 'maxPoints': 2, 'score': c4_score, 'percentage': c4_pct, 'isApplicable': True},
-        {'id': 'C5', 'name': 'GST Support Staff Rating', 'group': 'b1_systems_branding', 'bucket': 'bucket1', 'actual': f"{round(c5_rate*100, 1)}%", 'actualNumeric': c5_rate, 'floor': 0.30, 'target': 0.85, 'maxPoints': 2, 'score': c5_score, 'percentage': c5_pct, 'isApplicable': True},
+        {'id': 'C3', 'name': 'Branding Present', 'group': 'b1_systems_branding', 'bucket': 'bucket1', 'actual': c3_actual_str, 'actualNumeric': c3_score, 'floor': 0, 'target': 4, 'maxPoints': 4, 'score': c3_score, 'percentage': c3_pct, 'isApplicable': True},
+        {'id': 'C4', 'name': 'Lab Usability Rating', 'group': 'b1_systems_branding', 'bucket': 'bucket1', 'actual': c4_actual_str, 'actualNumeric': c4_avg, 'floor': 1, 'target': 4, 'maxPoints': 2, 'score': c4_score, 'percentage': c4_pct, 'isApplicable': True},
+        {'id': 'C5', 'name': 'GST Support Staff Rating', 'group': 'b1_systems_branding', 'bucket': 'bucket1', 'actual': c5_actual_str, 'actualNumeric': c5_rate, 'floor': 0.30, 'target': 0.85, 'maxPoints': 2, 'score': c5_score, 'percentage': c5_pct, 'isApplicable': True},
         {'id': 'C6', 'name': 'Harvest Frequency', 'group': 'b1_harvests', 'bucket': 'bucket1', 'actual': f"{round(harvests_per_mo, 1)}/mo", 'actualNumeric': harvests_per_mo, 'floor': 0.5, 'target': 3.0, 'maxPoints': 6, 'score': c6_score, 'percentage': c6_pct, 'isApplicable': True},
         {'id': 'C7', 'name': 'Harvest Yield', 'group': 'b1_harvests', 'bucket': 'bucket1', 'actual': f"{round(lbs_per_mo_sys, 2)} lb/mo/sys", 'actualNumeric': lbs_per_mo_sys, 'floor': 0.5, 'target': 3.0, 'maxPoints': 2, 'score': c7_score, 'percentage': c7_pct, 'isApplicable': True},
-        {'id': 'C8', 'name': 'Visitor Readiness', 'group': 'b1_readiness', 'bucket': 'bucket1', 'actual': round(c8_avg, 2), 'actualNumeric': c8_avg, 'floor': 1, 'target': 4, 'maxPoints': 2, 'score': c8_score, 'percentage': c8_pct, 'isApplicable': True},
+        {'id': 'C8', 'name': 'Visitor Readiness', 'group': 'b1_readiness', 'bucket': 'bucket1', 'actual': c8_actual_str, 'actualNumeric': c8_avg, 'floor': 1, 'target': 4, 'maxPoints': 2, 'score': c8_score, 'percentage': c8_pct, 'isApplicable': True},
         {'id': 'C9', 'name': 'Seedlings Present Rate', 'group': 'b1_readiness', 'bucket': 'bucket1', 'actual': f"{round(seedling_rate*100, 1)}%", 'actualNumeric': seedling_rate, 'floor': 0.10, 'target': 0.50, 'maxPoints': 1, 'score': c9_score, 'percentage': c9_pct, 'isApplicable': True},
         {'id': 'C10', 'name': 'Pest-Free Visit Rate', 'group': 'b1_readiness', 'bucket': 'bucket1', 'actual': f"{round(pest_free_rate*100, 1)}%", 'actualNumeric': pest_free_rate, 'floor': 0.60, 'target': 0.95, 'maxPoints': 2, 'score': c10_score, 'percentage': c10_pct, 'isApplicable': True}
     ]
 
     kpis_b2 = [
-        {'id': 'T1', 'name': 'Curriculum Usage & Ease', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': '75%', 'actualNumeric': 0.75, 'floor': 0.30, 'target': 0.85, 'maxPoints': 6, 'score': t1_score, 'percentage': t1_pct, 'isApplicable': True},
-        {'id': 'T2', 'name': 'Helpfulness & Confidence', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': '75%', 'actualNumeric': 0.75, 'floor': 0.30, 'target': 0.85, 'maxPoints': 2, 'score': t2_score, 'percentage': t2_pct, 'isApplicable': True},
-        {'id': 'T3', 'name': 'Materials & Digital Adoption', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': '70%', 'actualNumeric': 0.70, 'floor': 0.25, 'target': 0.80, 'maxPoints': 2, 'score': t3_score, 'percentage': t3_pct, 'isApplicable': True},
-        {'id': 'T4', 'name': 'Curriculum Confirmed via AMV', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': f"{round(amv_curr_rate*100, 1)}%", 'actualNumeric': amv_curr_rate, 'floor': 0.50, 'target': 1.0, 'maxPoints': 3, 'score': t4_score, 'percentage': t4_pct, 'isApplicable': True},
-        {'id': 'T5', 'name': 'Pedagogical Rubric Level', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': 'Level 3', 'actualNumeric': 3.0, 'floor': 1.5, 'target': 3.5, 'maxPoints': 5, 'score': t5_score, 'percentage': t5_pct, 'isApplicable': True},
-        {'id': 'T6', 'name': 'Rubric Growth', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': '+0.50', 'actualNumeric': 0.5, 'floor': 0.0, 'target': 0.75, 'maxPoints': 2, 'score': t6_score, 'percentage': t6_pct, 'isApplicable': True},
-        {'id': 'T7', 'name': 'Training Completion', 'group': 'b2_training', 'bucket': 'bucket2', 'actual': '100%' if prog_yr not in ['Implementation', 'Op Y1'] else '85%', 'actualNumeric': 1.0 if prog_yr not in ['Implementation', 'Op Y1'] else 0.85, 'floor': 0.40, 'target': 1.0, 'maxPoints': 10, 'score': t7_score, 'percentage': t7_pct, 'isApplicable': True},
-        {'id': 'T8', 'name': 'PD Attendance', 'group': 'b2_training', 'bucket': 'bucket2', 'actual': 'Attended', 'actualNumeric': 1.0, 'floor': 0, 'target': 1, 'maxPoints': 1, 'score': 1.0, 'percentage': 1.0, 'isApplicable': True},
+        {'id': 'T1', 'name': 'Curriculum Usage & Ease', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': t1_actual_str, 'actualNumeric': t1_val, 'floor': 0.30, 'target': 0.85, 'maxPoints': 6, 'score': t1_score, 'percentage': t1_pct, 'isApplicable': True},
+        {'id': 'T2', 'name': 'Helpfulness & Confidence', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': t2_actual_str, 'actualNumeric': t2_val, 'floor': 0.30, 'target': 0.85, 'maxPoints': 2, 'score': t2_score, 'percentage': t2_pct, 'isApplicable': True},
+        {'id': 'T3', 'name': 'Materials & Digital Adoption', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': t3_actual_str, 'actualNumeric': t3_val, 'floor': 0.25, 'target': 0.80, 'maxPoints': 2, 'score': t3_score, 'percentage': t3_pct, 'isApplicable': True},
+        {'id': 'T4', 'name': 'Curriculum Confirmed via AMV', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': t4_actual_str, 'actualNumeric': amv_curr_rate, 'floor': 0.50, 'target': 1.0, 'maxPoints': 3, 'score': t4_score, 'percentage': t4_pct, 'isApplicable': True},
+        {'id': 'T5', 'name': 'Pedagogical Rubric Level', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': t5_actual_str, 'actualNumeric': t5_val, 'floor': 1.5, 'target': 3.5, 'maxPoints': 5, 'score': t5_score, 'percentage': t5_pct, 'isApplicable': True},
+        {'id': 'T6', 'name': 'Rubric Growth', 'group': 'b2_comprehension', 'bucket': 'bucket2', 'actual': t6_actual_str, 'actualNumeric': t6_val, 'floor': 0.0, 'target': 0.75, 'maxPoints': 2, 'score': t6_score, 'percentage': t6_pct, 'isApplicable': True},
+        {'id': 'T7', 'name': 'Training Completion', 'group': 'b2_training', 'bucket': 'bucket2', 'actual': t7_actual_str, 'actualNumeric': t7_val, 'floor': 0.40, 'target': 1.0, 'maxPoints': 10, 'score': t7_score, 'percentage': t7_pct, 'isApplicable': True},
+        {'id': 'T8', 'name': 'PD Attendance', 'group': 'b2_training', 'bucket': 'bucket2', 'actual': t8_actual_str, 'actualNumeric': t8_val, 'floor': 0, 'target': 1, 'maxPoints': 1, 'score': t8_score, 'percentage': t8_val, 'isApplicable': True},
         {'id': 'T10', 'name': 'Teacher-GST Conversation Rate', 'group': 'b2_hc_engagement', 'bucket': 'bucket2', 'actual': f"{round(convo_rate*100, 1)}%", 'actualNumeric': convo_rate, 'floor': floor_t10, 'target': target_t10, 'maxPoints': 4, 'score': t10_score, 'percentage': t10_pct, 'isApplicable': True},
-        {'id': 'T11', 'name': 'Teacher Relationship Rating', 'group': 'b2_hc_engagement', 'bucket': 'bucket2', 'actual': round(rel_avg, 2), 'actualNumeric': rel_avg, 'floor': 1.0, 'target': 4.0, 'maxPoints': 5, 'score': t11_score, 'percentage': t11_pct, 'isApplicable': True}
+        {'id': 'T11', 'name': 'Teacher Relationship Rating', 'group': 'b2_hc_engagement', 'bucket': 'bucket2', 'actual': t11_actual_str, 'actualNumeric': rel_avg, 'floor': 1.0, 'target': 4.0, 'maxPoints': 5, 'score': t11_score, 'percentage': t11_pct, 'isApplicable': True}
     ]
 
     kpis_b3 = [
-        {'id': 'A1', 'name': 'Proposal Acceptance', 'group': 'b3_admin', 'bucket': 'bucket3', 'actual': 'Accepted On/Before Sept 30', 'actualNumeric': 365, 'floor': 0, 'target': 365, 'maxPoints': 10, 'score': a1_score, 'percentage': a1_pct, 'isApplicable': True},
-        {'id': 'A3', 'name': 'Custodian Involvement', 'group': 'b3_admin', 'bucket': 'bucket3', 'actual': cust_val, 'actualNumeric': cust_val, 'floor': 1, 'target': 4, 'maxPoints': 3, 'score': a3_score, 'percentage': a3_pct, 'isApplicable': True},
-        {'id': 'A6', 'name': 'Letters Received', 'group': 'b3_admin', 'bucket': 'bucket3', 'actual': 'Fall Thank-You Received', 'actualNumeric': 0.5, 'floor': 0, 'target': 1, 'maxPoints': 1, 'score': 0.5, 'percentage': 0.5, 'isApplicable': True},
-        {'id': 'A9', 'name': 'Principal Engagement', 'group': 'b3_admin', 'bucket': 'bucket3', 'actual': f"{round(princ_rate*100, 1)}%", 'actualNumeric': princ_rate, 'floor': 0.25, 'target': 0.90, 'maxPoints': 4, 'score': a9_score, 'percentage': a9_pct, 'isApplicable': True}
+        {'id': 'A1', 'name': 'Proposal Acceptance', 'group': 'b3_admin', 'bucket': 'bucket3', 'actual': a1_actual_str, 'actualNumeric': a1_val, 'floor': 0, 'target': 365, 'maxPoints': 10, 'score': a1_score, 'percentage': a1_pct, 'isApplicable': True},
+        {'id': 'A3', 'name': 'Custodian Involvement', 'group': 'b3_admin', 'bucket': 'bucket3', 'actual': a3_actual_str, 'actualNumeric': cust_val, 'floor': 1, 'target': 4, 'maxPoints': 3, 'score': a3_score, 'percentage': a3_pct, 'isApplicable': True},
+        {'id': 'A6', 'name': 'Letters Received', 'group': 'b3_admin', 'bucket': 'bucket3', 'actual': a6_actual_str, 'actualNumeric': a6_val, 'floor': 0, 'target': 1, 'maxPoints': 1, 'score': a6_score, 'percentage': a6_val, 'isApplicable': True},
+        {'id': 'A9', 'name': 'Principal Engagement', 'group': 'b3_admin', 'bucket': 'bucket3', 'actual': a9_actual_str, 'actualNumeric': princ_rate, 'floor': 0.25, 'target': 0.90, 'maxPoints': 4, 'score': a9_score, 'percentage': a9_pct, 'isApplicable': True}
     ]
 
     bucket1_score = {
