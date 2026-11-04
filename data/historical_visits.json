@@ -1,11 +1,11 @@
 {
   "version": "2.0",
   "schoolYear": "SY 2026\u20132027",
-  "lastUpdated": "2026-11-03T19:55:41.020507",
+  "lastUpdated": "2026-11-03T20:08:42.285271",
   "totalCumulativeVisits": 2167,
   "totalSchoolsTracked": 326,
-  "newVisitsAddedThisRun": 2167,
-  "historicalVisitsRetained": 0,
+  "newVisitsAddedThisRun": 0,
+  "historicalVisitsRetained": 2167,
   "sourceFiles": [
     "GST Asset Nov 2026.xls"
   ],

@@ -1,6 +1,6 @@
 {
   "schoolYear": "SY 2026\u20132027",
-  "generatedAt": "2026-11-03T19:55:41.196929",
+  "generatedAt": "2026-11-03T20:08:42.444838",
   "source": "data\\incoming",
   "totalSchools": 391,
   "flaggedCount": 207,
@@ -8,8 +8,8 @@
     "schoolYear": "SY 2026\u20132027",
     "mode": "incremental_accumulator",
     "totalCumulativeVisits": 2167,
-    "newVisitsAddedInLastRun": 2167,
-    "historicalVisitsRetained": 0,
+    "newVisitsAddedInLastRun": 0,
+    "historicalVisitsRetained": 2167,
     "earliestVisitDate": "2026-08-14",
     "latestVisitDate": "2026-11-09",
     "elapsedCalendarWeeks": 12.4,
@@ -17,7 +17,7 @@
     "sourceFiles": [
       "GST Asset Nov 2026.xls"
     ],
-    "lastRunTimestamp": "2026-11-03T19:55:41.196967"
+    "lastRunTimestamp": "2026-11-03T20:08:42.444885"
   },
   "schools": [
     {
@@ -514,7 +514,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.179323"
+        "calculatedAt": "2026-11-03T20:08:42.427251"
       },
       "flags": [],
       "weeklyHistory": [
@@ -594,7 +594,7 @@
         "installationDate": "2019",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K012",
@@ -1076,7 +1076,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.136775"
+        "calculatedAt": "2026-11-03T20:08:42.386915"
       },
       "flags": [],
       "weeklyHistory": [
@@ -1707,7 +1707,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.174775"
+        "calculatedAt": "2026-11-03T20:08:42.423145"
       },
       "flags": [],
       "weeklyHistory": [
@@ -2283,7 +2283,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.156209"
+        "calculatedAt": "2026-11-03T20:08:42.407094"
       },
       "flags": [],
       "weeklyHistory": [
@@ -2852,7 +2852,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.188411"
+        "calculatedAt": "2026-11-03T20:08:42.433876"
       },
       "flags": [],
       "weeklyHistory": [
@@ -3407,7 +3407,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.161998"
+        "calculatedAt": "2026-11-03T20:08:42.413952"
       },
       "flags": [],
       "weeklyHistory": [
@@ -3976,7 +3976,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.150934"
+        "calculatedAt": "2026-11-03T20:08:42.401595"
       },
       "flags": [],
       "weeklyHistory": [
@@ -4552,7 +4552,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.160890"
+        "calculatedAt": "2026-11-03T20:08:42.412742"
       },
       "flags": [],
       "weeklyHistory": [
@@ -4639,7 +4639,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "Q475",
@@ -5121,7 +5121,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.183320"
+        "calculatedAt": "2026-11-03T20:08:42.430536"
       },
       "flags": [],
       "weeklyHistory": [
@@ -5718,7 +5718,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.179195"
+        "calculatedAt": "2026-11-03T20:08:42.427107"
       },
       "flags": [],
       "weeklyHistory": [
@@ -6273,7 +6273,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.136461"
+        "calculatedAt": "2026-11-03T20:08:42.386645"
       },
       "flags": [],
       "weeklyHistory": [
@@ -6849,7 +6849,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.151516"
+        "calculatedAt": "2026-11-03T20:08:42.402250"
       },
       "flags": [],
       "weeklyHistory": [
@@ -7418,7 +7418,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.137835"
+        "calculatedAt": "2026-11-03T20:08:42.387895"
       },
       "flags": [],
       "weeklyHistory": [
@@ -7987,7 +7987,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.154348"
+        "calculatedAt": "2026-11-03T20:08:42.404839"
       },
       "flags": [],
       "weeklyHistory": [
@@ -8549,7 +8549,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.183976"
+        "calculatedAt": "2026-11-03T20:08:42.430975"
       },
       "flags": [],
       "weeklyHistory": [
@@ -9125,7 +9125,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.189602"
+        "calculatedAt": "2026-11-03T20:08:42.435803"
       },
       "flags": [],
       "weeklyHistory": [
@@ -9687,7 +9687,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.178057"
+        "calculatedAt": "2026-11-03T20:08:42.425739"
       },
       "flags": [],
       "weeklyHistory": [
@@ -10256,7 +10256,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.158351"
+        "calculatedAt": "2026-11-03T20:08:42.409872"
       },
       "flags": [],
       "weeklyHistory": [
@@ -10832,7 +10832,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.147158"
+        "calculatedAt": "2026-11-03T20:08:42.397858"
       },
       "flags": [],
       "weeklyHistory": [
@@ -11401,7 +11401,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.135199"
+        "calculatedAt": "2026-11-03T20:08:42.385269"
       },
       "flags": [],
       "weeklyHistory": [
@@ -11975,7 +11975,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.165070"
+        "calculatedAt": "2026-11-03T20:08:42.416641"
       },
       "flags": [],
       "weeklyHistory": [
@@ -12579,7 +12579,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.178288"
+        "calculatedAt": "2026-11-03T20:08:42.426032"
       },
       "flags": [],
       "weeklyHistory": [
@@ -13141,7 +13141,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.147302"
+        "calculatedAt": "2026-11-03T20:08:42.398006"
       },
       "flags": [],
       "weeklyHistory": [
@@ -13717,7 +13717,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.147553"
+        "calculatedAt": "2026-11-03T20:08:42.398265"
       },
       "flags": [],
       "weeklyHistory": [
@@ -14279,7 +14279,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.141971"
+        "calculatedAt": "2026-11-03T20:08:42.392414"
       },
       "flags": [],
       "weeklyHistory": [
@@ -14841,7 +14841,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.179403"
+        "calculatedAt": "2026-11-03T20:08:42.427343"
       },
       "flags": [],
       "weeklyHistory": [
@@ -15368,7 +15368,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.166025"
+        "calculatedAt": "2026-11-03T20:08:42.416948"
       },
       "flags": [],
       "weeklyHistory": [
@@ -15937,7 +15937,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.188734"
+        "calculatedAt": "2026-11-03T20:08:42.434140"
       },
       "flags": [],
       "weeklyHistory": [
@@ -16023,7 +16023,7 @@
         "installationDate": "2016",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K084",
@@ -16505,7 +16505,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.138816"
+        "calculatedAt": "2026-11-03T20:08:42.389015"
       },
       "flags": [],
       "weeklyHistory": [
@@ -17123,7 +17123,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.150773"
+        "calculatedAt": "2026-11-03T20:08:42.401419"
       },
       "flags": [],
       "weeklyHistory": [
@@ -17168,7 +17168,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K670",
@@ -17650,7 +17650,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.157356"
+        "calculatedAt": "2026-11-03T20:08:42.408497"
       },
       "flags": [],
       "weeklyHistory": [
@@ -18219,7 +18219,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.189431"
+        "calculatedAt": "2026-11-03T20:08:42.435495"
       },
       "flags": [],
       "weeklyHistory": [
@@ -18774,7 +18774,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.179518"
+        "calculatedAt": "2026-11-03T20:08:42.427472"
       },
       "flags": [],
       "weeklyHistory": [
@@ -19336,7 +19336,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.178902"
+        "calculatedAt": "2026-11-03T20:08:42.426770"
       },
       "flags": [],
       "weeklyHistory": [
@@ -19905,7 +19905,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.187162"
+        "calculatedAt": "2026-11-03T20:08:42.433101"
       },
       "flags": [],
       "weeklyHistory": [
@@ -20439,7 +20439,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.184669"
+        "calculatedAt": "2026-11-03T20:08:42.431843"
       },
       "flags": [],
       "weeklyHistory": [
@@ -20966,7 +20966,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.161327"
+        "calculatedAt": "2026-11-03T20:08:42.413223"
       },
       "flags": [],
       "weeklyHistory": [
@@ -21528,7 +21528,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.164045"
+        "calculatedAt": "2026-11-03T20:08:42.415960"
       },
       "flags": [
         {
@@ -21634,7 +21634,7 @@
         "installationDate": "2020",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "Q721",
@@ -22116,7 +22116,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.184544"
+        "calculatedAt": "2026-11-03T20:08:42.431550"
       },
       "flags": [],
       "weeklyHistory": [
@@ -22705,7 +22705,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.150149"
+        "calculatedAt": "2026-11-03T20:08:42.400902"
       },
       "flags": [
         {
@@ -23300,7 +23300,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.155521"
+        "calculatedAt": "2026-11-03T20:08:42.406211"
       },
       "flags": [],
       "weeklyHistory": [
@@ -23876,7 +23876,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.140727"
+        "calculatedAt": "2026-11-03T20:08:42.391064"
       },
       "flags": [],
       "weeklyHistory": [
@@ -24452,7 +24452,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.173436"
+        "calculatedAt": "2026-11-03T20:08:42.421803"
       },
       "flags": [],
       "weeklyHistory": [
@@ -25028,7 +25028,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.182346"
+        "calculatedAt": "2026-11-03T20:08:42.430062"
       },
       "flags": [],
       "weeklyHistory": [
@@ -25604,7 +25604,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.191336"
+        "calculatedAt": "2026-11-03T20:08:42.437456"
       },
       "flags": [],
       "weeklyHistory": [
@@ -26152,7 +26152,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.173619"
+        "calculatedAt": "2026-11-03T20:08:42.421960"
       },
       "flags": [],
       "weeklyHistory": [
@@ -26253,7 +26253,7 @@
         "installationDate": "2022",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X331",
@@ -26735,7 +26735,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.193557"
+        "calculatedAt": "2026-11-03T20:08:42.440788"
       },
       "flags": [],
       "weeklyHistory": [
@@ -27295,7 +27295,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.149093"
+        "calculatedAt": "2026-11-03T20:08:42.399956"
       },
       "flags": [],
       "weeklyHistory": [
@@ -27857,7 +27857,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.196208"
+        "calculatedAt": "2026-11-03T20:08:42.443990"
       },
       "flags": [],
       "weeklyHistory": [
@@ -27951,7 +27951,7 @@
         "installationDate": "2026",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "Q099",
@@ -28433,7 +28433,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.176834"
+        "calculatedAt": "2026-11-03T20:08:42.424535"
       },
       "flags": [],
       "weeklyHistory": [
@@ -29016,7 +29016,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.181236"
+        "calculatedAt": "2026-11-03T20:08:42.429266"
       },
       "flags": [],
       "weeklyHistory": [
@@ -29585,7 +29585,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.145757"
+        "calculatedAt": "2026-11-03T20:08:42.396423"
       },
       "flags": [],
       "weeklyHistory": [
@@ -30147,7 +30147,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.141248"
+        "calculatedAt": "2026-11-03T20:08:42.391642"
       },
       "flags": [],
       "weeklyHistory": [
@@ -30716,7 +30716,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.145043"
+        "calculatedAt": "2026-11-03T20:08:42.395676"
       },
       "flags": [],
       "weeklyHistory": [
@@ -31264,7 +31264,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.135357"
+        "calculatedAt": "2026-11-03T20:08:42.385416"
       },
       "flags": [],
       "weeklyHistory": [
@@ -31852,7 +31852,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.146360"
+        "calculatedAt": "2026-11-03T20:08:42.397030"
       },
       "flags": [],
       "weeklyHistory": [
@@ -32428,7 +32428,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.135608"
+        "calculatedAt": "2026-11-03T20:08:42.385763"
       },
       "flags": [],
       "weeklyHistory": [
@@ -32962,7 +32962,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.134521"
+        "calculatedAt": "2026-11-03T20:08:42.384673"
       },
       "flags": [],
       "weeklyHistory": [
@@ -33573,7 +33573,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.137986"
+        "calculatedAt": "2026-11-03T20:08:42.388040"
       },
       "flags": [],
       "weeklyHistory": [
@@ -34156,7 +34156,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.196028"
+        "calculatedAt": "2026-11-03T20:08:42.443755"
       },
       "flags": [],
       "weeklyHistory": [
@@ -34683,7 +34683,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.153317"
+        "calculatedAt": "2026-11-03T20:08:42.403772"
       },
       "flags": [],
       "weeklyHistory": [
@@ -35210,7 +35210,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.155356"
+        "calculatedAt": "2026-11-03T20:08:42.406018"
       },
       "flags": [],
       "weeklyHistory": [
@@ -35772,7 +35772,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.170630"
+        "calculatedAt": "2026-11-03T20:08:42.420420"
       },
       "flags": [],
       "weeklyHistory": [
@@ -36334,7 +36334,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.149524"
+        "calculatedAt": "2026-11-03T20:08:42.400355"
       },
       "flags": [],
       "weeklyHistory": [
@@ -36903,7 +36903,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.137556"
+        "calculatedAt": "2026-11-03T20:08:42.387641"
       },
       "flags": [
         {
@@ -37484,7 +37484,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.188932"
+        "calculatedAt": "2026-11-03T20:08:42.434297"
       },
       "flags": [
         {
@@ -38078,7 +38078,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.155211"
+        "calculatedAt": "2026-11-03T20:08:42.405854"
       },
       "flags": [],
       "weeklyHistory": [
@@ -38605,7 +38605,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.134657"
+        "calculatedAt": "2026-11-03T20:08:42.384771"
       },
       "flags": [],
       "weeklyHistory": [
@@ -39132,7 +39132,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.168896"
+        "calculatedAt": "2026-11-03T20:08:42.418913"
       },
       "flags": [
         {
@@ -39748,7 +39748,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.148763"
+        "calculatedAt": "2026-11-03T20:08:42.399511"
       },
       "flags": [],
       "weeklyHistory": [
@@ -39821,7 +39821,7 @@
         "installationDate": "2022",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X217",
@@ -40303,7 +40303,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.192338"
+        "calculatedAt": "2026-11-03T20:08:42.439689"
       },
       "flags": [
         {
@@ -40869,7 +40869,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.159247"
+        "calculatedAt": "2026-11-03T20:08:42.410926"
       },
       "flags": [],
       "weeklyHistory": [
@@ -41438,7 +41438,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.174602"
+        "calculatedAt": "2026-11-03T20:08:42.422981"
       },
       "flags": [],
       "weeklyHistory": [
@@ -42021,7 +42021,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.152884"
+        "calculatedAt": "2026-11-03T20:08:42.403265"
       },
       "flags": [],
       "weeklyHistory": [
@@ -42583,7 +42583,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.186888"
+        "calculatedAt": "2026-11-03T20:08:42.432840"
       },
       "flags": [],
       "weeklyHistory": [
@@ -43159,7 +43159,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.141106"
+        "calculatedAt": "2026-11-03T20:08:42.391483"
       },
       "flags": [],
       "weeklyHistory": [
@@ -43253,7 +43253,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "M475",
@@ -43735,7 +43735,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.167827"
+        "calculatedAt": "2026-11-03T20:08:42.418014"
       },
       "flags": [],
       "weeklyHistory": [
@@ -44332,7 +44332,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.137087"
+        "calculatedAt": "2026-11-03T20:08:42.387189"
       },
       "flags": [],
       "weeklyHistory": [
@@ -44908,7 +44908,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.192471"
+        "calculatedAt": "2026-11-03T20:08:42.439821"
       },
       "flags": [],
       "weeklyHistory": [
@@ -45002,7 +45002,7 @@
         "installationDate": "2017",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K525",
@@ -45484,7 +45484,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.152978"
+        "calculatedAt": "2026-11-03T20:08:42.403386"
       },
       "flags": [],
       "weeklyHistory": [
@@ -46018,7 +46018,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.161621"
+        "calculatedAt": "2026-11-03T20:08:42.413543"
       },
       "flags": [],
       "weeklyHistory": [
@@ -46545,7 +46545,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.168151"
+        "calculatedAt": "2026-11-03T20:08:42.418224"
       },
       "flags": [],
       "weeklyHistory": [
@@ -47079,7 +47079,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.161800"
+        "calculatedAt": "2026-11-03T20:08:42.413737"
       },
       "flags": [
         {
@@ -47660,7 +47660,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.137219"
+        "calculatedAt": "2026-11-03T20:08:42.387311"
       },
       "flags": [],
       "weeklyHistory": [
@@ -48222,7 +48222,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.143489"
+        "calculatedAt": "2026-11-03T20:08:42.394031"
       },
       "flags": [
         {
@@ -48796,7 +48796,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.183708"
+        "calculatedAt": "2026-11-03T20:08:42.430821"
       },
       "flags": [],
       "weeklyHistory": [
@@ -49372,7 +49372,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.176490"
+        "calculatedAt": "2026-11-03T20:08:42.424357"
       },
       "flags": [],
       "weeklyHistory": [
@@ -49941,7 +49941,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.148945"
+        "calculatedAt": "2026-11-03T20:08:42.399711"
       },
       "flags": [],
       "weeklyHistory": [
@@ -50517,7 +50517,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.148148"
+        "calculatedAt": "2026-11-03T20:08:42.398997"
       },
       "flags": [
         {
@@ -51098,7 +51098,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.171261"
+        "calculatedAt": "2026-11-03T20:08:42.420710"
       },
       "flags": [
         {
@@ -51679,7 +51679,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.162209"
+        "calculatedAt": "2026-11-03T20:08:42.414186"
       },
       "flags": [],
       "weeklyHistory": [
@@ -51773,7 +51773,7 @@
         "installationDate": "2021",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X333",
@@ -52255,7 +52255,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.193736"
+        "calculatedAt": "2026-11-03T20:08:42.440940"
       },
       "flags": [],
       "weeklyHistory": [
@@ -52829,7 +52829,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.175975"
+        "calculatedAt": "2026-11-03T20:08:42.424077"
       },
       "flags": [],
       "weeklyHistory": [
@@ -53398,7 +53398,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.146055"
+        "calculatedAt": "2026-11-03T20:08:42.396729"
       },
       "flags": [],
       "weeklyHistory": [
@@ -53478,7 +53478,7 @@
         "installationDate": "2020",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K637",
@@ -53960,7 +53960,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.155824"
+        "calculatedAt": "2026-11-03T20:08:42.406602"
       },
       "flags": [
         {
@@ -54119,7 +54119,7 @@
         "installationDate": "2011",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K089",
@@ -54601,7 +54601,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.139226"
+        "calculatedAt": "2026-11-03T20:08:42.389452"
       },
       "flags": [
         {
@@ -55238,7 +55238,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.154886"
+        "calculatedAt": "2026-11-03T20:08:42.405489"
       },
       "flags": [
         {
@@ -55819,7 +55819,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.194307"
+        "calculatedAt": "2026-11-03T20:08:42.441536"
       },
       "flags": [
         {
@@ -56433,7 +56433,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.153434"
+        "calculatedAt": "2026-11-03T20:08:42.403875"
       },
       "flags": [],
       "weeklyHistory": [
@@ -56967,7 +56967,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.150227"
+        "calculatedAt": "2026-11-03T20:08:42.400968"
       },
       "flags": [],
       "weeklyHistory": [
@@ -57501,7 +57501,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.164402"
+        "calculatedAt": "2026-11-03T20:08:42.416207"
       },
       "flags": [],
       "weeklyHistory": [
@@ -58035,7 +58035,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.170078"
+        "calculatedAt": "2026-11-03T20:08:42.420082"
       },
       "flags": [],
       "weeklyHistory": [
@@ -58569,7 +58569,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.135928"
+        "calculatedAt": "2026-11-03T20:08:42.386164"
       },
       "flags": [],
       "weeklyHistory": [
@@ -59103,7 +59103,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.141843"
+        "calculatedAt": "2026-11-03T20:08:42.392279"
       },
       "flags": [],
       "weeklyHistory": [
@@ -59637,7 +59637,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.151589"
+        "calculatedAt": "2026-11-03T20:08:42.402311"
       },
       "flags": [],
       "weeklyHistory": [
@@ -60171,7 +60171,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.153238"
+        "calculatedAt": "2026-11-03T20:08:42.403692"
       },
       "flags": [],
       "weeklyHistory": [
@@ -60705,7 +60705,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.159532"
+        "calculatedAt": "2026-11-03T20:08:42.411248"
       },
       "flags": [],
       "weeklyHistory": [
@@ -61239,7 +61239,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.181310"
+        "calculatedAt": "2026-11-03T20:08:42.429341"
       },
       "flags": [],
       "weeklyHistory": [
@@ -61773,7 +61773,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.159808"
+        "calculatedAt": "2026-11-03T20:08:42.411554"
       },
       "flags": [],
       "weeklyHistory": [
@@ -62307,7 +62307,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.168439"
+        "calculatedAt": "2026-11-03T20:08:42.418488"
       },
       "flags": [],
       "weeklyHistory": [
@@ -62841,7 +62841,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.169199"
+        "calculatedAt": "2026-11-03T20:08:42.419228"
       },
       "flags": [],
       "weeklyHistory": [
@@ -63375,7 +63375,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.164840"
+        "calculatedAt": "2026-11-03T20:08:42.416504"
       },
       "flags": [],
       "weeklyHistory": [
@@ -63909,7 +63909,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.168495"
+        "calculatedAt": "2026-11-03T20:08:42.418537"
       },
       "flags": [],
       "weeklyHistory": [
@@ -64443,7 +64443,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.172210"
+        "calculatedAt": "2026-11-03T20:08:42.421135"
       },
       "flags": [],
       "weeklyHistory": [
@@ -64977,7 +64977,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.195450"
+        "calculatedAt": "2026-11-03T20:08:42.442940"
       },
       "flags": [],
       "weeklyHistory": [
@@ -65511,7 +65511,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.140561"
+        "calculatedAt": "2026-11-03T20:08:42.390889"
       },
       "flags": [],
       "weeklyHistory": [
@@ -66045,7 +66045,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.140799"
+        "calculatedAt": "2026-11-03T20:08:42.391139"
       },
       "flags": [],
       "weeklyHistory": [
@@ -66579,7 +66579,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.191769"
+        "calculatedAt": "2026-11-03T20:08:42.439245"
       },
       "flags": [],
       "weeklyHistory": [
@@ -67113,7 +67113,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.163635"
+        "calculatedAt": "2026-11-03T20:08:42.415672"
       },
       "flags": [],
       "weeklyHistory": [
@@ -67647,7 +67647,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.137633"
+        "calculatedAt": "2026-11-03T20:08:42.387711"
       },
       "flags": [],
       "weeklyHistory": [
@@ -68181,7 +68181,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.137697"
+        "calculatedAt": "2026-11-03T20:08:42.387770"
       },
       "flags": [],
       "weeklyHistory": [
@@ -68715,7 +68715,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.160142"
+        "calculatedAt": "2026-11-03T20:08:42.411917"
       },
       "flags": [],
       "weeklyHistory": [
@@ -69249,7 +69249,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.136157"
+        "calculatedAt": "2026-11-03T20:08:42.386387"
       },
       "flags": [],
       "weeklyHistory": [
@@ -69783,7 +69783,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.141778"
+        "calculatedAt": "2026-11-03T20:08:42.392209"
       },
       "flags": [],
       "weeklyHistory": [
@@ -70317,7 +70317,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.173246"
+        "calculatedAt": "2026-11-03T20:08:42.421649"
       },
       "flags": [],
       "weeklyHistory": [
@@ -70851,7 +70851,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.177661"
+        "calculatedAt": "2026-11-03T20:08:42.425238"
       },
       "flags": [],
       "weeklyHistory": [
@@ -71385,7 +71385,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.180029"
+        "calculatedAt": "2026-11-03T20:08:42.428029"
       },
       "flags": [],
       "weeklyHistory": [
@@ -71919,7 +71919,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.181622"
+        "calculatedAt": "2026-11-03T20:08:42.429663"
       },
       "flags": [],
       "weeklyHistory": [
@@ -72453,7 +72453,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.184604"
+        "calculatedAt": "2026-11-03T20:08:42.431628"
       },
       "flags": [],
       "weeklyHistory": [
@@ -72987,7 +72987,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.185806"
+        "calculatedAt": "2026-11-03T20:08:42.431917"
       },
       "flags": [],
       "weeklyHistory": [
@@ -73521,7 +73521,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.186403"
+        "calculatedAt": "2026-11-03T20:08:42.432393"
       },
       "flags": [],
       "weeklyHistory": [
@@ -74055,7 +74055,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.193812"
+        "calculatedAt": "2026-11-03T20:08:42.441009"
       },
       "flags": [],
       "weeklyHistory": [
@@ -74589,7 +74589,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.156681"
+        "calculatedAt": "2026-11-03T20:08:42.407694"
       },
       "flags": [],
       "weeklyHistory": [
@@ -75123,7 +75123,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.172102"
+        "calculatedAt": "2026-11-03T20:08:42.421075"
       },
       "flags": [],
       "weeklyHistory": [
@@ -75657,7 +75657,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.164324"
+        "calculatedAt": "2026-11-03T20:08:42.416153"
       },
       "flags": [],
       "weeklyHistory": [
@@ -76191,7 +76191,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.187229"
+        "calculatedAt": "2026-11-03T20:08:42.433161"
       },
       "flags": [],
       "weeklyHistory": [
@@ -76725,7 +76725,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.191433"
+        "calculatedAt": "2026-11-03T20:08:42.438992"
       },
       "flags": [],
       "weeklyHistory": [
@@ -77259,7 +77259,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.194017"
+        "calculatedAt": "2026-11-03T20:08:42.441194"
       },
       "flags": [],
       "weeklyHistory": [
@@ -77793,7 +77793,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.194372"
+        "calculatedAt": "2026-11-03T20:08:42.441616"
       },
       "flags": [],
       "weeklyHistory": [
@@ -78327,7 +78327,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.195325"
+        "calculatedAt": "2026-11-03T20:08:42.442758"
       },
       "flags": [],
       "weeklyHistory": [
@@ -78861,7 +78861,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.166655"
+        "calculatedAt": "2026-11-03T20:08:42.417356"
       },
       "flags": [
         {
@@ -79442,7 +79442,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.135044"
+        "calculatedAt": "2026-11-03T20:08:42.385123"
       },
       "flags": [],
       "weeklyHistory": [
@@ -80024,7 +80024,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.184402"
+        "calculatedAt": "2026-11-03T20:08:42.431366"
       },
       "flags": [
         {
@@ -80605,7 +80605,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.177488"
+        "calculatedAt": "2026-11-03T20:08:42.425015"
       },
       "flags": [],
       "weeklyHistory": [
@@ -80699,7 +80699,7 @@
         "installationDate": "2019",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "M400",
@@ -81181,7 +81181,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.167154"
+        "calculatedAt": "2026-11-03T20:08:42.417545"
       },
       "flags": [
         {
@@ -81811,7 +81811,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.177880"
+        "calculatedAt": "2026-11-03T20:08:42.425510"
       },
       "flags": [],
       "weeklyHistory": [
@@ -82387,7 +82387,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.188127"
+        "calculatedAt": "2026-11-03T20:08:42.433638"
       },
       "flags": [],
       "weeklyHistory": [
@@ -82963,7 +82963,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.178424"
+        "calculatedAt": "2026-11-03T20:08:42.426204"
       },
       "flags": [],
       "weeklyHistory": [
@@ -83546,7 +83546,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.181074"
+        "calculatedAt": "2026-11-03T20:08:42.429101"
       },
       "flags": [
         {
@@ -83642,7 +83642,7 @@
         "installationDate": "2022",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "M361",
@@ -84124,7 +84124,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.166363"
+        "calculatedAt": "2026-11-03T20:08:42.417187"
       },
       "flags": [
         {
@@ -84230,7 +84230,7 @@
         "installationDate": "2018",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X754",
@@ -84712,7 +84712,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.196420"
+        "calculatedAt": "2026-11-03T20:08:42.444285"
       },
       "flags": [
         {
@@ -85293,7 +85293,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.193421"
+        "calculatedAt": "2026-11-03T20:08:42.440660"
       },
       "flags": [],
       "weeklyHistory": [
@@ -85869,7 +85869,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.140203"
+        "calculatedAt": "2026-11-03T20:08:42.390463"
       },
       "flags": [],
       "weeklyHistory": [
@@ -85949,7 +85949,7 @@
         "installationDate": "2022",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K562",
@@ -86431,7 +86431,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.153930"
+        "calculatedAt": "2026-11-03T20:08:42.404383"
       },
       "flags": [
         {
@@ -87075,7 +87075,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.195701"
+        "calculatedAt": "2026-11-03T20:08:42.443300"
       },
       "flags": [],
       "weeklyHistory": [
@@ -87651,7 +87651,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.172674"
+        "calculatedAt": "2026-11-03T20:08:42.421382"
       },
       "flags": [],
       "weeklyHistory": [
@@ -87710,7 +87710,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X211",
@@ -88192,7 +88192,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.191976"
+        "calculatedAt": "2026-11-03T20:08:42.439446"
       },
       "flags": [],
       "weeklyHistory": [
@@ -88270,7 +88270,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "Q319",
@@ -88752,7 +88752,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.180622"
+        "calculatedAt": "2026-11-03T20:08:42.428646"
       },
       "flags": [
         {
@@ -89340,7 +89340,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.169019"
+        "calculatedAt": "2026-11-03T20:08:42.419029"
       },
       "flags": [
         {
@@ -89907,7 +89907,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.138977"
+        "calculatedAt": "2026-11-03T20:08:42.389186"
       },
       "flags": [
         {
@@ -90499,7 +90499,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.177350"
+        "calculatedAt": "2026-11-03T20:08:42.424839"
       },
       "flags": [
         {
@@ -91087,7 +91087,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.135515"
+        "calculatedAt": "2026-11-03T20:08:42.385572"
       },
       "flags": [],
       "weeklyHistory": [
@@ -91675,7 +91675,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.174998"
+        "calculatedAt": "2026-11-03T20:08:42.423479"
       },
       "flags": [],
       "weeklyHistory": [
@@ -92237,7 +92237,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.173787"
+        "calculatedAt": "2026-11-03T20:08:42.422103"
       },
       "flags": [],
       "weeklyHistory": [
@@ -92806,7 +92806,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.179805"
+        "calculatedAt": "2026-11-03T20:08:42.427744"
       },
       "flags": [
         {
@@ -93384,7 +93384,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.140054"
+        "calculatedAt": "2026-11-03T20:08:42.390318"
       },
       "flags": [],
       "weeklyHistory": [
@@ -93464,7 +93464,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X267",
@@ -93946,7 +93946,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.192928"
+        "calculatedAt": "2026-11-03T20:08:42.440308"
       },
       "flags": [],
       "weeklyHistory": [
@@ -94492,7 +94492,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.154224"
+        "calculatedAt": "2026-11-03T20:08:42.404707"
       },
       "flags": [
         {
@@ -94591,7 +94591,7 @@
         "installationDate": "2016",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K643",
@@ -95073,7 +95073,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.156019"
+        "calculatedAt": "2026-11-03T20:08:42.406849"
       },
       "flags": [
         {
@@ -95661,7 +95661,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.136938"
+        "calculatedAt": "2026-11-03T20:08:42.387059"
       },
       "flags": [],
       "weeklyHistory": [
@@ -96230,7 +96230,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.194540"
+        "calculatedAt": "2026-11-03T20:08:42.441828"
       },
       "flags": [],
       "weeklyHistory": [
@@ -96764,7 +96764,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.146880"
+        "calculatedAt": "2026-11-03T20:08:42.397574"
       },
       "flags": [
         {
@@ -97331,7 +97331,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.168263"
+        "calculatedAt": "2026-11-03T20:08:42.418327"
       },
       "flags": [
         {
@@ -97905,7 +97905,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.178533"
+        "calculatedAt": "2026-11-03T20:08:42.426338"
       },
       "flags": [
         {
@@ -98483,7 +98483,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.143323"
+        "calculatedAt": "2026-11-03T20:08:42.393852"
       },
       "flags": [
         {
@@ -99075,7 +99075,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.184265"
+        "calculatedAt": "2026-11-03T20:08:42.431204"
       },
       "flags": [],
       "weeklyHistory": [
@@ -99651,7 +99651,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.148570"
+        "calculatedAt": "2026-11-03T20:08:42.399375"
       },
       "flags": [
         {
@@ -100232,7 +100232,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.160679"
+        "calculatedAt": "2026-11-03T20:08:42.412512"
       },
       "flags": [
         {
@@ -100813,7 +100813,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.169138"
+        "calculatedAt": "2026-11-03T20:08:42.419145"
       },
       "flags": [
         {
@@ -101394,7 +101394,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.173971"
+        "calculatedAt": "2026-11-03T20:08:42.422254"
       },
       "flags": [],
       "weeklyHistory": [
@@ -101963,7 +101963,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.142312"
+        "calculatedAt": "2026-11-03T20:08:42.392771"
       },
       "flags": [
         {
@@ -102535,7 +102535,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.179958"
+        "calculatedAt": "2026-11-03T20:08:42.427953"
       },
       "flags": [],
       "weeklyHistory": [
@@ -103104,7 +103104,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.159712"
+        "calculatedAt": "2026-11-03T20:08:42.411449"
       },
       "flags": [
         {
@@ -103685,7 +103685,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.134236"
+        "calculatedAt": "2026-11-03T20:08:42.384434"
       },
       "flags": [
         {
@@ -104301,7 +104301,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.179681"
+        "calculatedAt": "2026-11-03T20:08:42.427606"
       },
       "flags": [],
       "weeklyHistory": [
@@ -104863,7 +104863,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.196084"
+        "calculatedAt": "2026-11-03T20:08:42.443828"
       },
       "flags": [],
       "weeklyHistory": [
@@ -105397,7 +105397,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.192840"
+        "calculatedAt": "2026-11-03T20:08:42.440216"
       },
       "flags": [],
       "weeklyHistory": [
@@ -105931,7 +105931,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.153376"
+        "calculatedAt": "2026-11-03T20:08:42.403826"
       },
       "flags": [],
       "weeklyHistory": [
@@ -106465,7 +106465,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.155122"
+        "calculatedAt": "2026-11-03T20:08:42.405757"
       },
       "flags": [],
       "weeklyHistory": [
@@ -106999,7 +106999,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.155600"
+        "calculatedAt": "2026-11-03T20:08:42.406304"
       },
       "flags": [],
       "weeklyHistory": [
@@ -107533,7 +107533,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.151172"
+        "calculatedAt": "2026-11-03T20:08:42.401948"
       },
       "flags": [],
       "weeklyHistory": [
@@ -108067,7 +108067,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.136530"
+        "calculatedAt": "2026-11-03T20:08:42.386707"
       },
       "flags": [],
       "weeklyHistory": [
@@ -108601,7 +108601,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.138627"
+        "calculatedAt": "2026-11-03T20:08:42.388810"
       },
       "flags": [],
       "weeklyHistory": [
@@ -109135,7 +109135,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.157181"
+        "calculatedAt": "2026-11-03T20:08:42.408287"
       },
       "flags": [],
       "weeklyHistory": [
@@ -109669,7 +109669,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.186458"
+        "calculatedAt": "2026-11-03T20:08:42.432446"
       },
       "flags": [],
       "weeklyHistory": [
@@ -110203,7 +110203,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.181840"
+        "calculatedAt": "2026-11-03T20:08:42.429888"
       },
       "flags": [],
       "weeklyHistory": [
@@ -110765,7 +110765,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.153561"
+        "calculatedAt": "2026-11-03T20:08:42.403999"
       },
       "flags": [
         {
@@ -111353,7 +111353,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.182925"
+        "calculatedAt": "2026-11-03T20:08:42.430343"
       },
       "flags": [
         {
@@ -111449,7 +111449,7 @@
         "installationDate": "2021",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X492",
@@ -111931,7 +111931,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.195265"
+        "calculatedAt": "2026-11-03T20:08:42.442628"
       },
       "flags": [],
       "weeklyHistory": [
@@ -112498,7 +112498,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.194145"
+        "calculatedAt": "2026-11-03T20:08:42.441331"
       },
       "flags": [
         {
@@ -113072,7 +113072,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.168379"
+        "calculatedAt": "2026-11-03T20:08:42.418432"
       },
       "flags": [
         {
@@ -113646,7 +113646,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.161506"
+        "calculatedAt": "2026-11-03T20:08:42.413416"
       },
       "flags": [
         {
@@ -114220,7 +114220,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.175108"
+        "calculatedAt": "2026-11-03T20:08:42.423625"
       },
       "flags": [],
       "weeklyHistory": [
@@ -114789,7 +114789,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.192782"
+        "calculatedAt": "2026-11-03T20:08:42.440157"
       },
       "flags": [],
       "weeklyHistory": [
@@ -115358,7 +115358,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.164745"
+        "calculatedAt": "2026-11-03T20:08:42.416441"
       },
       "flags": [
         {
@@ -115988,7 +115988,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.137391"
+        "calculatedAt": "2026-11-03T20:08:42.387483"
       },
       "flags": [
         {
@@ -116590,7 +116590,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.195399"
+        "calculatedAt": "2026-11-03T20:08:42.442868"
       },
       "flags": [],
       "weeklyHistory": [
@@ -116642,7 +116642,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X469",
@@ -117124,7 +117124,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.194939"
+        "calculatedAt": "2026-11-03T20:08:42.442260"
       },
       "flags": [
         {
@@ -117777,7 +117777,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.136303"
+        "calculatedAt": "2026-11-03T20:08:42.386507"
       },
       "flags": [
         {
@@ -118348,7 +118348,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.147865"
+        "calculatedAt": "2026-11-03T20:08:42.398672"
       },
       "flags": [
         {
@@ -118924,7 +118924,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.175660"
+        "calculatedAt": "2026-11-03T20:08:42.423913"
       },
       "flags": [],
       "weeklyHistory": [
@@ -119493,7 +119493,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.139856"
+        "calculatedAt": "2026-11-03T20:08:42.390165"
       },
       "flags": [
         {
@@ -119589,7 +119589,7 @@
         "installationDate": "2026",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X531",
@@ -120071,7 +120071,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.195580"
+        "calculatedAt": "2026-11-03T20:08:42.443123"
       },
       "flags": [],
       "weeklyHistory": [
@@ -120163,7 +120163,7 @@
         "installationDate": "2022",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "Q311",
@@ -120645,7 +120645,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.180172"
+        "calculatedAt": "2026-11-03T20:08:42.428180"
       },
       "flags": [],
       "weeklyHistory": [
@@ -121221,7 +121221,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.143896"
+        "calculatedAt": "2026-11-03T20:08:42.394463"
       },
       "flags": [
         {
@@ -121820,7 +121820,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.144920"
+        "calculatedAt": "2026-11-03T20:08:42.395546"
       },
       "flags": [
         {
@@ -121912,7 +121912,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X005",
@@ -122394,7 +122394,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.186749"
+        "calculatedAt": "2026-11-03T20:08:42.432711"
       },
       "flags": [],
       "weeklyHistory": [
@@ -122961,7 +122961,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.190753"
+        "calculatedAt": "2026-11-03T20:08:42.436964"
       },
       "flags": [
         {
@@ -123060,7 +123060,7 @@
         "installationDate": "2013",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K147",
@@ -123542,7 +123542,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.142479"
+        "calculatedAt": "2026-11-03T20:08:42.392947"
       },
       "flags": [
         {
@@ -124128,7 +124128,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.171544"
+        "calculatedAt": "2026-11-03T20:08:42.420864"
       },
       "flags": [
         {
@@ -124717,7 +124717,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.177603"
+        "calculatedAt": "2026-11-03T20:08:42.425163"
       },
       "flags": [
         {
@@ -125291,7 +125291,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.156866"
+        "calculatedAt": "2026-11-03T20:08:42.407920"
       },
       "flags": [
         {
@@ -125879,7 +125879,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.187491"
+        "calculatedAt": "2026-11-03T20:08:42.433279"
       },
       "flags": [
         {
@@ -126467,7 +126467,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.153680"
+        "calculatedAt": "2026-11-03T20:08:42.404117"
       },
       "flags": [
         {
@@ -127059,7 +127059,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.159061"
+        "calculatedAt": "2026-11-03T20:08:42.410719"
       },
       "flags": [
         {
@@ -127630,7 +127630,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.144349"
+        "calculatedAt": "2026-11-03T20:08:42.394889"
       },
       "flags": [
         {
@@ -128229,7 +128229,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.138183"
+        "calculatedAt": "2026-11-03T20:08:42.388221"
       },
       "flags": [
         {
@@ -128768,7 +128768,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.172405"
+        "calculatedAt": "2026-11-03T20:08:42.421269"
       },
       "flags": [
         {
@@ -128867,7 +128867,7 @@
         "installationDate": "2019",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K344",
@@ -129349,7 +129349,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.149679"
+        "calculatedAt": "2026-11-03T20:08:42.400490"
       },
       "flags": [
         {
@@ -129945,7 +129945,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.154105"
+        "calculatedAt": "2026-11-03T20:08:42.404574"
       },
       "flags": [],
       "weeklyHistory": [
@@ -130011,7 +130011,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K218",
@@ -130493,7 +130493,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.145917"
+        "calculatedAt": "2026-11-03T20:08:42.396589"
       },
       "flags": [
         {
@@ -131090,7 +131090,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.157082"
+        "calculatedAt": "2026-11-03T20:08:42.408107"
       },
       "flags": [
         {
@@ -131661,7 +131661,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.152220"
+        "calculatedAt": "2026-11-03T20:08:42.402751"
       },
       "flags": [],
       "weeklyHistory": [
@@ -132216,7 +132216,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.160337"
+        "calculatedAt": "2026-11-03T20:08:42.412133"
       },
       "flags": [
         {
@@ -132797,7 +132797,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.150373"
+        "calculatedAt": "2026-11-03T20:08:42.401082"
       },
       "flags": [],
       "weeklyHistory": [
@@ -132870,7 +132870,7 @@
         "installationDate": "2010",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "M333",
@@ -133352,7 +133352,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.165544"
+        "calculatedAt": "2026-11-03T20:08:42.416823"
       },
       "flags": [
         {
@@ -134000,7 +134000,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.191521"
+        "calculatedAt": "2026-11-03T20:08:42.439069"
       },
       "flags": [
         {
@@ -134064,7 +134064,7 @@
         "installationDate": "2026",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X462",
@@ -134546,7 +134546,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.194663"
+        "calculatedAt": "2026-11-03T20:08:42.441993"
       },
       "flags": [
         {
@@ -135132,7 +135132,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.142719"
+        "calculatedAt": "2026-11-03T20:08:42.393207"
       },
       "flags": [
         {
@@ -135724,7 +135724,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.143742"
+        "calculatedAt": "2026-11-03T20:08:42.394305"
       },
       "flags": [],
       "weeklyHistory": [
@@ -136272,7 +136272,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.180456"
+        "calculatedAt": "2026-11-03T20:08:42.428476"
       },
       "flags": [
         {
@@ -136846,7 +136846,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.139550"
+        "calculatedAt": "2026-11-03T20:08:42.389850"
       },
       "flags": [
         {
@@ -137449,7 +137449,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.154005"
+        "calculatedAt": "2026-11-03T20:08:42.404463"
       },
       "flags": [],
       "weeklyHistory": [
@@ -137983,7 +137983,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.138400"
+        "calculatedAt": "2026-11-03T20:08:42.388500"
       },
       "flags": [],
       "weeklyHistory": [
@@ -138517,7 +138517,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.142557"
+        "calculatedAt": "2026-11-03T20:08:42.393029"
       },
       "flags": [],
       "weeklyHistory": [
@@ -139051,7 +139051,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.177090"
+        "calculatedAt": "2026-11-03T20:08:42.424672"
       },
       "flags": [
         {
@@ -139625,7 +139625,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.144663"
+        "calculatedAt": "2026-11-03T20:08:42.395268"
       },
       "flags": [
         {
@@ -140217,7 +140217,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.186332"
+        "calculatedAt": "2026-11-03T20:08:42.432328"
       },
       "flags": [
         {
@@ -140327,7 +140327,7 @@
         "installationDate": "2022",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X017",
@@ -140809,7 +140809,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.187057"
+        "calculatedAt": "2026-11-03T20:08:42.433005"
       },
       "flags": [
         {
@@ -141430,7 +141430,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.189105"
+        "calculatedAt": "2026-11-03T20:08:42.434694"
       },
       "flags": [
         {
@@ -142004,7 +142004,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.153171"
+        "calculatedAt": "2026-11-03T20:08:42.403572"
       },
       "flags": [
         {
@@ -142638,7 +142638,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.163545"
+        "calculatedAt": "2026-11-03T20:08:42.415611"
       },
       "flags": [
         {
@@ -143226,7 +143226,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.190864"
+        "calculatedAt": "2026-11-03T20:08:42.437063"
       },
       "flags": [
         {
@@ -143772,7 +143772,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.196591"
+        "calculatedAt": "2026-11-03T20:08:42.444484"
       },
       "flags": [
         {
@@ -143836,7 +143836,7 @@
         "installationDate": "2017",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K505",
@@ -144318,7 +144318,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.152759"
+        "calculatedAt": "2026-11-03T20:08:42.403140"
       },
       "flags": [
         {
@@ -144453,7 +144453,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X075",
@@ -144935,7 +144935,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.189260"
+        "calculatedAt": "2026-11-03T20:08:42.435124"
       },
       "flags": [
         {
@@ -145029,7 +145029,7 @@
         "installationDate": "2025",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X367",
@@ -145511,7 +145511,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.193946"
+        "calculatedAt": "2026-11-03T20:08:42.441129"
       },
       "flags": [],
       "weeklyHistory": [
@@ -146064,7 +146064,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.180287"
+        "calculatedAt": "2026-11-03T20:08:42.428302"
       },
       "flags": [
         {
@@ -146153,7 +146153,7 @@
         "installationDate": "2016",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X047",
@@ -146635,7 +146635,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.188552"
+        "calculatedAt": "2026-11-03T20:08:42.433993"
       },
       "flags": [
         {
@@ -147207,7 +147207,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.142142"
+        "calculatedAt": "2026-11-03T20:08:42.392601"
       },
       "flags": [
         {
@@ -147317,7 +147317,7 @@
         "installationDate": "2024",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "The Birch Wathen Lenox School",
@@ -147799,7 +147799,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.186590"
+        "calculatedAt": "2026-11-03T20:08:42.432572"
       },
       "flags": [
         {
@@ -148387,7 +148387,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.143037"
+        "calculatedAt": "2026-11-03T20:08:42.393555"
       },
       "flags": [
         {
@@ -148979,7 +148979,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.192215"
+        "calculatedAt": "2026-11-03T20:08:42.439573"
       },
       "flags": [
         {
@@ -149078,7 +149078,7 @@
         "installationDate": "2021",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K938",
@@ -149560,7 +149560,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.160036"
+        "calculatedAt": "2026-11-03T20:08:42.411801"
       },
       "flags": [
         {
@@ -149705,7 +149705,7 @@
         "installationDate": "2024",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X439",
@@ -150187,7 +150187,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.194480"
+        "calculatedAt": "2026-11-03T20:08:42.441752"
       },
       "flags": [
         {
@@ -150759,7 +150759,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.134856"
+        "calculatedAt": "2026-11-03T20:08:42.384955"
       },
       "flags": [],
       "weeklyHistory": [
@@ -151376,7 +151376,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.193029"
+        "calculatedAt": "2026-11-03T20:08:42.440395"
       },
       "flags": [],
       "weeklyHistory": [
@@ -151910,7 +151910,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.162392"
+        "calculatedAt": "2026-11-03T20:08:42.414393"
       },
       "flags": [
         {
@@ -152004,7 +152004,7 @@
         "installationDate": "2021",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "NA",
@@ -152486,7 +152486,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.169962"
+        "calculatedAt": "2026-11-03T20:08:42.419975"
       },
       "flags": [
         {
@@ -153459,7 +153459,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.138323"
+        "calculatedAt": "2026-11-03T20:08:42.388419"
       },
       "flags": [
         {
@@ -154030,7 +154030,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.153749"
+        "calculatedAt": "2026-11-03T20:08:42.404187"
       },
       "flags": [],
       "weeklyHistory": [
@@ -154564,7 +154564,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.147014"
+        "calculatedAt": "2026-11-03T20:08:42.397710"
       },
       "flags": [
         {
@@ -155149,7 +155149,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.162774"
+        "calculatedAt": "2026-11-03T20:08:42.414822"
       },
       "flags": [
         {
@@ -155720,7 +155720,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.154644"
+        "calculatedAt": "2026-11-03T20:08:42.405193"
       },
       "flags": [
         {
@@ -156284,7 +156284,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.152389"
+        "calculatedAt": "2026-11-03T20:08:42.402865"
       },
       "flags": [
         {
@@ -156865,7 +156865,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.145608"
+        "calculatedAt": "2026-11-03T20:08:42.396270"
       },
       "flags": [
         {
@@ -157429,7 +157429,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.192586"
+        "calculatedAt": "2026-11-03T20:08:42.439937"
       },
       "flags": [
         {
@@ -158010,7 +158010,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.146197"
+        "calculatedAt": "2026-11-03T20:08:42.396874"
       },
       "flags": [
         {
@@ -158602,7 +158602,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.154551"
+        "calculatedAt": "2026-11-03T20:08:42.405070"
       },
       "flags": [
         {
@@ -158698,7 +158698,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X111",
@@ -159180,7 +159180,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.189742"
+        "calculatedAt": "2026-11-03T20:08:42.436038"
       },
       "flags": [
         {
@@ -159749,7 +159749,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.143161"
+        "calculatedAt": "2026-11-03T20:08:42.393685"
       },
       "flags": [
         {
@@ -160320,7 +160320,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.177748"
+        "calculatedAt": "2026-11-03T20:08:42.425350"
       },
       "flags": [
         {
@@ -160891,7 +160891,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.156405"
+        "calculatedAt": "2026-11-03T20:08:42.407340"
       },
       "flags": [
         {
@@ -161479,7 +161479,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.144784"
+        "calculatedAt": "2026-11-03T20:08:42.395400"
       },
       "flags": [],
       "weeklyHistory": [
@@ -161545,7 +161545,7 @@
         "installationDate": "2024",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K676",
@@ -162027,7 +162027,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.157682"
+        "calculatedAt": "2026-11-03T20:08:42.408907"
       },
       "flags": [
         {
@@ -162123,7 +162123,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X564",
@@ -162605,7 +162605,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.195937"
+        "calculatedAt": "2026-11-03T20:08:42.443634"
       },
       "flags": [
         {
@@ -163204,7 +163204,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.136081"
+        "calculatedAt": "2026-11-03T20:08:42.386317"
       },
       "flags": [
         {
@@ -163792,7 +163792,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.159426"
+        "calculatedAt": "2026-11-03T20:08:42.411135"
       },
       "flags": [
         {
@@ -164381,7 +164381,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.154744"
+        "calculatedAt": "2026-11-03T20:08:42.405312"
       },
       "flags": [],
       "weeklyHistory": [
@@ -164908,7 +164908,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.171815"
+        "calculatedAt": "2026-11-03T20:08:42.421001"
       },
       "flags": [
         {
@@ -165490,7 +165490,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.176205"
+        "calculatedAt": "2026-11-03T20:08:42.424200"
       },
       "flags": [
         {
@@ -165575,7 +165575,7 @@
         "installationDate": "2014",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "M402",
@@ -166057,7 +166057,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.167412"
+        "calculatedAt": "2026-11-03T20:08:42.417699"
       },
       "flags": [
         {
@@ -166684,7 +166684,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.178763"
+        "calculatedAt": "2026-11-03T20:08:42.426619"
       },
       "flags": [],
       "weeklyHistory": [
@@ -167253,7 +167253,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.152603"
+        "calculatedAt": "2026-11-03T20:08:42.402997"
       },
       "flags": [
         {
@@ -167834,7 +167834,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.145487"
+        "calculatedAt": "2026-11-03T20:08:42.396146"
       },
       "flags": [
         {
@@ -168408,7 +168408,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.139719"
+        "calculatedAt": "2026-11-03T20:08:42.390026"
       },
       "flags": [
         {
@@ -169007,7 +169007,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.161123"
+        "calculatedAt": "2026-11-03T20:08:42.412981"
       },
       "flags": [
         {
@@ -169595,7 +169595,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.174266"
+        "calculatedAt": "2026-11-03T20:08:42.422539"
       },
       "flags": [
         {
@@ -170180,7 +170180,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.193239"
+        "calculatedAt": "2026-11-03T20:08:42.440511"
       },
       "flags": [
         {
@@ -170765,7 +170765,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.164500"
+        "calculatedAt": "2026-11-03T20:08:42.416273"
       },
       "flags": [
         {
@@ -171315,7 +171315,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.148377"
+        "calculatedAt": "2026-11-03T20:08:42.399219"
       },
       "flags": [
         {
@@ -171854,7 +171854,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.170938"
+        "calculatedAt": "2026-11-03T20:08:42.420560"
       },
       "flags": [
         {
@@ -172457,7 +172457,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.163152"
+        "calculatedAt": "2026-11-03T20:08:42.415318"
       },
       "flags": [
         {
@@ -173042,7 +173042,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.140952"
+        "calculatedAt": "2026-11-03T20:08:42.391300"
       },
       "flags": [
         {
@@ -173623,7 +173623,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.181687"
+        "calculatedAt": "2026-11-03T20:08:42.429732"
       },
       "flags": [
         {
@@ -174169,7 +174169,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.184117"
+        "calculatedAt": "2026-11-03T20:08:42.431048"
       },
       "flags": [
         {
@@ -174233,7 +174233,7 @@
         "installationDate": "2021",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K721",
@@ -174715,7 +174715,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.158548"
+        "calculatedAt": "2026-11-03T20:08:42.410113"
       },
       "flags": [
         {
@@ -175325,7 +175325,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.174134"
+        "calculatedAt": "2026-11-03T20:08:42.422395"
       },
       "flags": [],
       "weeklyHistory": [
@@ -175405,7 +175405,7 @@
         "installationDate": "2026",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "Q007",
@@ -175887,7 +175887,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.173087"
+        "calculatedAt": "2026-11-03T20:08:42.421570"
       },
       "flags": [
         {
@@ -176005,7 +176005,7 @@
         "installationDate": "2018",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K430",
@@ -176487,7 +176487,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.152077"
+        "calculatedAt": "2026-11-03T20:08:42.402640"
       },
       "flags": [
         {
@@ -177058,7 +177058,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.164234"
+        "calculatedAt": "2026-11-03T20:08:42.416093"
       },
       "flags": [
         {
@@ -177157,7 +177157,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X043",
@@ -177639,7 +177639,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.188260"
+        "calculatedAt": "2026-11-03T20:08:42.433748"
       },
       "flags": [
         {
@@ -178201,7 +178201,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.189922"
+        "calculatedAt": "2026-11-03T20:08:42.436362"
       },
       "flags": [
         {
@@ -178322,7 +178322,7 @@
         "installationDate": "2022",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X031",
@@ -178804,7 +178804,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.187906"
+        "calculatedAt": "2026-11-03T20:08:42.433467"
       },
       "flags": [
         {
@@ -179405,7 +179405,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.163826"
+        "calculatedAt": "2026-11-03T20:08:42.415807"
       },
       "flags": [
         {
@@ -180029,7 +180029,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.180925"
+        "calculatedAt": "2026-11-03T20:08:42.428953"
       },
       "flags": [
         {
@@ -180600,7 +180600,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.178648"
+        "calculatedAt": "2026-11-03T20:08:42.426476"
       },
       "flags": [],
       "weeklyHistory": [
@@ -181148,7 +181148,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.148283"
+        "calculatedAt": "2026-11-03T20:08:42.399128"
       },
       "flags": [
         {
@@ -181715,7 +181715,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.181539"
+        "calculatedAt": "2026-11-03T20:08:42.429579"
       },
       "flags": [
         {
@@ -182300,7 +182300,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.147425"
+        "calculatedAt": "2026-11-03T20:08:42.398134"
       },
       "flags": [],
       "weeklyHistory": [
@@ -182366,7 +182366,7 @@
         "installationDate": "2026",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X153",
@@ -182848,7 +182848,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.191072"
+        "calculatedAt": "2026-11-03T20:08:42.437263"
       },
       "flags": [
         {
@@ -183445,7 +183445,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.182659"
+        "calculatedAt": "2026-11-03T20:08:42.430202"
       },
       "flags": [
         {
@@ -184019,7 +184019,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.195803"
+        "calculatedAt": "2026-11-03T20:08:42.443441"
       },
       "flags": [
         {
@@ -184590,7 +184590,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.180788"
+        "calculatedAt": "2026-11-03T20:08:42.428825"
       },
       "flags": [
         {
@@ -185171,7 +185171,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.151350"
+        "calculatedAt": "2026-11-03T20:08:42.402109"
       },
       "flags": [
         {
@@ -185776,7 +185776,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.157521"
+        "calculatedAt": "2026-11-03T20:08:42.408704"
       },
       "flags": [
         {
@@ -185861,7 +185861,7 @@
         "installationDate": "2026",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X127",
@@ -186343,7 +186343,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.190531"
+        "calculatedAt": "2026-11-03T20:08:42.436765"
       },
       "flags": [
         {
@@ -186940,7 +186940,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.140337"
+        "calculatedAt": "2026-11-03T20:08:42.390650"
       },
       "flags": [
         {
@@ -187511,7 +187511,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.141699"
+        "calculatedAt": "2026-11-03T20:08:42.392125"
       },
       "flags": [
         {
@@ -188107,7 +188107,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.178181"
+        "calculatedAt": "2026-11-03T20:08:42.425896"
       },
       "flags": [
         {
@@ -188688,7 +188688,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.192661"
+        "calculatedAt": "2026-11-03T20:08:42.440027"
       },
       "flags": [
         {
@@ -188756,7 +188756,7 @@
         "installationDate": "2024",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X811",
@@ -189238,7 +189238,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.196508"
+        "calculatedAt": "2026-11-03T20:08:42.444401"
       },
       "flags": [
         {
@@ -189300,7 +189300,7 @@
         "installationDate": "2022",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K686",
@@ -189782,7 +189782,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.158139"
+        "calculatedAt": "2026-11-03T20:08:42.409609"
       },
       "flags": [
         {
@@ -189966,7 +189966,7 @@
         "installationDate": "2023",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X186",
@@ -190448,7 +190448,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.191669"
+        "calculatedAt": "2026-11-03T20:08:42.439179"
       },
       "flags": [
         {
@@ -191017,7 +191017,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.162606"
+        "calculatedAt": "2026-11-03T20:08:42.414579"
       },
       "flags": [
         {
@@ -191588,7 +191588,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.162953"
+        "calculatedAt": "2026-11-03T20:08:42.415024"
       },
       "flags": [
         {
@@ -192184,7 +192184,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.186126"
+        "calculatedAt": "2026-11-03T20:08:42.432200"
       },
       "flags": [
         {
@@ -192755,7 +192755,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.149977"
+        "calculatedAt": "2026-11-03T20:08:42.400757"
       },
       "flags": [
         {
@@ -193333,7 +193333,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.143621"
+        "calculatedAt": "2026-11-03T20:08:42.394175"
       },
       "flags": [
         {
@@ -193922,7 +193922,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.140482"
+        "calculatedAt": "2026-11-03T20:08:42.390808"
       },
       "flags": [
         {
@@ -194493,7 +194493,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.144026"
+        "calculatedAt": "2026-11-03T20:08:42.394601"
       },
       "flags": [
         {
@@ -195082,7 +195082,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.141385"
+        "calculatedAt": "2026-11-03T20:08:42.391788"
       },
       "flags": [
         {
@@ -195667,7 +195667,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.146478"
+        "calculatedAt": "2026-11-03T20:08:42.397149"
       },
       "flags": [
         {
@@ -196249,7 +196249,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.151097"
+        "calculatedAt": "2026-11-03T20:08:42.401862"
       },
       "flags": [
         {
@@ -196830,7 +196830,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.170204"
+        "calculatedAt": "2026-11-03T20:08:42.420202"
       },
       "flags": [
         {
@@ -197433,7 +197433,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.146737"
+        "calculatedAt": "2026-11-03T20:08:42.397424"
       },
       "flags": [
         {
@@ -198029,7 +198029,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.144150"
+        "calculatedAt": "2026-11-03T20:08:42.394735"
       },
       "flags": [
         {
@@ -198611,7 +198611,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.163351"
+        "calculatedAt": "2026-11-03T20:08:42.415482"
       },
       "flags": [
         {
@@ -199192,7 +199192,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.160489"
+        "calculatedAt": "2026-11-03T20:08:42.412300"
       },
       "flags": [
         {
@@ -199756,7 +199756,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.138088"
+        "calculatedAt": "2026-11-03T20:08:42.388136"
       },
       "flags": [
         {
@@ -200313,7 +200313,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.168729"
+        "calculatedAt": "2026-11-03T20:08:42.418747"
       },
       "flags": [
         {
@@ -200895,7 +200895,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.168033"
+        "calculatedAt": "2026-11-03T20:08:42.418138"
       },
       "flags": [
         {
@@ -201491,7 +201491,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.158893"
+        "calculatedAt": "2026-11-03T20:08:42.410527"
       },
       "flags": [
         {
@@ -202087,7 +202087,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.183489"
+        "calculatedAt": "2026-11-03T20:08:42.430653"
       },
       "flags": [
         {
@@ -202651,7 +202651,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.144518"
+        "calculatedAt": "2026-11-03T20:08:42.395111"
       },
       "flags": [
         {
@@ -203246,7 +203246,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.168626"
+        "calculatedAt": "2026-11-03T20:08:42.418617"
       },
       "flags": [
         {
@@ -203810,7 +203810,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.142882"
+        "calculatedAt": "2026-11-03T20:08:42.393385"
       },
       "flags": [
         {
@@ -204402,7 +204402,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.154436"
+        "calculatedAt": "2026-11-03T20:08:42.404937"
       },
       "flags": [
         {
@@ -204959,7 +204959,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.146600"
+        "calculatedAt": "2026-11-03T20:08:42.397275"
       },
       "flags": [
         {
@@ -205541,7 +205541,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.147983"
+        "calculatedAt": "2026-11-03T20:08:42.398824"
       },
       "flags": [
         {
@@ -206105,7 +206105,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.151737"
+        "calculatedAt": "2026-11-03T20:08:42.402435"
       },
       "flags": [
         {
@@ -206690,7 +206690,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.155043"
+        "calculatedAt": "2026-11-03T20:08:42.405664"
       },
       "flags": [
         {
@@ -207268,7 +207268,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.149374"
+        "calculatedAt": "2026-11-03T20:08:42.400232"
       },
       "flags": [
         {
@@ -207846,7 +207846,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.138549"
+        "calculatedAt": "2026-11-03T20:08:42.388648"
       },
       "flags": [
         {
@@ -208438,7 +208438,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.177946"
+        "calculatedAt": "2026-11-03T20:08:42.425595"
       },
       "flags": [
         {
@@ -208984,7 +208984,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.158718"
+        "calculatedAt": "2026-11-03T20:08:42.410321"
       },
       "flags": [
         {
@@ -209084,7 +209084,7 @@
         "installationDate": "2014",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "K376",
@@ -209566,7 +209566,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.150665"
+        "calculatedAt": "2026-11-03T20:08:42.401330"
       },
       "flags": [
         {
@@ -210165,7 +210165,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.141551"
+        "calculatedAt": "2026-11-03T20:08:42.391970"
       },
       "flags": [
         {
@@ -210743,7 +210743,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.145187"
+        "calculatedAt": "2026-11-03T20:08:42.395823"
       },
       "flags": [
         {
@@ -211346,7 +211346,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.179037"
+        "calculatedAt": "2026-11-03T20:08:42.426931"
       },
       "flags": [
         {
@@ -211913,7 +211913,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.150473"
+        "calculatedAt": "2026-11-03T20:08:42.401166"
       },
       "flags": [
         {
@@ -212470,7 +212470,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.145325"
+        "calculatedAt": "2026-11-03T20:08:42.395972"
       },
       "flags": [
         {
@@ -213052,7 +213052,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.149237"
+        "calculatedAt": "2026-11-03T20:08:42.400113"
       },
       "flags": [
         {
@@ -213655,7 +213655,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.185974"
+        "calculatedAt": "2026-11-03T20:08:42.432031"
       },
       "flags": [
         {
@@ -214237,7 +214237,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.174464"
+        "calculatedAt": "2026-11-03T20:08:42.422716"
       },
       "flags": [
         {
@@ -214305,7 +214305,7 @@
         "installationDate": "2021",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "AS",
@@ -214787,7 +214787,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.135846"
+        "calculatedAt": "2026-11-03T20:08:42.385973"
       },
       "flags": [
         {
@@ -215376,7 +215376,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.149823"
+        "calculatedAt": "2026-11-03T20:08:42.400609"
       },
       "flags": [],
       "weeklyHistory": [
@@ -215449,7 +215449,7 @@
         "installationDate": "2024",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X670",
@@ -215931,7 +215931,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.196300"
+        "calculatedAt": "2026-11-03T20:08:42.444126"
       },
       "flags": [
         {
@@ -216011,7 +216011,7 @@
         "installationDate": "2020",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "X481",
@@ -216493,7 +216493,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.195098"
+        "calculatedAt": "2026-11-03T20:08:42.442462"
       },
       "flags": [
         {
@@ -217065,7 +217065,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.157877"
+        "calculatedAt": "2026-11-03T20:08:42.409267"
       },
       "flags": [
         {
@@ -217661,7 +217661,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.167591"
+        "calculatedAt": "2026-11-03T20:08:42.417853"
       },
       "flags": [
         {
@@ -218218,7 +218218,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.151862"
+        "calculatedAt": "2026-11-03T20:08:42.402537"
       },
       "flags": [
         {
@@ -218782,7 +218782,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.156592"
+        "calculatedAt": "2026-11-03T20:08:42.407580"
       },
       "flags": [
         {
@@ -219367,7 +219367,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.181408"
+        "calculatedAt": "2026-11-03T20:08:42.429442"
       },
       "flags": [
         {
@@ -219431,7 +219431,7 @@
         "installationDate": "2024",
         "numLabs": 1,
         "systemsInstalled": 3,
-        "hasAquaponics": true
+        "hasAquaponics": false
       },
       "score": {
         "schoolDbn": "Q071",
@@ -219913,7 +219913,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.174879"
+        "calculatedAt": "2026-11-03T20:08:42.423270"
       },
       "flags": [
         {
@@ -220484,7 +220484,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.190035"
+        "calculatedAt": "2026-11-03T20:08:42.436546"
       },
       "flags": [
         {
@@ -221030,7 +221030,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.175186"
+        "calculatedAt": "2026-11-03T20:08:42.423714"
       },
       "flags": [
         {
@@ -221587,7 +221587,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.169418"
+        "calculatedAt": "2026-11-03T20:08:42.419449"
       },
       "flags": [
         {
@@ -222281,7 +222281,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.191858"
+        "calculatedAt": "2026-11-03T20:08:42.439332"
       },
       "flags": [
         {
@@ -222827,7 +222827,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.139390"
+        "calculatedAt": "2026-11-03T20:08:42.389626"
       },
       "flags": [
         {
@@ -223430,7 +223430,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T19:55:41.147704"
+        "calculatedAt": "2026-11-03T20:08:42.398422"
       },
       "flags": [
         {

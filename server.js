@@ -140,7 +140,7 @@ function runPythonIngestion(rootDir, scriptPath, callback) {
   tryNext(0);
 }
 
-const server = http.createServer((req, res) => {
+export function handleRequest(req, res) {
   const reqPath = decodeURI((req.url || '/').split('?')[0]);
   const rootDir = __dirname;
 
@@ -362,8 +362,12 @@ const server = http.createServer((req, res) => {
       res.end('Build not found. Please run npm run build first.');
     }
   }
-});
+}
 
-server.listen(port, '0.0.0.0', () => {
-  console.log(`NY Sun Works Dashboard production server running at http://0.0.0.0:${port}`);
-});
+export const server = http.createServer(handleRequest);
+
+if (process.env.NO_LISTEN !== '1') {
+  server.listen(port, '0.0.0.0', () => {
+    console.log(`NY Sun Works Dashboard production server running at http://0.0.0.0:${port}`);
+  });
+}

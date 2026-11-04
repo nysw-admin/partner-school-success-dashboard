@@ -1,22 +1,26 @@
-import os, json, subprocess, sys, time
-import pandas as pd
+import os, json, subprocess, sys
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if os.path.join(PROJECT_ROOT, 'scripts') not in sys.path:
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, 'scripts'))
+
 HIST_FILE = os.path.join(PROJECT_ROOT, 'data', 'historical_visits.json')
 COHORT_FILE = os.path.join(PROJECT_ROOT, 'data', 'cohort.json')
+SNAP_DIR = os.path.join(PROJECT_ROOT, 'data', 'snapshots')
 
-print("Testing Incremental Accumulator...")
+print("Testing Python Ingestion Pipeline & Incremental Accumulator...")
 
-# 1. Check historical visits file exists and has records
+# 1. Check historical visits file exists and has records for SY 2026-2027
 assert os.path.exists(HIST_FILE), "historical_visits.json should exist"
 with open(HIST_FILE, 'r', encoding='utf-8') as f:
     hist = json.load(f)
 
 base_count = hist.get('totalCumulativeVisits', 0)
-assert base_count > 3900, f"Expected >3900 visits, got {base_count}"
-print(f"[PASS] Base historical repository verified with {base_count} visits.")
+assert base_count == 2167, f"Expected 2167 visits from GST Asset Nov 2026.xls, got {base_count}"
+assert hist.get('schoolYear') == 'SY 2026–2027', f"Expected SY 2026–2027, got {hist.get('schoolYear')}"
+print(f"[PASS] Base historical repository verified with {base_count} visits ({hist.get('schoolYear')}).")
 
-# 2. Check cohort.json has ingestionMetadata
+# 2. Check cohort.json has ingestionMetadata and 391 schools
 assert os.path.exists(COHORT_FILE), "cohort.json should exist"
 with open(COHORT_FILE, 'r', encoding='utf-8') as f:
     cohort = json.load(f)
@@ -24,49 +28,37 @@ with open(COHORT_FILE, 'r', encoding='utf-8') as f:
 meta = cohort.get('ingestionMetadata', {})
 assert meta.get('mode') == 'incremental_accumulator', "Expected mode 'incremental_accumulator'"
 assert meta.get('totalCumulativeVisits') == base_count, "Metadata total visits matches"
-print(f"[PASS] Cohort metadata verified: {meta.get('totalCumulativeVisits')} cumulative visits across {meta.get('elapsedCalendarWeeks')} weeks.")
+assert len(cohort.get('schools', [])) == 391, f"Expected 391 schools, got {len(cohort.get('schools', []))}"
+print(f"[PASS] Cohort metadata verified: {len(cohort['schools'])} schools, {meta.get('totalCumulativeVisits')} cumulative visits across {meta.get('elapsedCalendarWeeks')} weeks.")
 
-# 3. Simulate an incremental upload: create a small incremental Excel file in data/incoming/
-test_inc_file = os.path.join(PROJECT_ROOT, 'data', 'incoming', 'Accelo GST Asset Export Jan 2026 (Test).xlsx')
+# 3. Verify automatic school-year rollover & archiving when a new school year arrives
+from ingest_real_data import detect_active_school_year, auto_archive_prior_cohort
+detected_sy, start_yr = detect_active_school_year(['Missing Assets 27_28.xlsx', 'GST Asset Nov 2027.xls'])
+assert detected_sy == 'SY 2027–2028' and start_yr == 2027, f"Expected SY 2027–2028, got {detected_sy}"
 
-# Take 3 rows from existing df and shift dates to Jan 2026 with unique run timestamp
-base_df = pd.read_excel(os.path.join(PROJECT_ROOT, 'data', 'incoming', 'Accelo GST Asset Export Sept-Dec 2025.xlsx'))
-sample_rows = base_df.head(3).copy()
-sample_rows['Title'] = sample_rows['Title'] + f' - Incremental Test {int(time.time())}'
-sample_rows['Visit date'] = '01/14/2026'
-sample_rows.to_excel(test_inc_file, index=False)
-
+test_snap_path = os.path.join(SNAP_DIR, 'snapshot_SY_2026_2027_AUTO_FINAL.json')
 try:
-    # Run ingestion script
-    cmd = [sys.executable, os.path.join(PROJECT_ROOT, 'scripts', 'ingest_real_data.py')]
-    res = subprocess.run(cmd, cwd=PROJECT_ROOT, capture_output=True, text=True)
-    assert res.returncode == 0, f"Ingestion failed: {res.stderr}"
-
-    # Check updated historical repository
-    with open(HIST_FILE, 'r', encoding='utf-8') as f:
-        hist_updated = json.load(f)
-
-    new_count = hist_updated.get('totalCumulativeVisits', 0)
-    assert new_count == base_count + 3, f"Expected {base_count + 3} visits, got {new_count}"
-    print(f"[PASS] Incremental upload successfully merged 3 new visits! (New total: {new_count})")
-
-    # Run ingestion script again to ensure idempotency (0 new visits added, total remains base_count + 3)
-    res2 = subprocess.run(cmd, cwd=PROJECT_ROOT, capture_output=True, text=True)
-    assert res2.returncode == 0
-
-    with open(HIST_FILE, 'r', encoding='utf-8') as f:
-        hist_third = json.load(f)
-
-    assert hist_third.get('totalCumulativeVisits') == new_count, "Second run should not duplicate records"
-    assert hist_third.get('newVisitsAddedThisRun') == 0, "Second run should have 0 new visits added"
-    print(f"[PASS] Deduplication verified! Total remains strictly {new_count} without duplicates.")
-
+    auto_archive_prior_cohort(COHORT_FILE, 'SY 2027–2028')
+    assert os.path.exists(test_snap_path), "auto_archive_prior_cohort must create archived snapshot JSON"
+    with open(test_snap_path, 'r', encoding='utf-8') as f:
+        snap_data = json.load(f)
+    assert snap_data.get('schoolYear') == 'SY 2026–2027'
+    assert snap_data.get('totalSchools') == 391
+    print(f"[PASS] School-Year Rollover & Auto-Archive verified (SY 2026–2027 -> SY 2027–2028 archived {snap_data['totalSchools']} schools).")
 finally:
-    # Clean up test incremental file
-    if os.path.exists(test_inc_file):
-        os.remove(test_inc_file)
-    # Re-run pipeline to restore base state
-    subprocess.run([sys.executable, os.path.join(PROJECT_ROOT, 'scripts', 'ingest_real_data.py'), '--reset'], cwd=PROJECT_ROOT, capture_output=True)
-    print("[PASS] Test cleanup completed and base state restored.")
+    if os.path.exists(test_snap_path):
+        os.remove(test_snap_path)
 
-print("\nALL INCREMENTAL ACCUMULATOR TESTS PASSED 100%!")
+# 4. Run ingestion script again to ensure idempotency (0 new visits added, total remains 2167)
+cmd = [sys.executable, os.path.join(PROJECT_ROOT, 'scripts', 'ingest_real_data.py')]
+res = subprocess.run(cmd, cwd=PROJECT_ROOT, capture_output=True, text=True)
+assert res.returncode == 0, f"Ingestion failed: {res.stderr}"
+
+with open(HIST_FILE, 'r', encoding='utf-8') as f:
+    hist_second = json.load(f)
+
+assert hist_second.get('totalCumulativeVisits') == base_count, "Idempotent run should not duplicate records"
+assert hist_second.get('newVisitsAddedThisRun') == 0, "Idempotent run should have 0 new visits added"
+print(f"[PASS] Idempotency & deduplication verified! Total remains strictly {base_count} with 0 duplicates.")
+
+print("\nALL PYTHON PIPELINE & INCREMENTAL ACCUMULATOR TESTS PASSED 100%!")

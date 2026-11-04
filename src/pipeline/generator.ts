@@ -3,7 +3,7 @@ import type { SchoolScore } from '../types/score.ts';
 import type { ActiveFlag, FlaggedSchoolReport } from '../types/flags.ts';
 import { evaluateSchoolScore } from '../engine/grader.ts';
 import { evaluateSchoolFlags, buildFlaggedSchoolReport, type WeeklyLogHistoryItem } from '../engine/flagger.ts';
-import realCohortData from '../../data/cohort.json';
+import realCohortData from '../../data/cohort.json' with { type: 'json' };
 
 export interface SchoolWithData {
   school: School;

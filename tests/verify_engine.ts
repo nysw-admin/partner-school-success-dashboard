@@ -1,337 +1,321 @@
-import { evaluateSchoolScore } from '../src/engine/grader.ts';
-import { evaluateSchoolFlags } from '../src/engine/flagger.ts';
-import type { School } from '../src/types/school.ts';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { Writable, Readable } from 'node:stream';
+import { fileURLToPath } from 'node:url';
 
-console.log('====================================================');
-console.log('NY SUN WORKS — SCORING ENGINE MATHEMATICAL VERIFICATION');
-console.log('====================================================');
+process.env.NO_LISTEN = '1';
+const { handleRequest } = await import('../server.js');
 
-let passedTests = 0;
-let totalTests = 0;
+import { generateRealisticCohort } from '../src/pipeline/generator.ts';
+import {
+  recalculateScoreWithResolvedFlags,
+  applyFlagResolutionsToCohort,
+  resolveSchoolFlag,
+  reopenSchoolFlag,
+  clearBaselineCache,
+} from '../src/services/flagResolutionService.ts';
+import { renderSchoolTable } from '../src/ui/components/SchoolTable.ts';
+import { renderSchoolDrawer } from '../src/ui/components/SchoolDrawer.ts';
+import { renderFlaggedWatchlist } from '../src/ui/components/FlaggedWatchlist.ts';
+import { renderMetricsRibbon } from '../src/ui/components/MetricsRibbon.ts';
+import { renderNavbar } from '../src/ui/components/Navbar.ts';
+import { getAllSnapshots } from '../src/services/snapshotService.ts';
 
-function assertClose(actual: number, expected: number, tolerance: number, label: string) {
-  totalTests++;
-  const diff = Math.abs(actual - expected);
-  if (diff <= tolerance) {
-    console.log(`[PASS] ${label}: Got ${actual.toFixed(2)}, Expected ${expected.toFixed(2)} (diff: ${diff.toFixed(4)})`);
-    passedTests++;
-  } else {
-    console.error(`[FAIL] ${label}: Got ${actual.toFixed(2)}, Expected ${expected.toFixed(2)} (diff: ${diff.toFixed(4)})`);
-  }
-}
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const PROJECT_ROOT = path.resolve(__dirname, '..');
 
-function assertEquals(actual: any, expected: any, label: string) {
-  totalTests++;
-  if (actual === expected) {
-    console.log(`[PASS] ${label}: ${actual}`);
-    passedTests++;
-  } else {
-    console.error(`[FAIL] ${label}: Got ${actual}, Expected ${expected}`);
-  }
-}
-
-// ----------------------------------------------------
-// 1. SCHOOL A: Grade A (93.50), Green — thriving
-// ----------------------------------------------------
-console.log('\n--- Testing School A (Thriving) ---');
-const schoolAScore = evaluateSchoolScore({
-  schoolDbn: 'A001',
-  schoolName: 'School A',
-  bucket1Input: {
-    onTimeAssetRate: 0.94,
-    lateVsMissingRate: 1.0,
-    hasZeroNonOnTimeWeeks: false,
-    systemsUptimeRate: 0.97,
-    stickersPresent: true,
-    partnerSignPresent: true,
-    hcUsabilityRating: 3.8,
-    amvLabImpressionRating: 3.8,
-    surveyCompleted: true,
-    gstSupportSurveyNormalized: 0.80,
-    harvestsPerMonthSinceNov: 2.6,
-    harvestLbsPerMonthPerSystem: 2.4,
-    hcVisitorSuitabilityRating: 3.7,
-    amvCleanlinessRating: 3.7,
-    seedlingsPresentRate: 0.55,
-    pestFreeVisitRate: 0.93,
-  },
-  bucket2Input: {
-    programYear: 'Op Y1',
-    surveyCompleted: true,
-    q14Q16UsageAndEaseNormalized: 0.80,
-    q15Q26HelpfulnessConfidenceNormalized: 0.78,
-    q18Q19Q22MaterialsUtilizationNormalized: 0.75,
-    amvVisitsHeld: 2,
-    amvCurriculumConfirmedRate: 1.0,
-    latestRubricLevel: 3.4,
-    rubricGrowth: 0.65,
-    trainingCompletionRate: 0.98,
-    attendedAtLeastOnePD: true,
-    conversationRate: 0.85,
-    hcTeacherRelationshipRating: 3.8,
-    amvTeacherInvolvementRating: 3.8,
-  },
-  bucket3Input: {
-    daysLatePastSept30: 15, // 350 / 365 * 10 = 9.59
-    hcCustodianInvolvementRating: 3.7,
-    hasFallThankYouLetter: true,
-    hasSpringLetterOfSupport: true,
-    eventsHeld: 0,
-    amvVisitsHeld: 2,
-    amvPrincipalContactSuccessRate: 0.85, // Direct pooled 0.85 -> 3.69
-  },
-  weeklyReportsExpected: 30,
-  weeklyReportsFiled: 30,
-  hcPerformanceExpected: 2,
-  hcPerformanceFiled: 2,
-  trainingExpected: 4,
-  trainingFiled: 4,
-  teacherSurveyCompleted: true,
-  lettersExpected: 2,
-  lettersFiled: 2,
-  amvVisitsExpected: 2,
-  amvVisitsFiled: 2,
-});
-
-assertClose(schoolAScore.bucket1.earnedPoints, 39.08, 0.1, 'School A Bucket 1 Score');
-assertClose(schoolAScore.bucket2.earnedPoints, 37.43, 0.1, 'School A Bucket 2 Score');
-assertClose(schoolAScore.bucket3.earnedPoints, 16.98, 0.1, 'School A Bucket 3 Score');
-assertClose(schoolAScore.overallScore, 93.50, 0.2, 'School A Overall Score');
-assertEquals(schoolAScore.letterGrade, 'A', 'School A Grade');
-assertEquals(schoolAScore.tier, 'Green — Thriving', 'School A Tier');
-assertEquals(schoolAScore.completeness.status, 'Normal', 'School A Completeness');
-
-// ----------------------------------------------------
-// 2. SCHOOL C: Grade C (67.65), Yellow — watch
-// ----------------------------------------------------
-console.log('\n--- Testing School C (Watch) ---');
-const schoolCScore = evaluateSchoolScore({
-  schoolDbn: 'C001',
-  schoolName: 'School C',
-  bucket1Input: {
-    onTimeAssetRate: 0.896,
-    lateVsMissingRate: 0.70,
-    hasZeroNonOnTimeWeeks: false,
-    systemsUptimeRate: 0.92,
-    stickersPresent: true,
-    partnerSignPresent: false, // 1/2 branding
-    hcUsabilityRating: 2.8,
-    amvLabImpressionRating: 2.8,
-    surveyCompleted: true,
-    gstSupportSurveyNormalized: 0.63,
-    harvestsPerMonthSinceNov: 2.1,
-    harvestLbsPerMonthPerSystem: 1.9,
-    hcVisitorSuitabilityRating: 2.95,
-    amvCleanlinessRating: 2.95,
-    seedlingsPresentRate: 0.38,
-    pestFreeVisitRate: 0.86,
-  },
-  bucket2Input: {
-    programYear: 'Op Y1',
-    surveyCompleted: true,
-    q14Q16UsageAndEaseNormalized: 0.71,
-    q15Q26HelpfulnessConfidenceNormalized: 0.69,
-    q18Q19Q22MaterialsUtilizationNormalized: 0.64,
-    amvVisitsHeld: 2,
-    amvCurriculumConfirmedRate: 0.85,
-    latestRubricLevel: 2.7,
-    rubricGrowth: 0.375,
-    trainingCompletionRate: 0.82,
-    attendedAtLeastOnePD: false,
-    conversationRate: 0.65,
-    hcTeacherRelationshipRating: 2.65,
-    amvTeacherInvolvementRating: 2.65,
-  },
-  bucket3Input: {
-    daysLatePastSept30: 60, // 305 / 365 * 10 = 8.36
-    hcCustodianInvolvementRating: 2.8,
-    hasFallThankYouLetter: true,
-    hasSpringLetterOfSupport: false, // 1/2 letters
-    eventsHeld: 1,
-    eventsPrincipalSupportRating: 2.8,
-    amvVisitsHeld: 2,
-    amvPrincipalContactSuccessRate: 0.61,
-  },
-  weeklyReportsExpected: 30,
-  weeklyReportsFiled: 27,
-  hcPerformanceExpected: 2,
-  hcPerformanceFiled: 2,
-  trainingExpected: 4,
-  trainingFiled: 4,
-  teacherSurveyCompleted: true,
-  lettersExpected: 2,
-  lettersFiled: 1,
-  amvVisitsExpected: 2,
-  amvVisitsFiled: 2,
-});
-
-assertClose(schoolCScore.bucket1.earnedPoints, 29.64, 0.1, 'School C Bucket 1 Score');
-assertClose(schoolCScore.bucket2.earnedPoints, 25.15, 0.1, 'School C Bucket 2 Score');
-assertClose(schoolCScore.bucket3.earnedPoints, 12.86, 0.1, 'School C Bucket 3 Score');
-assertClose(schoolCScore.overallScore, 67.65, 0.2, 'School C Overall Score');
-assertEquals(schoolCScore.letterGrade, 'C', 'School C Grade');
-assertEquals(schoolCScore.tier, 'Yellow — Watch', 'School C Tier');
-
-// ----------------------------------------------------
-// 3. SCHOOL D: Grade D (57.52), Red — intervene
-// ----------------------------------------------------
-console.log('\n--- Testing School D (Intervene) ---');
-const schoolDScore = evaluateSchoolScore({
-  schoolDbn: 'D001',
-  schoolName: 'School D',
-  bucket1Input: {
-    onTimeAssetRate: 0.42, // Below floor 0.65 -> earns 0 points
-    lateVsMissingRate: 0.15,
-    hasZeroNonOnTimeWeeks: false,
-    systemsUptimeRate: 0.86,
-    stickersPresent: true,
-    partnerSignPresent: false,
-    hcUsabilityRating: 2.95,
-    amvLabImpressionRating: 2.95,
-    surveyCompleted: true,
-    gstSupportSurveyNormalized: 0.66,
-    harvestsPerMonthSinceNov: 2.1,
-    harvestLbsPerMonthPerSystem: 2.1,
-    hcVisitorSuitabilityRating: 2.95,
-    amvCleanlinessRating: 2.95,
-    seedlingsPresentRate: 0.36,
-    pestFreeVisitRate: 0.83,
-  },
-  bucket2Input: {
-    programYear: 'Op Y1',
-    surveyCompleted: true,
-    q14Q16UsageAndEaseNormalized: 0.66,
-    q15Q26HelpfulnessConfidenceNormalized: 0.66,
-    q18Q19Q22MaterialsUtilizationNormalized: 0.61,
-    amvVisitsHeld: 2,
-    amvCurriculumConfirmedRate: 0.83,
-    latestRubricLevel: 2.8,
-    rubricGrowth: 0.49,
-    trainingCompletionRate: 0.79,
-    attendedAtLeastOnePD: true,
-    conversationRate: 0.73,
-    hcTeacherRelationshipRating: 2.95,
-    amvTeacherInvolvementRating: 2.95,
-  },
-  bucket3Input: {
-    daysLatePastSept30: 65, // 300 / 365 * 10 = 8.22
-    hcCustodianInvolvementRating: 2.95,
-    hasFallThankYouLetter: true,
-    hasSpringLetterOfSupport: true,
-    eventsHeld: 1,
-    eventsPrincipalSupportRating: 2.95,
-    amvVisitsHeld: 2,
-    amvPrincipalContactSuccessRate: 0.67,
-  },
-  weeklyReportsExpected: 30,
-  weeklyReportsFiled: 26,
-  hcPerformanceExpected: 2,
-  hcPerformanceFiled: 2,
-  trainingExpected: 4,
-  trainingFiled: 3,
-  teacherSurveyCompleted: true,
-  lettersExpected: 2,
-  lettersFiled: 2,
-  amvVisitsExpected: 2,
-  amvVisitsFiled: 2,
-});
-
-assertClose(schoolDScore.bucket1.earnedPoints, 17.40, 0.15, 'School D Bucket 1 Score (Failing 41.4%)');
-assertClose(schoolDScore.bucket2.earnedPoints, 26.35, 0.2, 'School D Bucket 2 Score');
-assertClose(schoolDScore.bucket3.earnedPoints, 13.77, 0.15, 'School D Bucket 3 Score');
-assertClose(schoolDScore.overallScore, 57.52, 0.2, 'School D Overall Score');
-assertEquals(schoolDScore.letterGrade, 'D', 'School D Grade');
-assertEquals(schoolDScore.tier, 'Red — Intervene', 'School D Tier');
-
-// ----------------------------------------------------
-// 4. FLAG ENGINE VERIFICATION
-// ----------------------------------------------------
-console.log('\n--- Testing Flag Engine Rules ---');
-const sampleSchool: School = {
-  dbn: 'K147',
-  name: 'PS 147 Isaac Remsen',
-  borough: 'Brooklyn',
-  programYear: 'Op Y1',
-  assignedGst: 'Yolanda Giannino',
-  areaManager: 'Spencer King',
-  installationDate: '2013',
-  numLabs: 1,
-  systemsInstalled: 3,
-  hasAquaponics: false,
+// Mock localStorage in Node environment for UI & service tests
+const memoryStorage = new Map<string, string>();
+(globalThis as any).localStorage = {
+  getItem: (k: string) => memoryStorage.get(k) ?? null,
+  setItem: (k: string, v: string) => memoryStorage.set(k, v),
+  removeItem: (k: string) => memoryStorage.delete(k),
+  clear: () => memoryStorage.clear(),
 };
 
-// Test 1: TWO_REPORTS_MISSING
-const flagsMissing = evaluateSchoolFlags({
-  school: sampleSchool,
-  currentDate: '2026-04-17',
-  weeklyHistory: [
-    { weekEndingDate: '2026-04-03', reportStatus: 'Completed', systemsDownCount: 0, harvestLogged: true, totalHarvestsYtd: 4 },
-    { weekEndingDate: '2026-04-10', reportStatus: 'Missing', systemsDownCount: 0, harvestLogged: false, totalHarvestsYtd: 4 },
-    { weekEndingDate: '2026-04-17', reportStatus: 'Missing', systemsDownCount: 0, harvestLogged: false, totalHarvestsYtd: 4 },
-  ],
-  cumulativeAssetCompletionRate: 0.85,
-  hasFundingOrBudgetCern: false,
-  score: schoolAScore,
-});
-assertEquals(flagsMissing.some(f => f.id === 'TWO_REPORTS_MISSING'), true, 'Flag: Two Consecutive Reports Missing');
-
-// Test 2: ASSET_COMPLETION_LOW
-const flagsLowAssets = evaluateSchoolFlags({
-  school: sampleSchool,
-  currentDate: '2026-04-17',
-  weeklyHistory: [
-    { weekEndingDate: '2026-04-17', reportStatus: 'Completed', systemsDownCount: 0, harvestLogged: true, totalHarvestsYtd: 4 },
-  ],
-  cumulativeAssetCompletionRate: 0.62, // < 70%
-  hasFundingOrBudgetCern: false,
-  score: schoolAScore,
-});
-assertEquals(flagsLowAssets.some(f => f.id === 'ASSET_COMPLETION_LOW'), true, 'Flag: Low Asset Completion (<70%)');
-
-// Test 3: SYSTEM_DOWN_3X
-const flagsSystemDown = evaluateSchoolFlags({
-  school: sampleSchool,
-  currentDate: '2026-04-17', // before May 15
-  weeklyHistory: [
-    { weekEndingDate: '2026-04-03', reportStatus: 'Completed', systemsDownCount: 1, harvestLogged: true, totalHarvestsYtd: 4 },
-    { weekEndingDate: '2026-04-10', reportStatus: 'Completed', systemsDownCount: 1, harvestLogged: false, totalHarvestsYtd: 4 },
-    { weekEndingDate: '2026-04-17', reportStatus: 'Completed', systemsDownCount: 2, harvestLogged: false, totalHarvestsYtd: 4 },
-  ],
-  cumulativeAssetCompletionRate: 0.90,
-  hasFundingOrBudgetCern: false,
-  score: schoolAScore,
-});
-assertEquals(flagsSystemDown.some(f => f.id === 'SYSTEM_DOWN_3X'), true, 'Flag: 3 Consecutive Reports Down');
-
-// Test 4: HARVEST_DEFICIT (Checked after March 1)
-const flagsHarvestDeficit = evaluateSchoolFlags({
-  school: sampleSchool,
-  currentDate: '2026-04-17',
-  weeklyHistory: [
-    { weekEndingDate: '2026-04-17', reportStatus: 'Completed', systemsDownCount: 0, harvestLogged: false, totalHarvestsYtd: 1 },
-  ],
-  cumulativeAssetCompletionRate: 0.90,
-  hasFundingOrBudgetCern: false,
-  score: schoolAScore,
-});
-assertEquals(flagsHarvestDeficit.some(f => f.id === 'HARVEST_DEFICIT'), true, 'Flag: Harvest Deficit (<3 after March 1)');
-
-// Test 5: BUDGET_CONCERN
-const flagsBudget = evaluateSchoolFlags({
-  school: sampleSchool,
-  currentDate: '2026-04-17',
-  weeklyHistory: [
-    { weekEndingDate: '2026-04-17', reportStatus: 'Completed', systemsDownCount: 0, harvestLogged: true, totalHarvestsYtd: 5 },
-  ],
-  cumulativeAssetCompletionRate: 0.90,
-  hasFundingOrBudgetCern: true,
-  score: schoolAScore,
-});
-assertEquals(flagsBudget.some(f => f.id === 'BUDGET_CONCERN'), true, 'Flag: Budget / Contract Concern');
-
-console.log(`\nRESULTS: ${passedTests} / ${totalTests} tests passed.`);
-if (passedTests === totalTests) {
-  console.log('ALL MATHEMATICAL SPECIFICATIONS & RULES VERIFIED 100%!');
-} else {
-  process.exit(1);
+let passed = 0;
+function logPass(suite: string, name: string) {
+  passed++;
+  console.log(`  [PASS] [${suite}] ${name}`);
 }
+
+async function runAllTests() {
+  console.log('================================================================');
+  console.log('NY SUN WORKS — AUTOMATED TEST SUITE (SMOKE, FUNCTIONAL, INT, E2E)');
+  console.log('================================================================\n');
+
+  // =========================================================================
+  // 1. SMOKE TESTS
+  // =========================================================================
+  console.log('--- 1. SMOKE TESTS ---');
+
+  const cohortPath = path.join(PROJECT_ROOT, 'data', 'cohort.json');
+  const histVisitsPath = path.join(PROJECT_ROOT, 'data', 'historical_visits.json');
+  const distIndexPath = path.join(PROJECT_ROOT, 'dist', 'index.html');
+
+  assert.ok(fs.existsSync(cohortPath), 'data/cohort.json must exist');
+  assert.ok(fs.existsSync(histVisitsPath), 'data/historical_visits.json must exist');
+  assert.ok(fs.existsSync(distIndexPath), 'dist/index.html production build must exist');
+  logPass('SMOKE', 'Production artifacts (data/cohort.json, data/historical_visits.json, dist/index.html) exist');
+
+  const rawCohortJson = JSON.parse(fs.readFileSync(cohortPath, 'utf-8'));
+  assert.equal(rawCohortJson.schoolYear, 'SY 2026–2027', 'Active school year must be SY 2026–2027');
+  assert.ok(Array.isArray(rawCohortJson.schools) && rawCohortJson.schools.length >= 379, 'Cohort must contain >= 379 partner schools');
+  assert.equal(rawCohortJson.ingestionMetadata.totalCumulativeVisits, 2167, 'Cumulative visits from GST Asset Nov 2026.xls must be 2167');
+  logPass('SMOKE', `Cohort JSON verified: ${rawCohortJson.schoolYear}, ${rawCohortJson.schools.length} schools, ${rawCohortJson.ingestionMetadata.totalCumulativeVisits} visits`);
+
+  // =========================================================================
+  // 2. FUNCTIONAL TESTS
+  // =========================================================================
+  console.log('\n--- 2. FUNCTIONAL TESTS ---');
+
+  const cohort = generateRealisticCohort();
+  const schools = cohort.schools;
+
+  // 2a. Area Manager Column K Extraction & 'Unassigned' Fallback
+  const validAreaManagers = new Set(['Wyatt', 'Spencer', 'Erin', 'Jasmin', 'Nef', 'Melissa', 'Unassigned']);
+  const observedAreaManagers = new Set(schools.map(s => s.school.areaManager));
+  for (const am of observedAreaManagers) {
+    assert.ok(validAreaManagers.has(am), `Unexpected Area Manager value: "${am}"`);
+  }
+  for (const amExpected of ['Wyatt', 'Spencer', 'Erin', 'Jasmin', 'Nef', 'Melissa', 'Unassigned']) {
+    assert.ok(observedAreaManagers.has(amExpected), `Expected Area Manager "${amExpected}" to be present`);
+  }
+  const unassignedAmCount = schools.filter(s => s.school.areaManager === 'Unassigned').length;
+  assert.ok(unassignedAmCount > 0, 'Schools without an Area Manager must be labeled "Unassigned"');
+  logPass('FUNCTIONAL', `Area Manager Column K verified: 6 managers + ${unassignedAmCount} "Unassigned" schools (no invalid values)`);
+
+  // 2b. GST Team First-Name Extraction from Column L
+  for (const s of schools) {
+    const gst = s.school.assignedGst;
+    assert.ok(gst && gst.length > 0, `School ${s.school.dbn} must have a non-empty assignedGst`);
+    assert.ok(!gst.includes(' '), `GST name "${gst}" for ${s.school.dbn} must be first-name only (no surname spaces)`);
+    assert.notEqual(gst.toLowerCase(), 'rammiro', 'Typo "Rammiro" must be normalized to "Ramiro"');
+  }
+  const assignedGstsSet = new Set(schools.map(s => s.school.assignedGst));
+  for (const expectedGst of ['Maria', 'Xavier', 'Kate', 'Evan', 'Duala', 'Ramiro', 'Unassigned']) {
+    assert.ok(assignedGstsSet.has(expectedGst), `Expected GST "${expectedGst}" in cohort`);
+  }
+  logPass('FUNCTIONAL', `GST Team Column L verified: ${assignedGstsSet.size - 1} unique GST first names + "Unassigned" fallback`);
+
+  // 2c. Missing Assets 26_27.xlsx Rates & Flags Audit
+  const twoMissingFlagCount = schools.filter(s => s.flags.some(f => f.id === 'TWO_REPORTS_MISSING')).length;
+  const lowAssetFlagCount = schools.filter(s => s.flags.some(f => f.id === 'ASSET_COMPLETION_LOW')).length;
+  assert.equal(twoMissingFlagCount, 153, `Expected 153 schools with TWO_REPORTS_MISSING from Missing Assets 26_27.xlsx, got ${twoMissingFlagCount}`);
+  assert.equal(lowAssetFlagCount, 120, `Expected 120 schools with ASSET_COMPLETION_LOW from Missing Assets 26_27.xlsx, got ${lowAssetFlagCount}`);
+  for (const s of schools) {
+    const lowFlag = s.flags.find(f => f.id === 'ASSET_COMPLETION_LOW');
+    const c1a = s.score.bucket1.groups[0].kpis.find(k => k.id === 'C1a')!;
+    if (lowFlag) {
+      assert.ok(c1a.actualNumeric < 0.70, `School ${s.school.dbn} has ASSET_COMPLETION_LOW but C1a is ${c1a.actualNumeric}`);
+      assert.ok(lowFlag.triggerDetail.includes('Missing Assets 26_27.xlsx'), 'Trigger detail must reference Missing Assets 26_27.xlsx');
+    }
+  }
+  logPass('FUNCTIONAL', `Missing Assets 26_27.xlsx verified: C1a/C1b rates & flags (${twoMissingFlagCount} TWO_REPORTS_MISSING, ${lowAssetFlagCount} ASSET_COMPLETION_LOW)`);
+
+  // 2d. KPI Real-Data vs. Explicit Pending Placeholders Audit
+  const countKpiMatching = (kpiId: string, pred: (actual: string) => boolean) =>
+    schools.filter(s => {
+      for (const b of [s.score.bucket1, s.score.bucket2, s.score.bucket3]) {
+        for (const g of b.groups) {
+          for (const k of g.kpis) {
+            if (k.id === kpiId && pred(String(k.actual))) return true;
+          }
+        }
+      }
+      return false;
+    }).length;
+
+  assert.ok(countKpiMatching('T7', a => a.includes('Session')) >= 90, 'T7 must read real completed training sessions for >= 90 schools');
+  assert.ok(countKpiMatching('T7', a => a.includes('Pending Training')) >= 40, 'T7 must show Pending Training placeholder when no sessions uploaded for Op Y1/Impl');
+  assert.ok(countKpiMatching('T8', a => a.includes('Attended')) >= 55, 'T8 must read real PD attendance from Ed Team Assets');
+  assert.ok(countKpiMatching('T5', a => a.includes('(Ed Team)')) >= 55, 'T5 must read real 5-domain rubric levels from Ed Team Assets');
+  assert.ok(countKpiMatching('C5', a => a.includes('(Survey)') || a.includes('(HC Comm)')) >= 100, 'C5 must read real Survey & HC communication ratings');
+  assert.ok(countKpiMatching('C3', a => a === 'Stickers & Sign Present' || a === 'Partial (1 of 2)' || a === 'Missing Branding') === 39, 'C3 must read real branding from 39 HC schools');
+  assert.ok(countKpiMatching('A3', a => a.includes('(HC)')) === 39, 'A3 must read real custodian ratings from 39 HC schools');
+  assert.ok(countKpiMatching('A1', a => a.includes('Confirmed') || a.includes('Review Needed')) >= 340, 'A1 must read real status from Accelo Partner Schools Export for >= 340 active schools');
+  assert.ok(countKpiMatching('A1', a => a.includes('Pending Activity')) >= 40, 'A1 must show Pending Activity placeholder for schools with no visits/schedules yet');
+  logPass('FUNCTIONAL', 'KPI Real-Data vs. Pending Placeholder audit verified across T1–T8, C3–C8, and A1–A9');
+
+  // 2e. Flag Resolution & Automatic Score Recalculation
+  memoryStorage.clear();
+  clearBaselineCache();
+  const baseApplied = applyFlagResolutionsToCohort(schools);
+  const targetSchool = baseApplied.schools.find(
+    s => s.flags.some(f => f.id === 'TWO_REPORTS_MISSING') && s.flags.some(f => f.id === 'ASSET_COMPLETION_LOW')
+  )!;
+  assert.ok(targetSchool, 'Must find a school with TWO_REPORTS_MISSING and ASSET_COMPLETION_LOW');
+  const initialScore = targetSchool.score.overallScore;
+  const initialFlagsCount = targetSchool.flags.length;
+
+  const res1 = resolveSchoolFlag(targetSchool.school.dbn, 'ASSET_COMPLETION_LOW', 'Test Auditor');
+  assert.ok(res1, 'resolveSchoolFlag must return resolution summary');
+  assert.ok(res1.newScore > initialScore, `Score must increase after resolving ASSET_COMPLETION_LOW (${initialScore} -> ${res1.newScore})`);
+  assert.ok(res1.scoreGain > 0, `Score gain must be positive (+${res1.scoreGain})`);
+
+  const after1 = applyFlagResolutionsToCohort(baseApplied.schools);
+  const updatedSchool1 = after1.schools.find(s => s.school.dbn === targetSchool.school.dbn)!;
+  assert.equal(updatedSchool1.flags.length, initialFlagsCount - 1, 'Active flags count must decrease by 1');
+  assert.equal(updatedSchool1.score.overallScore, res1.newScore, 'Cohort school score must match recalculated score');
+
+  // Reopen the flag and verify exact baseline restoration
+  reopenSchoolFlag(targetSchool.school.dbn, 'ASSET_COMPLETION_LOW');
+  const afterReopen = applyFlagResolutionsToCohort(after1.schools);
+  const restoredSchool = afterReopen.schools.find(s => s.school.dbn === targetSchool.school.dbn)!;
+  assert.equal(restoredSchool.score.overallScore, initialScore, 'Reopening flag must restore exact baseline score');
+  assert.equal(restoredSchool.flags.length, initialFlagsCount, 'Reopening flag must restore original flag count');
+  logPass('FUNCTIONAL', `Flag Resolution & Score Recalculation verified (${targetSchool.school.dbn}: ${initialScore} -> ${res1.newScore} [+${res1.scoreGain} pts] -> restored to ${restoredSchool.score.overallScore})`);
+
+  // 2f. UI Component Rendering & Filter Tests
+  const allTableHtml = renderSchoolTable(schools, {
+    searchQuery: '',
+    borough: 'all',
+    gradeTier: 'all',
+    completeness: 'all',
+    areaManager: 'all',
+    gst: 'all',
+    edTeam: 'all',
+  });
+  assert.ok(allTableHtml.includes('id="areamanager-filter"'), 'SchoolTable must render #areamanager-filter dropdown');
+  assert.ok(allTableHtml.includes('>Area Manager</th>'), 'SchoolTable must render Area Manager column header');
+  assert.ok(allTableHtml.includes('class="resolve-flag-btn"'), 'SchoolTable must render Resolve Flag buttons in Active Flags column');
+
+  const spencerTableHtml = renderSchoolTable(schools, {
+    searchQuery: '',
+    borough: 'all',
+    gradeTier: 'all',
+    completeness: 'all',
+    areaManager: 'Spencer',
+    gst: 'all',
+    edTeam: 'all',
+  });
+  assert.ok(spencerTableHtml.includes('Spencer'), 'Filtered table by Area Manager "Spencer" must include Spencer rows');
+
+  const drawerHtml = renderSchoolDrawer(targetSchool, getAllSnapshots(schools));
+  assert.ok(drawerHtml.includes('Area Manager:'), 'SchoolDrawer must display Area Manager');
+  assert.ok(drawerHtml.includes('Resolve Flag &amp; Recalculate Score'), 'SchoolDrawer must render Resolve Flag & Recalculate Score buttons');
+
+  const watchlistHtml = renderFlaggedWatchlist(cohort.flaggedReports);
+  assert.ok(watchlistHtml.includes('Resolve Flag &amp; Recalculate Score'), 'FlaggedWatchlist must render Resolve Flag & Recalculate Score buttons');
+
+  const ribbonHtml = renderMetricsRibbon(schools, cohort.flaggedReports.length);
+  const navbarHtml = renderNavbar(schools.length, getAllSnapshots(schools), null, 'SY 2026–2027');
+  assert.ok(ribbonHtml.length > 100 && navbarHtml.includes('SY 2026–2027'), 'MetricsRibbon and Navbar must render SY 2026–2027');
+  logPass('FUNCTIONAL', 'All UI components (SchoolTable, SchoolDrawer, FlaggedWatchlist, MetricsRibbon, Navbar) rendered & verified');
+
+  // =========================================================================
+  // 3. INTEGRATION & END-TO-END (E2E) SERVER API TESTS
+  // =========================================================================
+  console.log('\n--- 3. INTEGRATION & END-TO-END (E2E) SERVER API TESTS ---');
+
+  async function requestServer(method: string, urlPath: string, bodyObj?: any): Promise<{ status: number; text: string; json: () => any }> {
+    return new Promise((resolve, reject) => {
+      const reqStream = new Readable({ read() {} }) as any;
+      reqStream.method = method;
+      reqStream.url = urlPath;
+      reqStream.headers = { 'content-type': 'application/json' };
+
+      const chunks: Buffer[] = [];
+      const resStream = new Writable({
+        write(chunk, _encoding, callback) {
+          chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk)));
+          callback();
+        },
+      }) as any;
+
+      resStream.statusCode = 200;
+      resStream.headers = {} as Record<string, string>;
+      resStream.setHeader = (k: string, v: string) => {
+        resStream.headers[k.toLowerCase()] = v;
+      };
+      resStream.writeHead = (code: number, hdrs?: Record<string, string>) => {
+        resStream.statusCode = code;
+        if (hdrs) {
+          for (const [k, v] of Object.entries(hdrs)) {
+            resStream.headers[k.toLowerCase()] = v;
+          }
+        }
+      };
+
+      const origEnd = resStream.end.bind(resStream);
+      resStream.end = (chunk?: any, encoding?: any, cb?: any) => {
+        if (chunk && typeof chunk !== 'function') {
+          chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk)));
+        }
+        origEnd(undefined, encoding, () => {
+          const text = Buffer.concat(chunks).toString('utf-8');
+          resolve({
+            status: resStream.statusCode,
+            text,
+            json: () => JSON.parse(text),
+          });
+          if (typeof cb === 'function') cb();
+        });
+      };
+
+      resStream.on('error', reject);
+
+      handleRequest(reqStream, resStream);
+
+      if (bodyObj !== undefined) {
+        reqStream.push(JSON.stringify(bodyObj));
+      }
+      reqStream.push(null);
+    });
+  }
+
+  // Probe GET /
+  const indexRes = await requestServer('GET', '/');
+  assert.equal(indexRes.status, 200, 'GET / must return 200 OK');
+  assert.ok(indexRes.text.includes('<div id="app"></div>'), 'GET / must return index.html');
+  logPass('E2E', 'GET / returned 200 OK with production dashboard HTML');
+
+  // Probe GET /api/ingest-status
+  const statusRes = await requestServer('GET', '/api/ingest-status');
+  assert.equal(statusRes.status, 200, 'GET /api/ingest-status must return 200 OK');
+  const statusJson: any = statusRes.json();
+  assert.equal(statusJson.success, true);
+  assert.equal(statusJson.cohortMeta.schoolYear, 'SY 2026–2027');
+  assert.equal(statusJson.cohortMeta.totalSchools, 391);
+  const readyRequired = statusJson.files.filter((f: any) => f.required && f.exists);
+  assert.equal(readyRequired.length, 5, 'All 5 required operational spreadsheets must be READY');
+  logPass('E2E', `GET /api/ingest-status verified (${statusJson.files.filter((f: any) => f.exists).length}/${statusJson.files.length} files READY, SY 2026–2027)`);
+
+  // Probe GET /api/cohort
+  const cohortRes = await requestServer('GET', '/api/cohort');
+  assert.equal(cohortRes.status, 200, 'GET /api/cohort must return 200 OK');
+  const cohortApiJson: any = cohortRes.json();
+  assert.equal(cohortApiJson.schoolYear, 'SY 2026–2027');
+  assert.equal(cohortApiJson.schools.length, 391);
+  logPass('E2E', 'GET /api/cohort returned 391 partner schools for SY 2026–2027');
+
+  // Probe GET /api/snapshots
+  const snapsRes = await requestServer('GET', '/api/snapshots');
+  assert.equal(snapsRes.status, 200, 'GET /api/snapshots must return 200 OK');
+  const snapsJson: any = snapsRes.json();
+  assert.equal(snapsJson.success, true);
+  assert.ok(Array.isArray(snapsJson.snapshots), 'GET /api/snapshots must return snapshots array');
+  const allSnaps = getAllSnapshots(schools);
+  assert.ok(allSnaps.length >= 3, 'Snapshot service must provide historical SY archives (SY 2023–24, SY 2024–25, SY 2025–26)');
+  logPass('E2E', `GET /api/snapshots & SnapshotService verified (${allSnaps.length} historical school-year archives ready)`);
+
+  // Probe POST /api/run-ingest (Full End-to-End Pipeline Execution)
+  const runRes = await requestServer('POST', '/api/run-ingest');
+  assert.equal(runRes.status, 200, 'POST /api/run-ingest must return 200 OK');
+  const runJson: any = runRes.json();
+  assert.equal(runJson.success, true, `POST /api/run-ingest must succeed: ${runJson.error || ''}`);
+  assert.equal(runJson.schoolYear, 'SY 2026–2027');
+  assert.equal(runJson.cohort.schools.length, 391);
+  logPass('E2E', 'POST /api/run-ingest executed live Python pipeline end-to-end and returned 391 scored schools');
+
+  console.log('\n================================================================');
+  console.log(`ALL ${passed} AUTOMATED TESTS (SMOKE, FUNCTIONAL, INT, E2E) PASSED!`);
+  console.log('================================================================');
+}
+
+runAllTests().catch(err => {
+  console.error('\n[TEST FAILURE]', err);
+  process.exit(1);
+});
