@@ -1,6 +1,6 @@
 {
   "schoolYear": "SY 2026\u20132027",
-  "generatedAt": "2026-11-03T18:56:26.597177",
+  "generatedAt": "2026-11-03T19:14:16.198100",
   "source": "data\\incoming",
   "totalSchools": 391,
   "flaggedCount": 286,
@@ -17,7 +17,7 @@
     "sourceFiles": [
       "GST Asset Nov 2026.xls"
     ],
-    "lastRunTimestamp": "2026-11-03T18:56:26.597229"
+    "lastRunTimestamp": "2026-11-03T19:14:16.198142"
   },
   "schools": [
     {
@@ -514,7 +514,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.577936"
+        "calculatedAt": "2026-11-03T19:14:16.178456"
       },
       "flags": [],
       "weeklyHistory": [
@@ -1090,7 +1090,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583785"
+        "calculatedAt": "2026-11-03T19:14:16.185273"
       },
       "flags": [],
       "weeklyHistory": [
@@ -1666,7 +1666,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.576966"
+        "calculatedAt": "2026-11-03T19:14:16.177297"
       },
       "flags": [],
       "weeklyHistory": [
@@ -1754,7 +1754,7 @@
         "name": "PS 12 Dr. Jacqueline Peek-Davis",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Ike",
+        "assignedGst": "Isaac",
         "areaManager": "Spencer",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -2242,7 +2242,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.546935"
+        "calculatedAt": "2026-11-03T19:14:16.145716"
       },
       "flags": [],
       "weeklyHistory": [
@@ -2873,7 +2873,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.592733"
+        "calculatedAt": "2026-11-03T19:14:16.194375"
       },
       "flags": [],
       "weeklyHistory": [
@@ -2961,7 +2961,7 @@
         "name": "Green Acres Middle School",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Owen Yoder",
+        "assignedGst": "Owen",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Vanessa Graves",
         "installationDate": "2025",
@@ -3449,7 +3449,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.545351"
+        "calculatedAt": "2026-11-03T19:14:16.144161"
       },
       "flags": [
         {
@@ -3555,7 +3555,7 @@
         "name": "Jackson-Olin High School",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Owen Yoder",
+        "assignedGst": "Owen",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2025",
@@ -4043,7 +4043,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.545506"
+        "calculatedAt": "2026-11-03T19:14:16.144311"
       },
       "flags": [
         {
@@ -4629,7 +4629,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.572327"
+        "calculatedAt": "2026-11-03T19:14:16.171530"
       },
       "flags": [],
       "weeklyHistory": [
@@ -5233,7 +5233,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.570350"
+        "calculatedAt": "2026-11-03T19:14:16.169356"
       },
       "flags": [],
       "weeklyHistory": [
@@ -5314,7 +5314,7 @@
         "name": "PS 142 Amalia Castro",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Zander",
+        "assignedGst": "Evan",
         "areaManager": "Nef",
         "curriculumSpecialist": "Heather Holz",
         "installationDate": "2023",
@@ -5802,7 +5802,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.570464"
+        "calculatedAt": "2026-11-03T19:14:16.169513"
       },
       "flags": [],
       "weeklyHistory": [
@@ -6378,7 +6378,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.579985"
+        "calculatedAt": "2026-11-03T19:14:16.180955"
       },
       "flags": [],
       "weeklyHistory": [
@@ -6947,7 +6947,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.580223"
+        "calculatedAt": "2026-11-03T19:14:16.181264"
       },
       "flags": [],
       "weeklyHistory": [
@@ -7509,7 +7509,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.556879"
+        "calculatedAt": "2026-11-03T19:14:16.156761"
       },
       "flags": [],
       "weeklyHistory": [
@@ -8085,7 +8085,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.557181"
+        "calculatedAt": "2026-11-03T19:14:16.157007"
       },
       "flags": [],
       "weeklyHistory": [
@@ -8647,7 +8647,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.593068"
+        "calculatedAt": "2026-11-03T19:14:16.194647"
       },
       "flags": [],
       "weeklyHistory": [
@@ -9221,7 +9221,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.569718"
+        "calculatedAt": "2026-11-03T19:14:16.168488"
       },
       "flags": [],
       "weeklyHistory": [
@@ -9790,7 +9790,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.551322"
+        "calculatedAt": "2026-11-03T19:14:16.151058"
       },
       "flags": [],
       "weeklyHistory": [
@@ -9864,7 +9864,7 @@
         "name": "Q239 PS 239",
         "borough": "Queens",
         "programYear": "Op Y2+",
-        "assignedGst": "Maria Carrion",
+        "assignedGst": "Maria",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -10352,7 +10352,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.581230"
+        "calculatedAt": "2026-11-03T19:14:16.182483"
       },
       "flags": [
         {
@@ -10403,7 +10403,7 @@
         "name": "Seven Bridges Middle School",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Lloyd Pyes",
+        "assignedGst": "Lloyd",
         "areaManager": "Wyatt",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2023",
@@ -10891,7 +10891,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.586481"
+        "calculatedAt": "2026-11-03T19:14:16.188702"
       },
       "flags": [
         {
@@ -11472,7 +11472,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.572632"
+        "calculatedAt": "2026-11-03T19:14:16.171870"
       },
       "flags": [],
       "weeklyHistory": [
@@ -12041,7 +12041,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.547880"
+        "calculatedAt": "2026-11-03T19:14:16.146701"
       },
       "flags": [],
       "weeklyHistory": [
@@ -12610,7 +12610,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.548904"
+        "calculatedAt": "2026-11-03T19:14:16.147717"
       },
       "flags": [],
       "weeklyHistory": [
@@ -13228,7 +13228,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.556705"
+        "calculatedAt": "2026-11-03T19:14:16.156607"
       },
       "flags": [],
       "weeklyHistory": [
@@ -13797,7 +13797,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.560905"
+        "calculatedAt": "2026-11-03T19:14:16.160676"
       },
       "flags": [],
       "weeklyHistory": [
@@ -13885,7 +13885,7 @@
         "name": "UPROSE",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Elizabeth",
+        "assignedGst": "Lucy",
         "areaManager": "Wyatt",
         "curriculumSpecialist": "Heather Holz",
         "installationDate": "2021",
@@ -14373,7 +14373,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.575471"
+        "calculatedAt": "2026-11-03T19:14:16.175429"
       },
       "flags": [
         {
@@ -15324,7 +15324,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.584121"
+        "calculatedAt": "2026-11-03T19:14:16.185788"
       },
       "flags": [],
       "weeklyHistory": [
@@ -15921,7 +15921,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.581154"
+        "calculatedAt": "2026-11-03T19:14:16.182392"
       },
       "flags": [],
       "weeklyHistory": [
@@ -16483,7 +16483,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.546656"
+        "calculatedAt": "2026-11-03T19:14:16.145414"
       },
       "flags": [],
       "weeklyHistory": [
@@ -17059,7 +17059,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.581341"
+        "calculatedAt": "2026-11-03T19:14:16.182624"
       },
       "flags": [],
       "weeklyHistory": [
@@ -17621,7 +17621,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.564883"
+        "calculatedAt": "2026-11-03T19:14:16.163714"
       },
       "flags": [],
       "weeklyHistory": [
@@ -18183,7 +18183,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.567557"
+        "calculatedAt": "2026-11-03T19:14:16.166007"
       },
       "flags": [],
       "weeklyHistory": [
@@ -18752,7 +18752,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.587353"
+        "calculatedAt": "2026-11-03T19:14:16.189705"
       },
       "flags": [],
       "weeklyHistory": [
@@ -19286,7 +19286,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.585080"
+        "calculatedAt": "2026-11-03T19:14:16.187047"
       },
       "flags": [],
       "weeklyHistory": [
@@ -19813,7 +19813,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.579389"
+        "calculatedAt": "2026-11-03T19:14:16.180233"
       },
       "flags": [],
       "weeklyHistory": [
@@ -20389,7 +20389,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.568196"
+        "calculatedAt": "2026-11-03T19:14:16.166785"
       },
       "flags": [],
       "weeklyHistory": [
@@ -20477,7 +20477,7 @@
         "name": "PS/MS 394 Mary McLeod Bethune",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Ike",
+        "assignedGst": "Isaac",
         "areaManager": "Spencer",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2021",
@@ -20965,7 +20965,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.561550"
+        "calculatedAt": "2026-11-03T19:14:16.161129"
       },
       "flags": [],
       "weeklyHistory": [
@@ -21534,7 +21534,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.562926"
+        "calculatedAt": "2026-11-03T19:14:16.162110"
       },
       "flags": [],
       "weeklyHistory": [
@@ -21608,7 +21608,7 @@
         "name": "K644 Eagle Academy for Young Men II (at Ocean Hill)",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Ike",
+        "assignedGst": "Isaac",
         "areaManager": "Erin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2023",
@@ -22096,7 +22096,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.566910"
+        "calculatedAt": "2026-11-03T19:14:16.165106"
       },
       "flags": [],
       "weeklyHistory": [
@@ -22665,7 +22665,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.588426"
+        "calculatedAt": "2026-11-03T19:14:16.190794"
       },
       "flags": [],
       "weeklyHistory": [
@@ -23233,7 +23233,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.581029"
+        "calculatedAt": "2026-11-03T19:14:16.182251"
       },
       "flags": [],
       "weeklyHistory": [
@@ -23788,7 +23788,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.576181"
+        "calculatedAt": "2026-11-03T19:14:16.176322"
       },
       "flags": [
         {
@@ -24366,7 +24366,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.565730"
+        "calculatedAt": "2026-11-03T19:14:16.164045"
       },
       "flags": [],
       "weeklyHistory": [
@@ -24893,7 +24893,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.589192"
+        "calculatedAt": "2026-11-03T19:14:16.191483"
       },
       "flags": [],
       "weeklyHistory": [
@@ -25455,7 +25455,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.578630"
+        "calculatedAt": "2026-11-03T19:14:16.179321"
       },
       "flags": [],
       "weeklyHistory": [
@@ -26024,7 +26024,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.592889"
+        "calculatedAt": "2026-11-03T19:14:16.194502"
       },
       "flags": [],
       "weeklyHistory": [
@@ -26584,7 +26584,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.584466"
+        "calculatedAt": "2026-11-03T19:14:16.186209"
       },
       "flags": [],
       "weeklyHistory": [
@@ -27160,7 +27160,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.560025"
+        "calculatedAt": "2026-11-03T19:14:16.160055"
       },
       "flags": [
         {
@@ -27755,7 +27755,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.566460"
+        "calculatedAt": "2026-11-03T19:14:16.164600"
       },
       "flags": [],
       "weeklyHistory": [
@@ -28331,7 +28331,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.558602"
+        "calculatedAt": "2026-11-03T19:14:16.158248"
       },
       "flags": [],
       "weeklyHistory": [
@@ -28907,7 +28907,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.578157"
+        "calculatedAt": "2026-11-03T19:14:16.178727"
       },
       "flags": [],
       "weeklyHistory": [
@@ -29469,7 +29469,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.584933"
+        "calculatedAt": "2026-11-03T19:14:16.186868"
       },
       "flags": [],
       "weeklyHistory": [
@@ -30058,7 +30058,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.560724"
+        "calculatedAt": "2026-11-03T19:14:16.160556"
       },
       "flags": [],
       "weeklyHistory": [
@@ -30585,7 +30585,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.591595"
+        "calculatedAt": "2026-11-03T19:14:16.193468"
       },
       "flags": [],
       "weeklyHistory": [
@@ -31161,7 +31161,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.584649"
+        "calculatedAt": "2026-11-03T19:14:16.186436"
       },
       "flags": [],
       "weeklyHistory": [
@@ -31737,7 +31737,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.596338"
+        "calculatedAt": "2026-11-03T19:14:16.197343"
       },
       "flags": [],
       "weeklyHistory": [
@@ -31825,7 +31825,7 @@
         "name": "Central Park Elementary School",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Owen Yoder",
+        "assignedGst": "Owen",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Heather Holz",
         "installationDate": "2025",
@@ -32313,7 +32313,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.545174"
+        "calculatedAt": "2026-11-03T19:14:16.143990"
       },
       "flags": [],
       "weeklyHistory": [
@@ -32442,7 +32442,7 @@
         "name": "Minor Elementary School",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Owen Yoder",
+        "assignedGst": "Owen",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2025",
@@ -32930,7 +32930,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.545664"
+        "calculatedAt": "2026-11-03T19:14:16.144463"
       },
       "flags": [
         {
@@ -33042,7 +33042,7 @@
         "name": "Wylam Elementary School",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Owen Yoder",
+        "assignedGst": "Owen",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2025",
@@ -33530,7 +33530,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.545919"
+        "calculatedAt": "2026-11-03T19:14:16.144699"
       },
       "flags": [
         {
@@ -33588,7 +33588,7 @@
         "name": "Bush Hills STEAM Academy",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Owen Yoder",
+        "assignedGst": "Owen",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2025",
@@ -34076,7 +34076,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.544869"
+        "calculatedAt": "2026-11-03T19:14:16.143490"
       },
       "flags": [],
       "weeklyHistory": [
@@ -34687,7 +34687,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.575949"
+        "calculatedAt": "2026-11-03T19:14:16.176033"
       },
       "flags": [
         {
@@ -35279,7 +35279,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.587068"
+        "calculatedAt": "2026-11-03T19:14:16.189405"
       },
       "flags": [],
       "weeklyHistory": [
@@ -35367,7 +35367,7 @@
         "name": "The New School for Leadership and Journalism",
         "borough": "Bronx",
         "programYear": "Implementation",
-        "assignedGst": "Jawann",
+        "assignedGst": "Duala",
         "areaManager": "Wyatt",
         "curriculumSpecialist": "Vanessa Graves",
         "installationDate": "2026",
@@ -35855,7 +35855,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.592050"
+        "calculatedAt": "2026-11-03T19:14:16.193835"
       },
       "flags": [],
       "weeklyHistory": [
@@ -36424,7 +36424,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.590361"
+        "calculatedAt": "2026-11-03T19:14:16.192445"
       },
       "flags": [],
       "weeklyHistory": [
@@ -36972,7 +36972,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.588106"
+        "calculatedAt": "2026-11-03T19:14:16.190500"
       },
       "flags": [],
       "weeklyHistory": [
@@ -37527,7 +37527,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.566249"
+        "calculatedAt": "2026-11-03T19:14:16.164381"
       },
       "flags": [],
       "weeklyHistory": [
@@ -37566,7 +37566,7 @@
         "name": "Charles A Brown Elementary School",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Owen Yoder",
+        "assignedGst": "Owen",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2025",
@@ -38054,7 +38054,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.544975"
+        "calculatedAt": "2026-11-03T19:14:16.143636"
       },
       "flags": [
         {
@@ -38593,7 +38593,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.577804"
+        "calculatedAt": "2026-11-03T19:14:16.178298"
       },
       "flags": [],
       "weeklyHistory": [
@@ -38688,7 +38688,7 @@
         "name": "PS 211",
         "borough": "Bronx",
         "programYear": "Op Y3+",
-        "assignedGst": "Jawann",
+        "assignedGst": "Jasmin",
         "areaManager": "Jasmin",
         "curriculumSpecialist": "Julia Levine",
         "installationDate": "2023",
@@ -39176,7 +39176,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.591067"
+        "calculatedAt": "2026-11-03T19:14:16.193026"
       },
       "flags": [],
       "weeklyHistory": [
@@ -39736,7 +39736,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.575826"
+        "calculatedAt": "2026-11-03T19:14:16.175877"
       },
       "flags": [
         {
@@ -40310,7 +40310,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.572108"
+        "calculatedAt": "2026-11-03T19:14:16.171308"
       },
       "flags": [
         {
@@ -40940,7 +40940,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.578992"
+        "calculatedAt": "2026-11-03T19:14:16.179759"
       },
       "flags": [],
       "weeklyHistory": [
@@ -41523,7 +41523,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.596155"
+        "calculatedAt": "2026-11-03T19:14:16.197197"
       },
       "flags": [
         {
@@ -42069,7 +42069,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.592134"
+        "calculatedAt": "2026-11-03T19:14:16.193901"
       },
       "flags": [
         {
@@ -42615,7 +42615,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.563652"
+        "calculatedAt": "2026-11-03T19:14:16.162622"
       },
       "flags": [
         {
@@ -43161,7 +43161,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.560116"
+        "calculatedAt": "2026-11-03T19:14:16.160130"
       },
       "flags": [
         {
@@ -43707,7 +43707,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.571839"
+        "calculatedAt": "2026-11-03T19:14:16.171057"
       },
       "flags": [
         {
@@ -44253,7 +44253,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.563530"
+        "calculatedAt": "2026-11-03T19:14:16.162532"
       },
       "flags": [
         {
@@ -44799,7 +44799,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.575579"
+        "calculatedAt": "2026-11-03T19:14:16.175568"
       },
       "flags": [
         {
@@ -45345,7 +45345,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.546108"
+        "calculatedAt": "2026-11-03T19:14:16.144875"
       },
       "flags": [
         {
@@ -45891,7 +45891,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.566160"
+        "calculatedAt": "2026-11-03T19:14:16.164314"
       },
       "flags": [
         {
@@ -46437,7 +46437,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.566514"
+        "calculatedAt": "2026-11-03T19:14:16.164657"
       },
       "flags": [
         {
@@ -46983,7 +46983,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.561166"
+        "calculatedAt": "2026-11-03T19:14:16.160857"
       },
       "flags": [
         {
@@ -47529,7 +47529,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.551203"
+        "calculatedAt": "2026-11-03T19:14:16.150853"
       },
       "flags": [
         {
@@ -48075,7 +48075,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.561631"
+        "calculatedAt": "2026-11-03T19:14:16.161187"
       },
       "flags": [
         {
@@ -48621,7 +48621,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.563350"
+        "calculatedAt": "2026-11-03T19:14:16.162406"
       },
       "flags": [
         {
@@ -49167,7 +49167,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.568943"
+        "calculatedAt": "2026-11-03T19:14:16.167576"
       },
       "flags": [
         {
@@ -49713,7 +49713,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583280"
+        "calculatedAt": "2026-11-03T19:14:16.184435"
       },
       "flags": [
         {
@@ -50259,7 +50259,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.569103"
+        "calculatedAt": "2026-11-03T19:14:16.167767"
       },
       "flags": [
         {
@@ -50805,7 +50805,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.573961"
+        "calculatedAt": "2026-11-03T19:14:16.173531"
       },
       "flags": [
         {
@@ -51351,7 +51351,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.574716"
+        "calculatedAt": "2026-11-03T19:14:16.174420"
       },
       "flags": [
         {
@@ -51897,7 +51897,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.572175"
+        "calculatedAt": "2026-11-03T19:14:16.171377"
       },
       "flags": [
         {
@@ -51955,7 +51955,7 @@
         "name": "New York Harbor School",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Lloyd",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -52443,7 +52443,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.574017"
+        "calculatedAt": "2026-11-03T19:14:16.173601"
       },
       "flags": [
         {
@@ -52989,7 +52989,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.576404"
+        "calculatedAt": "2026-11-03T19:14:16.176587"
       },
       "flags": [
         {
@@ -53535,7 +53535,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.595273"
+        "calculatedAt": "2026-11-03T19:14:16.196455"
       },
       "flags": [
         {
@@ -54081,7 +54081,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.546720"
+        "calculatedAt": "2026-11-03T19:14:16.145477"
       },
       "flags": [
         {
@@ -54627,7 +54627,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.550086"
+        "calculatedAt": "2026-11-03T19:14:16.149517"
       },
       "flags": [
         {
@@ -55173,7 +55173,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.550300"
+        "calculatedAt": "2026-11-03T19:14:16.149780"
       },
       "flags": [
         {
@@ -55719,7 +55719,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.590790"
+        "calculatedAt": "2026-11-03T19:14:16.192794"
       },
       "flags": [
         {
@@ -56265,7 +56265,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.571364"
+        "calculatedAt": "2026-11-03T19:14:16.170400"
       },
       "flags": [
         {
@@ -56811,7 +56811,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.547699"
+        "calculatedAt": "2026-11-03T19:14:16.146499"
       },
       "flags": [
         {
@@ -56869,7 +56869,7 @@
         "name": "PS 34 Oliver H. Perry Elementary",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Kate",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -57357,7 +57357,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.547759"
+        "calculatedAt": "2026-11-03T19:14:16.146561"
       },
       "flags": [
         {
@@ -57903,7 +57903,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.569305"
+        "calculatedAt": "2026-11-03T19:14:16.167992"
       },
       "flags": [
         {
@@ -58449,7 +58449,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.548742"
+        "calculatedAt": "2026-11-03T19:14:16.147487"
       },
       "flags": [
         {
@@ -58995,7 +58995,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.546312"
+        "calculatedAt": "2026-11-03T19:14:16.145066"
       },
       "flags": [
         {
@@ -59541,7 +59541,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.551143"
+        "calculatedAt": "2026-11-03T19:14:16.150788"
       },
       "flags": [
         {
@@ -60087,7 +60087,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.576838"
+        "calculatedAt": "2026-11-03T19:14:16.177133"
       },
       "flags": [
         {
@@ -60633,7 +60633,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.579567"
+        "calculatedAt": "2026-11-03T19:14:16.180448"
       },
       "flags": [
         {
@@ -61179,7 +61179,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.581749"
+        "calculatedAt": "2026-11-03T19:14:16.183146"
       },
       "flags": [
         {
@@ -61237,7 +61237,7 @@
         "name": "Q419 MS 419",
         "borough": "Queens",
         "programYear": "Op Y2+",
-        "assignedGst": "Jonathan",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -61725,7 +61725,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583518"
+        "calculatedAt": "2026-11-03T19:14:16.184766"
       },
       "flags": [
         {
@@ -62271,7 +62271,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.585002"
+        "calculatedAt": "2026-11-03T19:14:16.186945"
       },
       "flags": [
         {
@@ -62329,7 +62329,7 @@
         "name": "R204",
         "borough": "Staten Island",
         "programYear": "Op Y2+",
-        "assignedGst": "Hannah",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -62817,7 +62817,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.585140"
+        "calculatedAt": "2026-11-03T19:14:16.187114"
       },
       "flags": [
         {
@@ -63363,7 +63363,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.567452"
+        "calculatedAt": "2026-11-03T19:14:16.165873"
       },
       "flags": [
         {
@@ -63909,7 +63909,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.586571"
+        "calculatedAt": "2026-11-03T19:14:16.188804"
       },
       "flags": [
         {
@@ -64455,7 +64455,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.586636"
+        "calculatedAt": "2026-11-03T19:14:16.188870"
       },
       "flags": [
         {
@@ -65001,7 +65001,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.593152"
+        "calculatedAt": "2026-11-03T19:14:16.194715"
       },
       "flags": [
         {
@@ -65547,7 +65547,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.567187"
+        "calculatedAt": "2026-11-03T19:14:16.165435"
       },
       "flags": [
         {
@@ -66093,7 +66093,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.576345"
+        "calculatedAt": "2026-11-03T19:14:16.176517"
       },
       "flags": [
         {
@@ -66639,7 +66639,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.571790"
+        "calculatedAt": "2026-11-03T19:14:16.170988"
       },
       "flags": [
         {
@@ -67185,7 +67185,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.587417"
+        "calculatedAt": "2026-11-03T19:14:16.189771"
       },
       "flags": [
         {
@@ -67731,7 +67731,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.590441"
+        "calculatedAt": "2026-11-03T19:14:16.192512"
       },
       "flags": [
         {
@@ -68277,7 +68277,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.593389"
+        "calculatedAt": "2026-11-03T19:14:16.194910"
       },
       "flags": [
         {
@@ -68823,7 +68823,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.593875"
+        "calculatedAt": "2026-11-03T19:14:16.195317"
       },
       "flags": [
         {
@@ -69369,7 +69369,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.595026"
+        "calculatedAt": "2026-11-03T19:14:16.196255"
       },
       "flags": [
         {
@@ -69915,7 +69915,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.587856"
+        "calculatedAt": "2026-11-03T19:14:16.190214"
       },
       "flags": [],
       "weeklyHistory": [
@@ -70491,7 +70491,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.596077"
+        "calculatedAt": "2026-11-03T19:14:16.197132"
       },
       "flags": [],
       "weeklyHistory": [
@@ -71018,7 +71018,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.563455"
+        "calculatedAt": "2026-11-03T19:14:16.162479"
       },
       "flags": [],
       "weeklyHistory": [
@@ -71545,7 +71545,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.575706"
+        "calculatedAt": "2026-11-03T19:14:16.175729"
       },
       "flags": [
         {
@@ -71649,7 +71649,7 @@
         "name": "M110 PS 110 Florence Nightingale",
         "borough": "Manhattan",
         "programYear": "Op Y2+",
-        "assignedGst": "Zander Vinocur",
+        "assignedGst": "Zander",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -72137,7 +72137,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.570130"
+        "calculatedAt": "2026-11-03T19:14:16.168980"
       },
       "flags": [
         {
@@ -72676,7 +72676,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.573676"
+        "calculatedAt": "2026-11-03T19:14:16.173118"
       },
       "flags": [],
       "weeklyHistory": [
@@ -72722,7 +72722,7 @@
         "name": "Ocean Hill Collegiate Charter School",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Ike",
+        "assignedGst": "Isaac",
         "areaManager": "Erin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2023",
@@ -73210,7 +73210,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.568792"
+        "calculatedAt": "2026-11-03T19:14:16.167398"
       },
       "flags": [],
       "weeklyHistory": [
@@ -73779,7 +73779,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.588607"
+        "calculatedAt": "2026-11-03T19:14:16.190961"
       },
       "flags": [
         {
@@ -74373,7 +74373,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.570239"
+        "calculatedAt": "2026-11-03T19:14:16.169145"
       },
       "flags": [
         {
@@ -74954,7 +74954,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.569411"
+        "calculatedAt": "2026-11-03T19:14:16.168119"
       },
       "flags": [
         {
@@ -75535,7 +75535,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.555108"
+        "calculatedAt": "2026-11-03T19:14:16.155241"
       },
       "flags": [],
       "weeklyHistory": [
@@ -76097,7 +76097,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.588758"
+        "calculatedAt": "2026-11-03T19:14:16.191106"
       },
       "flags": [
         {
@@ -76671,7 +76671,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.578853"
+        "calculatedAt": "2026-11-03T19:14:16.179591"
       },
       "flags": [],
       "weeklyHistory": [
@@ -77240,7 +77240,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.591413"
+        "calculatedAt": "2026-11-03T19:14:16.193315"
       },
       "flags": [
         {
@@ -77806,7 +77806,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.571619"
+        "calculatedAt": "2026-11-03T19:14:16.170792"
       },
       "flags": [
         {
@@ -78394,7 +78394,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.576282"
+        "calculatedAt": "2026-11-03T19:14:16.176444"
       },
       "flags": [
         {
@@ -78965,7 +78965,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.595455"
+        "calculatedAt": "2026-11-03T19:14:16.196606"
       },
       "flags": [],
       "weeklyHistory": [
@@ -79539,7 +79539,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.563042"
+        "calculatedAt": "2026-11-03T19:14:16.162191"
       },
       "flags": [],
       "weeklyHistory": [
@@ -79585,7 +79585,7 @@
         "name": "Hunter College Elementary School",
         "borough": "Manhattan",
         "programYear": "Op Y1",
-        "assignedGst": "Sage Cormier",
+        "assignedGst": "Sage",
         "areaManager": "Melissa",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2024",
@@ -80073,7 +80073,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.546246"
+        "calculatedAt": "2026-11-03T19:14:16.145005"
       },
       "flags": [
         {
@@ -80661,7 +80661,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.564429"
+        "calculatedAt": "2026-11-03T19:14:16.163217"
       },
       "flags": [
         {
@@ -80719,7 +80719,7 @@
         "name": "South Hampton K-8 School",
         "borough": "Manhattan",
         "programYear": "Op Y1",
-        "assignedGst": "Owen Yoder",
+        "assignedGst": "Owen",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2025",
@@ -81207,7 +81207,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.545823"
+        "calculatedAt": "2026-11-03T19:14:16.144611"
       },
       "flags": [
         {
@@ -81807,7 +81807,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.566348"
+        "calculatedAt": "2026-11-03T19:14:16.164483"
       },
       "flags": [],
       "weeklyHistory": [
@@ -82369,7 +82369,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.569957"
+        "calculatedAt": "2026-11-03T19:14:16.168757"
       },
       "flags": [],
       "weeklyHistory": [
@@ -82931,7 +82931,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.565912"
+        "calculatedAt": "2026-11-03T19:14:16.164153"
       },
       "flags": [
         {
@@ -83512,7 +83512,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.595642"
+        "calculatedAt": "2026-11-03T19:14:16.196758"
       },
       "flags": [],
       "weeklyHistory": [
@@ -84088,7 +84088,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.577096"
+        "calculatedAt": "2026-11-03T19:14:16.177460"
       },
       "flags": [],
       "weeklyHistory": [
@@ -84671,7 +84671,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.558416"
+        "calculatedAt": "2026-11-03T19:14:16.158083"
       },
       "flags": [],
       "weeklyHistory": [
@@ -85226,7 +85226,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.584344"
+        "calculatedAt": "2026-11-03T19:14:16.186058"
       },
       "flags": [],
       "weeklyHistory": [
@@ -85802,7 +85802,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.550244"
+        "calculatedAt": "2026-11-03T19:14:16.149703"
       },
       "flags": [],
       "weeklyHistory": [
@@ -85890,7 +85890,7 @@
         "name": "Lincoln High School (Yonkers, NY)",
         "borough": "Manhattan",
         "programYear": "Implementation",
-        "assignedGst": "Duala Dawson",
+        "assignedGst": "Duala",
         "areaManager": "Wyatt",
         "curriculumSpecialist": "Julia Levine",
         "installationDate": "2025",
@@ -86378,7 +86378,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.544613"
+        "calculatedAt": "2026-11-03T19:14:16.143114"
       },
       "flags": [
         {
@@ -86994,7 +86994,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.579505"
+        "calculatedAt": "2026-11-03T19:14:16.180373"
       },
       "flags": [
         {
@@ -87568,7 +87568,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.593782"
+        "calculatedAt": "2026-11-03T19:14:16.195240"
       },
       "flags": [
         {
@@ -88182,7 +88182,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.592281"
+        "calculatedAt": "2026-11-03T19:14:16.194012"
       },
       "flags": [],
       "weeklyHistory": [
@@ -88728,7 +88728,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.589045"
+        "calculatedAt": "2026-11-03T19:14:16.191359"
       },
       "flags": [],
       "weeklyHistory": [
@@ -89283,7 +89283,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.579253"
+        "calculatedAt": "2026-11-03T19:14:16.180066"
       },
       "flags": [
         {
@@ -89871,7 +89871,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.557838"
+        "calculatedAt": "2026-11-03T19:14:16.157570"
       },
       "flags": [
         {
@@ -90452,7 +90452,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.573047"
+        "calculatedAt": "2026-11-03T19:14:16.172353"
       },
       "flags": [
         {
@@ -91082,7 +91082,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.576073"
+        "calculatedAt": "2026-11-03T19:14:16.176185"
       },
       "flags": [
         {
@@ -91674,7 +91674,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.572879"
+        "calculatedAt": "2026-11-03T19:14:16.172149"
       },
       "flags": [
         {
@@ -92255,7 +92255,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.577222"
+        "calculatedAt": "2026-11-03T19:14:16.177610"
       },
       "flags": [],
       "weeklyHistory": [
@@ -92824,7 +92824,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.555780"
+        "calculatedAt": "2026-11-03T19:14:16.155860"
       },
       "flags": [],
       "weeklyHistory": [
@@ -93400,7 +93400,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.574381"
+        "calculatedAt": "2026-11-03T19:14:16.174030"
       },
       "flags": [
         {
@@ -94016,7 +94016,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.550703"
+        "calculatedAt": "2026-11-03T19:14:16.150328"
       },
       "flags": [],
       "weeklyHistory": [
@@ -94585,7 +94585,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.559343"
+        "calculatedAt": "2026-11-03T19:14:16.158938"
       },
       "flags": [],
       "weeklyHistory": [
@@ -95154,7 +95154,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.549740"
+        "calculatedAt": "2026-11-03T19:14:16.149083"
       },
       "flags": [],
       "weeklyHistory": [
@@ -95716,7 +95716,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.546041"
+        "calculatedAt": "2026-11-03T19:14:16.144811"
       },
       "flags": [
         {
@@ -95795,7 +95795,7 @@
         "name": "I68 Isaac Bildersee",
         "borough": "Brooklyn",
         "programYear": "Op Y1",
-        "assignedGst": "Ike",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -96283,7 +96283,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.548443"
+        "calculatedAt": "2026-11-03T19:14:16.147250"
       },
       "flags": [
         {
@@ -96829,7 +96829,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.551823"
+        "calculatedAt": "2026-11-03T19:14:16.151517"
       },
       "flags": [
         {
@@ -97375,7 +97375,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.549186"
+        "calculatedAt": "2026-11-03T19:14:16.148153"
       },
       "flags": [
         {
@@ -98012,7 +98012,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.554015"
+        "calculatedAt": "2026-11-03T19:14:16.153539"
       },
       "flags": [],
       "weeklyHistory": [
@@ -98560,7 +98560,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.581561"
+        "calculatedAt": "2026-11-03T19:14:16.182902"
       },
       "flags": [
         {
@@ -99138,7 +99138,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.582265"
+        "calculatedAt": "2026-11-03T19:14:16.183348"
       },
       "flags": [],
       "weeklyHistory": [
@@ -99714,7 +99714,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.581454"
+        "calculatedAt": "2026-11-03T19:14:16.182767"
       },
       "flags": [],
       "weeklyHistory": [
@@ -100276,7 +100276,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.550561"
+        "calculatedAt": "2026-11-03T19:14:16.150137"
       },
       "flags": [],
       "weeklyHistory": [
@@ -100852,7 +100852,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.593553"
+        "calculatedAt": "2026-11-03T19:14:16.195048"
       },
       "flags": [
         {
@@ -101426,7 +101426,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.586927"
+        "calculatedAt": "2026-11-03T19:14:16.189249"
       },
       "flags": [],
       "weeklyHistory": [
@@ -101993,7 +101993,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.581688"
+        "calculatedAt": "2026-11-03T19:14:16.183063"
       },
       "flags": [],
       "weeklyHistory": [
@@ -102562,7 +102562,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.580360"
+        "calculatedAt": "2026-11-03T19:14:16.181429"
       },
       "flags": [],
       "weeklyHistory": [
@@ -103145,7 +103145,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.566667"
+        "calculatedAt": "2026-11-03T19:14:16.164828"
       },
       "flags": [
         {
@@ -103786,7 +103786,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583228"
+        "calculatedAt": "2026-11-03T19:14:16.184363"
       },
       "flags": [],
       "weeklyHistory": [
@@ -104355,7 +104355,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.549846"
+        "calculatedAt": "2026-11-03T19:14:16.149213"
       },
       "flags": [],
       "weeklyHistory": [
@@ -104917,7 +104917,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.587556"
+        "calculatedAt": "2026-11-03T19:14:16.189914"
       },
       "flags": [
         {
@@ -105505,7 +105505,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.564085"
+        "calculatedAt": "2026-11-03T19:14:16.162937"
       },
       "flags": [
         {
@@ -106051,7 +106051,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.579799"
+        "calculatedAt": "2026-11-03T19:14:16.180728"
       },
       "flags": [],
       "weeklyHistory": [
@@ -106627,7 +106627,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.547355"
+        "calculatedAt": "2026-11-03T19:14:16.146131"
       },
       "flags": [],
       "weeklyHistory": [
@@ -107189,7 +107189,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.594580"
+        "calculatedAt": "2026-11-03T19:14:16.195890"
       },
       "flags": [
         {
@@ -107842,7 +107842,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.595142"
+        "calculatedAt": "2026-11-03T19:14:16.196349"
       },
       "flags": [
         {
@@ -108388,7 +108388,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.551754"
+        "calculatedAt": "2026-11-03T19:14:16.151455"
       },
       "flags": [
         {
@@ -108974,7 +108974,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.578281"
+        "calculatedAt": "2026-11-03T19:14:16.178882"
       },
       "flags": [],
       "weeklyHistory": [
@@ -109543,7 +109543,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.578509"
+        "calculatedAt": "2026-11-03T19:14:16.179168"
       },
       "flags": [],
       "weeklyHistory": [
@@ -110112,7 +110112,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583119"
+        "calculatedAt": "2026-11-03T19:14:16.184208"
       },
       "flags": [
         {
@@ -110690,7 +110690,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.564342"
+        "calculatedAt": "2026-11-03T19:14:16.163145"
       },
       "flags": [
         {
@@ -111334,7 +111334,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583983"
+        "calculatedAt": "2026-11-03T19:14:16.185600"
       },
       "flags": [
         {
@@ -111912,7 +111912,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.562384"
+        "calculatedAt": "2026-11-03T19:14:16.161731"
       },
       "flags": [
         {
@@ -112493,7 +112493,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.580685"
+        "calculatedAt": "2026-11-03T19:14:16.181828"
       },
       "flags": [],
       "weeklyHistory": [
@@ -113062,7 +113062,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.577477"
+        "calculatedAt": "2026-11-03T19:14:16.177902"
       },
       "flags": [],
       "weeklyHistory": [
@@ -113624,7 +113624,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.594038"
+        "calculatedAt": "2026-11-03T19:14:16.195452"
       },
       "flags": [
         {
@@ -114196,7 +114196,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.576774"
+        "calculatedAt": "2026-11-03T19:14:16.177044"
       },
       "flags": [
         {
@@ -114796,7 +114796,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.592400"
+        "calculatedAt": "2026-11-03T19:14:16.194106"
       },
       "flags": [],
       "weeklyHistory": [
@@ -114842,7 +114842,7 @@
         "name": "The Birch Wathen Lenox School",
         "borough": "Manhattan",
         "programYear": "Op Y1",
-        "assignedGst": "Lucy Yang",
+        "assignedGst": "Lucy",
         "areaManager": "Melissa",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2024",
@@ -115330,7 +115330,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.586790"
+        "calculatedAt": "2026-11-03T19:14:16.189050"
       },
       "flags": [
         {
@@ -115929,7 +115929,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.573787"
+        "calculatedAt": "2026-11-03T19:14:16.173258"
       },
       "flags": [
         {
@@ -116514,7 +116514,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.572758"
+        "calculatedAt": "2026-11-03T19:14:16.172013"
       },
       "flags": [
         {
@@ -117113,7 +117113,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.582679"
+        "calculatedAt": "2026-11-03T19:14:16.183617"
       },
       "flags": [
         {
@@ -117698,7 +117698,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.548022"
+        "calculatedAt": "2026-11-03T19:14:16.146861"
       },
       "flags": [],
       "weeklyHistory": [
@@ -118281,7 +118281,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.552981"
+        "calculatedAt": "2026-11-03T19:14:16.152505"
       },
       "flags": [],
       "weeklyHistory": [
@@ -118341,7 +118341,7 @@
         "name": "East Brooklyn Community High School",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Garrett",
+        "assignedGst": "Jack",
         "areaManager": "Spencer",
         "curriculumSpecialist": "Ryan Myrie",
         "installationDate": "2021",
@@ -118829,7 +118829,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.567655"
+        "calculatedAt": "2026-11-03T19:14:16.166130"
       },
       "flags": [
         {
@@ -119407,7 +119407,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.566795"
+        "calculatedAt": "2026-11-03T19:14:16.164973"
       },
       "flags": [
         {
@@ -119995,7 +119995,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.582810"
+        "calculatedAt": "2026-11-03T19:14:16.183782"
       },
       "flags": [
         {
@@ -120594,7 +120594,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.554334"
+        "calculatedAt": "2026-11-03T19:14:16.154049"
       },
       "flags": [
         {
@@ -121154,7 +121154,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.562219"
+        "calculatedAt": "2026-11-03T19:14:16.161599"
       },
       "flags": [],
       "weeklyHistory": [
@@ -121221,7 +121221,7 @@
         "name": "JM Rapport High School for Career Development",
         "borough": "Bronx",
         "programYear": "Op Y3+",
-        "assignedGst": "Rebecca",
+        "assignedGst": "Rebeca",
         "areaManager": "Jasmin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2018",
@@ -121709,7 +121709,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.596637"
+        "calculatedAt": "2026-11-03T19:14:16.197593"
       },
       "flags": [
         {
@@ -122301,7 +122301,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.558780"
+        "calculatedAt": "2026-11-03T19:14:16.158392"
       },
       "flags": [
         {
@@ -122875,7 +122875,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.563998"
+        "calculatedAt": "2026-11-03T19:14:16.162874"
       },
       "flags": [
         {
@@ -123467,7 +123467,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.553551"
+        "calculatedAt": "2026-11-03T19:14:16.153070"
       },
       "flags": [
         {
@@ -124066,7 +124066,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.553139"
+        "calculatedAt": "2026-11-03T19:14:16.152664"
       },
       "flags": [
         {
@@ -124665,7 +124665,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.580462"
+        "calculatedAt": "2026-11-03T19:14:16.181554"
       },
       "flags": [
         {
@@ -125243,7 +125243,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.549635"
+        "calculatedAt": "2026-11-03T19:14:16.148945"
       },
       "flags": [
         {
@@ -125821,7 +125821,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.568682"
+        "calculatedAt": "2026-11-03T19:14:16.167273"
       },
       "flags": [
         {
@@ -126392,7 +126392,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.576627"
+        "calculatedAt": "2026-11-03T19:14:16.176861"
       },
       "flags": [
         {
@@ -126945,7 +126945,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.553725"
+        "calculatedAt": "2026-11-03T19:14:16.153244"
       },
       "flags": [
         {
@@ -127540,7 +127540,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.588242"
+        "calculatedAt": "2026-11-03T19:14:16.190636"
       },
       "flags": [
         {
@@ -128112,7 +128112,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.548195"
+        "calculatedAt": "2026-11-03T19:14:16.147053"
       },
       "flags": [
         {
@@ -128651,7 +128651,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.594305"
+        "calculatedAt": "2026-11-03T19:14:16.195667"
       },
       "flags": [
         {
@@ -128760,7 +128760,7 @@
         "name": "Thomas A. Edison Career and Technical Education High School",
         "borough": "Queens",
         "programYear": "Op Y3+",
-        "assignedGst": "Miguel",
+        "assignedGst": "Erin",
         "areaManager": "Erin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2017",
@@ -129248,7 +129248,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.584770"
+        "calculatedAt": "2026-11-03T19:14:16.186584"
       },
       "flags": [
         {
@@ -129840,7 +129840,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.580803"
+        "calculatedAt": "2026-11-03T19:14:16.181973"
       },
       "flags": [
         {
@@ -130421,7 +130421,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.580568"
+        "calculatedAt": "2026-11-03T19:14:16.181684"
       },
       "flags": [],
       "weeklyHistory": [
@@ -130969,7 +130969,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.564556"
+        "calculatedAt": "2026-11-03T19:14:16.163325"
       },
       "flags": [],
       "weeklyHistory": [
@@ -131029,7 +131029,7 @@
         "name": "PS 190 Sheffield",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Erin",
         "curriculumSpecialist": "Heather Holz",
         "installationDate": "2021",
@@ -131517,7 +131517,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.553882"
+        "calculatedAt": "2026-11-03T19:14:16.153397"
       },
       "flags": [
         {
@@ -132109,7 +132109,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583671"
+        "calculatedAt": "2026-11-03T19:14:16.185093"
       },
       "flags": [],
       "weeklyHistory": [
@@ -132671,7 +132671,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.555437"
+        "calculatedAt": "2026-11-03T19:14:16.155559"
       },
       "flags": [],
       "weeklyHistory": [
@@ -133233,7 +133233,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.551600"
+        "calculatedAt": "2026-11-03T19:14:16.151322"
       },
       "flags": [
         {
@@ -133328,7 +133328,7 @@
         "name": "PS 316 Queens Explorers Elementary School",
         "borough": "Queens",
         "programYear": "Op Y3+",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Wyatt",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2017",
@@ -133816,7 +133816,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.582530"
+        "calculatedAt": "2026-11-03T19:14:16.183471"
       },
       "flags": [
         {
@@ -134387,7 +134387,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.569838"
+        "calculatedAt": "2026-11-03T19:14:16.168625"
       },
       "flags": [
         {
@@ -134975,7 +134975,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.569246"
+        "calculatedAt": "2026-11-03T19:14:16.167925"
       },
       "flags": [
         {
@@ -135602,7 +135602,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.547078"
+        "calculatedAt": "2026-11-03T19:14:16.145856"
       },
       "flags": [
         {
@@ -136183,7 +136183,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.572508"
+        "calculatedAt": "2026-11-03T19:14:16.171725"
       },
       "flags": [
         {
@@ -136831,7 +136831,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.588898"
+        "calculatedAt": "2026-11-03T19:14:16.191233"
       },
       "flags": [
         {
@@ -136919,7 +136919,7 @@
         "name": "Claremont International HS",
         "borough": "Bronx",
         "programYear": "Op Y3+",
-        "assignedGst": "Jawann",
+        "assignedGst": "Duala",
         "areaManager": "Jasmin",
         "curriculumSpecialist": "Ryan Myrie",
         "installationDate": "2023",
@@ -137407,7 +137407,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.595966"
+        "calculatedAt": "2026-11-03T19:14:16.197036"
       },
       "flags": [
         {
@@ -137518,7 +137518,7 @@
         "name": "East Elmhurst Community School",
         "borough": "Queens",
         "programYear": "Implementation",
-        "assignedGst": "Hannah",
+        "assignedGst": "Wyatt",
         "areaManager": "Wyatt",
         "curriculumSpecialist": "Julia Levine",
         "installationDate": "2026",
@@ -138006,7 +138006,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.582926"
+        "calculatedAt": "2026-11-03T19:14:16.183937"
       },
       "flags": [
         {
@@ -138587,7 +138587,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.563258"
+        "calculatedAt": "2026-11-03T19:14:16.162343"
       },
       "flags": [
         {
@@ -139221,7 +139221,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.546423"
+        "calculatedAt": "2026-11-03T19:14:16.145172"
       },
       "flags": [
         {
@@ -139304,7 +139304,7 @@
         "name": "X147",
         "borough": "Bronx",
         "programYear": "Op Y2+",
-        "assignedGst": "Duala",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -139792,7 +139792,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.590030"
+        "calculatedAt": "2026-11-03T19:14:16.192181"
       },
       "flags": [
         {
@@ -139850,7 +139850,7 @@
         "name": "X177",
         "borough": "Bronx",
         "programYear": "Op Y2+",
-        "assignedGst": "Duala",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -140338,7 +140338,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.590521"
+        "calculatedAt": "2026-11-03T19:14:16.192576"
       },
       "flags": [
         {
@@ -140396,7 +140396,7 @@
         "name": "X450",
         "borough": "Bronx",
         "programYear": "Op Y2+",
-        "assignedGst": "Jawann",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -140884,7 +140884,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.594126"
+        "calculatedAt": "2026-11-03T19:14:16.195524"
       },
       "flags": [
         {
@@ -140942,7 +140942,7 @@
         "name": "X855",
         "borough": "Bronx",
         "programYear": "Op Y2+",
-        "assignedGst": "Jawann",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -141430,7 +141430,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.596851"
+        "calculatedAt": "2026-11-03T19:14:16.197768"
       },
       "flags": [
         {
@@ -141976,7 +141976,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.570567"
+        "calculatedAt": "2026-11-03T19:14:16.169618"
       },
       "flags": [
         {
@@ -142064,7 +142064,7 @@
         "name": "Lyons Community School",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Nef",
+        "assignedGst": "Kate",
         "areaManager": "Nef",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2022",
@@ -142552,7 +142552,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.565613"
+        "calculatedAt": "2026-11-03T19:14:16.163975"
       },
       "flags": [
         {
@@ -142628,7 +142628,7 @@
         "name": "Multicultural High School",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Ike",
+        "assignedGst": "Isaac",
         "areaManager": "Erin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2016",
@@ -143116,7 +143116,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.565441"
+        "calculatedAt": "2026-11-03T19:14:16.163898"
       },
       "flags": [
         {
@@ -143694,7 +143694,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.589325"
+        "calculatedAt": "2026-11-03T19:14:16.191591"
       },
       "flags": [
         {
@@ -144263,7 +144263,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.570755"
+        "calculatedAt": "2026-11-03T19:14:16.169812"
       },
       "flags": [
         {
@@ -144834,7 +144834,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.552418"
+        "calculatedAt": "2026-11-03T19:14:16.151998"
       },
       "flags": [
         {
@@ -145405,7 +145405,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.579667"
+        "calculatedAt": "2026-11-03T19:14:16.180568"
       },
       "flags": [
         {
@@ -145488,7 +145488,7 @@
         "name": "Westorchard Elementary School (Chappaqua, NY)",
         "borough": "Manhattan",
         "programYear": "Implementation",
-        "assignedGst": "Lloyd",
+        "assignedGst": "Wyatt",
         "areaManager": "Wyatt",
         "curriculumSpecialist": "Vanessa Graves",
         "installationDate": "2025",
@@ -145976,7 +145976,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.574929"
+        "calculatedAt": "2026-11-03T19:14:16.174675"
       },
       "flags": [
         {
@@ -146659,7 +146659,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.559506"
+        "calculatedAt": "2026-11-03T19:14:16.159157"
       },
       "flags": [
         {
@@ -147255,7 +147255,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.591246"
+        "calculatedAt": "2026-11-03T19:14:16.193177"
       },
       "flags": [
         {
@@ -147359,7 +147359,7 @@
         "name": "The Urban Assembly School for Green Careers",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Sage",
+        "assignedGst": "Lucy",
         "areaManager": "Melissa",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2014",
@@ -147847,7 +147847,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.573207"
+        "calculatedAt": "2026-11-03T19:14:16.172550"
       },
       "flags": [
         {
@@ -148474,7 +148474,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.569608"
+        "calculatedAt": "2026-11-03T19:14:16.168357"
       },
       "flags": [
         {
@@ -149055,7 +149055,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.571734"
+        "calculatedAt": "2026-11-03T19:14:16.170924"
       },
       "flags": [
         {
@@ -149636,7 +149636,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.574529"
+        "calculatedAt": "2026-11-03T19:14:16.174202"
       },
       "flags": [
         {
@@ -150203,7 +150203,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.562551"
+        "calculatedAt": "2026-11-03T19:14:16.161851"
       },
       "flags": [
         {
@@ -150784,7 +150784,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.574653"
+        "calculatedAt": "2026-11-03T19:14:16.174349"
       },
       "flags": [
         {
@@ -151365,7 +151365,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.567395"
+        "calculatedAt": "2026-11-03T19:14:16.165799"
       },
       "flags": [
         {
@@ -151936,7 +151936,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.589941"
+        "calculatedAt": "2026-11-03T19:14:16.192108"
       },
       "flags": [
         {
@@ -152528,7 +152528,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.567792"
+        "calculatedAt": "2026-11-03T19:14:16.166304"
       },
       "flags": [
         {
@@ -153106,7 +153106,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.571306"
+        "calculatedAt": "2026-11-03T19:14:16.170337"
       },
       "flags": [
         {
@@ -153694,7 +153694,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.552288"
+        "calculatedAt": "2026-11-03T19:14:16.151892"
       },
       "flags": [
         {
@@ -153798,7 +153798,7 @@
         "name": "PS 279 Herman Schreiber",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Erin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2017",
@@ -154286,7 +154286,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.557525"
+        "calculatedAt": "2026-11-03T19:14:16.157301"
       },
       "flags": [
         {
@@ -154862,7 +154862,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.555601"
+        "calculatedAt": "2026-11-03T19:14:16.155704"
       },
       "flags": [
         {
@@ -154966,7 +154966,7 @@
         "name": "PS 21 Crispus Attucks",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Nef",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2016",
@@ -155454,7 +155454,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.547497"
+        "calculatedAt": "2026-11-03T19:14:16.146281"
       },
       "flags": [
         {
@@ -156056,7 +156056,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.577351"
+        "calculatedAt": "2026-11-03T19:14:16.177757"
       },
       "flags": [
         {
@@ -156637,7 +156637,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.560267"
+        "calculatedAt": "2026-11-03T19:14:16.160243"
       },
       "flags": [
         {
@@ -157204,7 +157204,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.573461"
+        "calculatedAt": "2026-11-03T19:14:16.172835"
       },
       "flags": [
         {
@@ -157813,7 +157813,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.562754"
+        "calculatedAt": "2026-11-03T19:14:16.161993"
       },
       "flags": [
         {
@@ -158430,7 +158430,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.549418"
+        "calculatedAt": "2026-11-03T19:14:16.148530"
       },
       "flags": [
         {
@@ -158545,7 +158545,7 @@
         "name": "MS 297 75 Morton",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Tessa",
+        "assignedGst": "Zander",
         "areaManager": "Nef",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2021",
@@ -159033,7 +159033,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.571905"
+        "calculatedAt": "2026-11-03T19:14:16.171136"
       },
       "flags": [
         {
@@ -159583,7 +159583,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.577668"
+        "calculatedAt": "2026-11-03T19:14:16.178132"
       },
       "flags": [
         {
@@ -160133,7 +160133,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.554953"
+        "calculatedAt": "2026-11-03T19:14:16.155068"
       },
       "flags": [
         {
@@ -160697,7 +160697,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.549539"
+        "calculatedAt": "2026-11-03T19:14:16.148798"
       },
       "flags": [
         {
@@ -161296,7 +161296,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.547217"
+        "calculatedAt": "2026-11-03T19:14:16.145999"
       },
       "flags": [
         {
@@ -161396,7 +161396,7 @@
         "name": "IS 381",
         "borough": "Brooklyn",
         "programYear": "Implementation",
-        "assignedGst": "Jack",
+        "assignedGst": "Isaac",
         "areaManager": "Spencer",
         "curriculumSpecialist": "Vanessa Graves",
         "installationDate": "2025",
@@ -161884,7 +161884,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.561077"
+        "calculatedAt": "2026-11-03T19:14:16.160795"
       },
       "flags": [
         {
@@ -162476,7 +162476,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.556527"
+        "calculatedAt": "2026-11-03T19:14:16.156470"
       },
       "flags": [
         {
@@ -162573,7 +162573,7 @@
         "name": "PS X017",
         "borough": "Bronx",
         "programYear": "Op Y1",
-        "assignedGst": "Rebecca",
+        "assignedGst": "Rebeca",
         "areaManager": "Jasmin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2022",
@@ -163061,7 +163061,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.587249"
+        "calculatedAt": "2026-11-03T19:14:16.189598"
       },
       "flags": [
         {
@@ -163205,7 +163205,7 @@
         "name": "K272 PS 272 Curtis Estabrook",
         "borough": "Brooklyn",
         "programYear": "Op Y1",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Erin",
         "curriculumSpecialist": "Heather Holz",
         "installationDate": "2023",
@@ -163693,7 +163693,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.557025"
+        "calculatedAt": "2026-11-03T19:14:16.156880"
       },
       "flags": [],
       "weeklyHistory": [
@@ -163753,7 +163753,7 @@
         "name": "John Bowne High School",
         "borough": "Queens",
         "programYear": "Op Y3+",
-        "assignedGst": "Maria",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -164241,7 +164241,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583571"
+        "calculatedAt": "2026-11-03T19:14:16.184837"
       },
       "flags": [
         {
@@ -164299,7 +164299,7 @@
         "name": "Q575",
         "borough": "Queens",
         "programYear": "Op Y2+",
-        "assignedGst": "Maria",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -164787,7 +164787,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.584525"
+        "calculatedAt": "2026-11-03T19:14:16.186283"
       },
       "flags": [
         {
@@ -165333,7 +165333,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583886"
+        "calculatedAt": "2026-11-03T19:14:16.185457"
       },
       "flags": [
         {
@@ -165907,7 +165907,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.576529"
+        "calculatedAt": "2026-11-03T19:14:16.176742"
       },
       "flags": [
         {
@@ -166499,7 +166499,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583019"
+        "calculatedAt": "2026-11-03T19:14:16.184063"
       },
       "flags": [
         {
@@ -167070,7 +167070,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.562068"
+        "calculatedAt": "2026-11-03T19:14:16.161495"
       },
       "flags": [
         {
@@ -167641,7 +167641,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.552564"
+        "calculatedAt": "2026-11-03T19:14:16.152129"
       },
       "flags": [
         {
@@ -168244,7 +168244,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.587970"
+        "calculatedAt": "2026-11-03T19:14:16.190325"
       },
       "flags": [
         {
@@ -168806,7 +168806,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583456"
+        "calculatedAt": "2026-11-03T19:14:16.184681"
       },
       "flags": [
         {
@@ -169391,7 +169391,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.596762"
+        "calculatedAt": "2026-11-03T19:14:16.197697"
       },
       "flags": [
         {
@@ -169935,7 +169935,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.591882"
+        "calculatedAt": "2026-11-03T19:14:16.193697"
       },
       "flags": [
         {
@@ -170485,7 +170485,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.573901"
+        "calculatedAt": "2026-11-03T19:14:16.173403"
       },
       "flags": [
         {
@@ -171059,7 +171059,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.554203"
+        "calculatedAt": "2026-11-03T19:14:16.153762"
       },
       "flags": [
         {
@@ -171633,7 +171633,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.570062"
+        "calculatedAt": "2026-11-03T19:14:16.168890"
       },
       "flags": [
         {
@@ -172207,7 +172207,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.567301"
+        "calculatedAt": "2026-11-03T19:14:16.165656"
       },
       "flags": [
         {
@@ -172318,7 +172318,7 @@
         "name": "JHS 292 Margaret S. Douglas",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Erin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2016",
@@ -172806,7 +172806,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.558264"
+        "calculatedAt": "2026-11-03T19:14:16.157941"
       },
       "flags": [
         {
@@ -173398,7 +173398,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.571067"
+        "calculatedAt": "2026-11-03T19:14:16.170078"
       },
       "flags": [
         {
@@ -173983,7 +173983,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.592554"
+        "calculatedAt": "2026-11-03T19:14:16.194230"
       },
       "flags": [
         {
@@ -174568,7 +174568,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.549021"
+        "calculatedAt": "2026-11-03T19:14:16.147892"
       },
       "flags": [
         {
@@ -175171,7 +175171,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.577587"
+        "calculatedAt": "2026-11-03T19:14:16.178035"
       },
       "flags": [
         {
@@ -175756,7 +175756,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.568887"
+        "calculatedAt": "2026-11-03T19:14:16.167509"
       },
       "flags": [
         {
@@ -176345,7 +176345,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.579117"
+        "calculatedAt": "2026-11-03T19:14:16.179903"
       },
       "flags": [
         {
@@ -176930,7 +176930,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.558095"
+        "calculatedAt": "2026-11-03T19:14:16.157788"
       },
       "flags": [
         {
@@ -176981,7 +176981,7 @@
         "name": "Isaac Pitkin",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Erin",
         "curriculumSpecialist": "Heather Holz",
         "installationDate": "2022",
@@ -177469,7 +177469,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.552715"
+        "calculatedAt": "2026-11-03T19:14:16.152266"
       },
       "flags": [
         {
@@ -178054,7 +178054,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.557984"
+        "calculatedAt": "2026-11-03T19:14:16.157693"
       },
       "flags": [
         {
@@ -178621,7 +178621,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.591769"
+        "calculatedAt": "2026-11-03T19:14:16.193607"
       },
       "flags": [
         {
@@ -178725,7 +178725,7 @@
         "name": "IS 211 John Wilson",
         "borough": "Brooklyn",
         "programYear": "Implementation",
-        "assignedGst": "Ike",
+        "assignedGst": "Spencer",
         "areaManager": "Spencer",
         "curriculumSpecialist": "Vanessa Graves",
         "installationDate": "2025",
@@ -179213,7 +179213,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.554814"
+        "calculatedAt": "2026-11-03T19:14:16.154818"
       },
       "flags": [
         {
@@ -179787,7 +179787,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.551465"
+        "calculatedAt": "2026-11-03T19:14:16.151198"
       },
       "flags": [
         {
@@ -180379,7 +180379,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.580107"
+        "calculatedAt": "2026-11-03T19:14:16.181117"
       },
       "flags": [
         {
@@ -180472,7 +180472,7 @@
         "name": "PS /IS 384 Frances E Carter",
         "borough": "Brooklyn",
         "programYear": "Implementation",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Erin",
         "curriculumSpecialist": "Heather Holz",
         "installationDate": "2025",
@@ -180960,7 +180960,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.561367"
+        "calculatedAt": "2026-11-03T19:14:16.160999"
       },
       "flags": [
         {
@@ -181565,7 +181565,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.578727"
+        "calculatedAt": "2026-11-03T19:14:16.179442"
       },
       "flags": [
         {
@@ -182132,7 +182132,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.580917"
+        "calculatedAt": "2026-11-03T19:14:16.182118"
       },
       "flags": [
         {
@@ -182211,7 +182211,7 @@
         "name": "PS 150 Queens",
         "borough": "Queens",
         "programYear": "Op Y3+",
-        "assignedGst": "Maria",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -182699,7 +182699,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.579866"
+        "calculatedAt": "2026-11-03T19:14:16.180809"
       },
       "flags": [
         {
@@ -182757,7 +182757,7 @@
         "name": "PS 151 Lyndon B. Johnson",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Erin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2023",
@@ -183245,7 +183245,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.551966"
+        "calculatedAt": "2026-11-03T19:14:16.151637"
       },
       "flags": [
         {
@@ -183837,7 +183837,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.559832"
+        "calculatedAt": "2026-11-03T19:14:16.159784"
       },
       "flags": [
         {
@@ -184415,7 +184415,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.571492"
+        "calculatedAt": "2026-11-03T19:14:16.170599"
       },
       "flags": [
         {
@@ -185039,7 +185039,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.553276"
+        "calculatedAt": "2026-11-03T19:14:16.152796"
       },
       "flags": [
         {
@@ -185617,7 +185617,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.585359"
+        "calculatedAt": "2026-11-03T19:14:16.187365"
       },
       "flags": [
         {
@@ -185700,7 +185700,7 @@
         "name": "PS 067 Charles A. Dorsey",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Nef",
+        "assignedGst": "Zander",
         "areaManager": "Nef",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2023",
@@ -186188,7 +186188,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.548366"
+        "calculatedAt": "2026-11-03T19:14:16.147171"
       },
       "flags": [
         {
@@ -186759,7 +186759,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.550820"
+        "calculatedAt": "2026-11-03T19:14:16.150452"
       },
       "flags": [
         {
@@ -187344,7 +187344,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.595785"
+        "calculatedAt": "2026-11-03T19:14:16.196875"
       },
       "flags": [
         {
@@ -187915,7 +187915,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.590700"
+        "calculatedAt": "2026-11-03T19:14:16.192723"
       },
       "flags": [
         {
@@ -188484,7 +188484,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.549934"
+        "calculatedAt": "2026-11-03T19:14:16.149326"
       },
       "flags": [
         {
@@ -189055,7 +189055,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.570664"
+        "calculatedAt": "2026-11-03T19:14:16.169718"
       },
       "flags": [
         {
@@ -189626,7 +189626,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.555289"
+        "calculatedAt": "2026-11-03T19:14:16.155419"
       },
       "flags": [
         {
@@ -190223,7 +190223,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.556380"
+        "calculatedAt": "2026-11-03T19:14:16.156350"
       },
       "flags": [
         {
@@ -190801,7 +190801,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.569048"
+        "calculatedAt": "2026-11-03T19:14:16.167703"
       },
       "flags": [
         {
@@ -191393,7 +191393,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.564723"
+        "calculatedAt": "2026-11-03T19:14:16.163585"
       },
       "flags": [
         {
@@ -191985,7 +191985,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.566073"
+        "calculatedAt": "2026-11-03T19:14:16.164256"
       },
       "flags": [
         {
@@ -192563,7 +192563,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.547633"
+        "calculatedAt": "2026-11-03T19:14:16.146427"
       },
       "flags": [
         {
@@ -193155,7 +193155,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.559166"
+        "calculatedAt": "2026-11-03T19:14:16.158764"
       },
       "flags": [
         {
@@ -193733,7 +193733,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.560595"
+        "calculatedAt": "2026-11-03T19:14:16.160470"
       },
       "flags": [
         {
@@ -194343,7 +194343,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.589498"
+        "calculatedAt": "2026-11-03T19:14:16.191735"
       },
       "flags": [
         {
@@ -194458,7 +194458,7 @@
         "name": "PS/MS 31 William Lloyd Garrison School",
         "borough": "Bronx",
         "programYear": "Op Y3+",
-        "assignedGst": "Jonathan",
+        "assignedGst": "Jasmin",
         "areaManager": "Jasmin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2022",
@@ -194946,7 +194946,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.587696"
+        "calculatedAt": "2026-11-03T19:14:16.190055"
       },
       "flags": [
         {
@@ -195059,7 +195059,7 @@
         "name": "PS 28 Wright Brothers",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Jasmin",
+        "assignedGst": "Xavier",
         "areaManager": "Jasmin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2017",
@@ -195547,7 +195547,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.569498"
+        "calculatedAt": "2026-11-03T19:14:16.168224"
       },
       "flags": [
         {
@@ -196111,7 +196111,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.568071"
+        "calculatedAt": "2026-11-03T19:14:16.166634"
       },
       "flags": [
         {
@@ -196777,7 +196777,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.568309"
+        "calculatedAt": "2026-11-03T19:14:16.166917"
       },
       "flags": [
         {
@@ -197387,7 +197387,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.551071"
+        "calculatedAt": "2026-11-03T19:14:16.150716"
       },
       "flags": [
         {
@@ -197983,7 +197983,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.590207"
+        "calculatedAt": "2026-11-03T19:14:16.192326"
       },
       "flags": [
         {
@@ -198092,7 +198092,7 @@
         "name": "HS 560 City-As-School",
         "borough": "Manhattan",
         "programYear": "Op Y3+",
-        "assignedGst": "Evan",
+        "assignedGst": "Zander",
         "areaManager": "Nef",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2018",
@@ -198580,7 +198580,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.574110"
+        "calculatedAt": "2026-11-03T19:14:16.173716"
       },
       "flags": [
         {
@@ -199144,7 +199144,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.556228"
+        "calculatedAt": "2026-11-03T19:14:16.156227"
       },
       "flags": [
         {
@@ -199740,7 +199740,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.553399"
+        "calculatedAt": "2026-11-03T19:14:16.152918"
       },
       "flags": [
         {
@@ -200322,7 +200322,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.570911"
+        "calculatedAt": "2026-11-03T19:14:16.169924"
       },
       "flags": [
         {
@@ -200430,7 +200430,7 @@
         "name": "PS 58 The Carroll School",
         "borough": "Brooklyn",
         "programYear": "Op Y3+",
-        "assignedGst": "Nef",
+        "assignedGst": "Jack",
         "areaManager": "Nef",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2021",
@@ -200918,7 +200918,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.548116"
+        "calculatedAt": "2026-11-03T19:14:16.146964"
       },
       "flags": [
         {
@@ -201475,7 +201475,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.574216"
+        "calculatedAt": "2026-11-03T19:14:16.173838"
       },
       "flags": [
         {
@@ -202057,7 +202057,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.583359"
+        "calculatedAt": "2026-11-03T19:14:16.184538"
       },
       "flags": [
         {
@@ -202603,7 +202603,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.568507"
+        "calculatedAt": "2026-11-03T19:14:16.167151"
       },
       "flags": [
         {
@@ -203199,7 +203199,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.555915"
+        "calculatedAt": "2026-11-03T19:14:16.155974"
       },
       "flags": [
         {
@@ -203781,7 +203781,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.552850"
+        "calculatedAt": "2026-11-03T19:14:16.152389"
       },
       "flags": [
         {
@@ -203882,7 +203882,7 @@
         "name": "PS 401: The Christopher Avenue Community School",
         "borough": "Brooklyn",
         "programYear": "Op Y1",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Erin",
         "curriculumSpecialist": "Julia Levine",
         "installationDate": "2024",
@@ -204370,7 +204370,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.561792"
+        "calculatedAt": "2026-11-03T19:14:16.161302"
       },
       "flags": [
         {
@@ -204955,7 +204955,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.564996"
+        "calculatedAt": "2026-11-03T19:14:16.163796"
       },
       "flags": [
         {
@@ -205512,7 +205512,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.556062"
+        "calculatedAt": "2026-11-03T19:14:16.156093"
       },
       "flags": [
         {
@@ -206094,7 +206094,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.584205"
+        "calculatedAt": "2026-11-03T19:14:16.185900"
       },
       "flags": [
         {
@@ -206658,7 +206658,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.557663"
+        "calculatedAt": "2026-11-03T19:14:16.157418"
       },
       "flags": [
         {
@@ -207222,7 +207222,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.552129"
+        "calculatedAt": "2026-11-03T19:14:16.151763"
       },
       "flags": [
         {
@@ -207814,7 +207814,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.568404"
+        "calculatedAt": "2026-11-03T19:14:16.167029"
       },
       "flags": [
         {
@@ -207908,7 +207908,7 @@
         "name": "PS 131 Brooklyn",
         "borough": "Brooklyn",
         "programYear": "Op Y1",
-        "assignedGst": "Ike",
+        "assignedGst": "Isaac",
         "areaManager": "Spencer",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2024",
@@ -208396,7 +208396,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.550943"
+        "calculatedAt": "2026-11-03T19:14:16.150583"
       },
       "flags": [
         {
@@ -208486,7 +208486,7 @@
         "name": "PS 373 Brooklyn Transition Center",
         "borough": "Brooklyn",
         "programYear": "Op Y1",
-        "assignedGst": "Nef",
+        "assignedGst": "Kate",
         "areaManager": "Nef",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -208974,7 +208974,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.560390"
+        "calculatedAt": "2026-11-03T19:14:16.160331"
       },
       "flags": [
         {
@@ -209043,7 +209043,7 @@
         "name": "JHS 127 The Castle Hill",
         "borough": "Bronx",
         "programYear": "Implementation",
-        "assignedGst": "Jonathan",
+        "assignedGst": "Ramiro",
         "areaManager": "Jasmin",
         "curriculumSpecialist": "Vanessa Graves",
         "installationDate": "2026",
@@ -209531,7 +209531,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.589768"
+        "calculatedAt": "2026-11-03T19:14:16.191963"
       },
       "flags": [
         {
@@ -210128,7 +210128,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.563831"
+        "calculatedAt": "2026-11-03T19:14:16.162752"
       },
       "flags": [
         {
@@ -210727,7 +210727,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.585247"
+        "calculatedAt": "2026-11-03T19:14:16.187235"
       },
       "flags": [
         {
@@ -211309,7 +211309,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.573586"
+        "calculatedAt": "2026-11-03T19:14:16.172985"
       },
       "flags": [
         {
@@ -211905,7 +211905,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.594937"
+        "calculatedAt": "2026-11-03T19:14:16.196182"
       },
       "flags": [
         {
@@ -212484,7 +212484,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.593302"
+        "calculatedAt": "2026-11-03T19:14:16.194837"
       },
       "flags": [
         {
@@ -213049,7 +213049,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.567022"
+        "calculatedAt": "2026-11-03T19:14:16.165246"
       },
       "flags": [
         {
@@ -213637,7 +213637,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.578040"
+        "calculatedAt": "2026-11-03T19:14:16.178583"
       },
       "flags": [
         {
@@ -213720,7 +213720,7 @@
         "name": "PS 345 Patrolman Robert Bolden",
         "borough": "Brooklyn",
         "programYear": "Op Y1",
-        "assignedGst": "Karyn",
+        "assignedGst": "Peggy",
         "areaManager": "Erin",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2022",
@@ -214208,7 +214208,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.559670"
+        "calculatedAt": "2026-11-03T19:14:16.159492"
       },
       "flags": [
         {
@@ -214775,7 +214775,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.550427"
+        "calculatedAt": "2026-11-03T19:14:16.149916"
       },
       "flags": [
         {
@@ -215367,7 +215367,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.558955"
+        "calculatedAt": "2026-11-03T19:14:16.158553"
       },
       "flags": [
         {
@@ -215970,7 +215970,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.554494"
+        "calculatedAt": "2026-11-03T19:14:16.154328"
       },
       "flags": [
         {
@@ -216573,7 +216573,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.550028"
+        "calculatedAt": "2026-11-03T19:14:16.149448"
       },
       "flags": [
         {
@@ -217144,7 +217144,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.567908"
+        "calculatedAt": "2026-11-03T19:14:16.166436"
       },
       "flags": [
         {
@@ -217740,7 +217740,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.596467"
+        "calculatedAt": "2026-11-03T19:14:16.197451"
       },
       "flags": [
         {
@@ -217814,7 +217814,7 @@
         "name": "IS 117 Joseph H Wade",
         "borough": "Bronx",
         "programYear": "Implementation",
-        "assignedGst": "Jawann",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -218302,7 +218302,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.589594"
+        "calculatedAt": "2026-11-03T19:14:16.191815"
       },
       "flags": [
         {
@@ -218360,7 +218360,7 @@
         "name": "P.S./I.S. 78Q",
         "borough": "Queens",
         "programYear": "Op Y1",
-        "assignedGst": "Wyatt",
+        "assignedGst": "Unassigned",
         "areaManager": "Unassigned",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2019",
@@ -218848,7 +218848,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.578383"
+        "calculatedAt": "2026-11-03T19:14:16.179005"
       },
       "flags": [
         {
@@ -218917,7 +218917,7 @@
         "name": "New Visions Charter High School for the Humanities II",
         "borough": "Bronx",
         "programYear": "Op Y1",
-        "assignedGst": "Jawann",
+        "assignedGst": "Jasmin",
         "areaManager": "Jasmin",
         "curriculumSpecialist": "Ryan Myrie",
         "installationDate": "2023",
@@ -219405,7 +219405,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.590906"
+        "calculatedAt": "2026-11-03T19:14:16.192890"
       },
       "flags": [
         {
@@ -219463,7 +219463,7 @@
         "name": "W.H. Maxwell Career and Technical Education High School",
         "borough": "Brooklyn",
         "programYear": "Op Y1",
-        "assignedGst": "Nishi",
+        "assignedGst": "Shabiha",
         "areaManager": "Erin",
         "curriculumSpecialist": "Aryana Kamelian",
         "installationDate": "2024",
@@ -219951,7 +219951,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.567130"
+        "calculatedAt": "2026-11-03T19:14:16.165371"
       },
       "flags": [
         {
@@ -220536,7 +220536,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.573298"
+        "calculatedAt": "2026-11-03T19:14:16.172657"
       },
       "flags": [
         {
@@ -221093,7 +221093,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.571186"
+        "calculatedAt": "2026-11-03T19:14:16.170203"
       },
       "flags": [
         {
@@ -221685,7 +221685,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.548659"
+        "calculatedAt": "2026-11-03T19:14:16.147407"
       },
       "flags": [
         {
@@ -222277,7 +222277,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.594760"
+        "calculatedAt": "2026-11-03T19:14:16.196036"
       },
       "flags": [
         {
@@ -222860,7 +222860,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.554638"
+        "calculatedAt": "2026-11-03T19:14:16.154562"
       },
       "flags": [
         {
@@ -223442,7 +223442,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.561928"
+        "calculatedAt": "2026-11-03T19:14:16.161395"
       },
       "flags": [
         {
@@ -223518,7 +223518,7 @@
         "name": "PS 90 Edna Cohen School",
         "borough": "Brooklyn",
         "programYear": "Op Y1",
-        "assignedGst": "Jack",
+        "assignedGst": "Nick",
         "areaManager": "Spencer",
         "curriculumSpecialist": "Unassigned",
         "installationDate": "2024",
@@ -224006,7 +224006,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.549302"
+        "calculatedAt": "2026-11-03T19:14:16.148338"
       },
       "flags": [
         {
@@ -224609,7 +224609,7 @@
             }
           ]
         },
-        "calculatedAt": "2026-11-03T18:56:26.557353"
+        "calculatedAt": "2026-11-03T19:14:16.157151"
       },
       "flags": [
         {
@@ -224730,7 +224730,7 @@
     {
       "schoolDbn": "-",
       "schoolName": "Lincoln High School (Yonkers, NY)",
-      "assignedGst": "Duala Dawson",
+      "assignedGst": "Duala",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -224751,7 +224751,7 @@
     {
       "schoolDbn": "ALCABES",
       "schoolName": "Charles A Brown Elementary School",
-      "assignedGst": "Owen Yoder",
+      "assignedGst": "Owen",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -224772,7 +224772,7 @@
     {
       "schoolDbn": "ALGAMS",
       "schoolName": "Green Acres Middle School",
-      "assignedGst": "Owen Yoder",
+      "assignedGst": "Owen",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -224793,7 +224793,7 @@
     {
       "schoolDbn": "ALJOHS",
       "schoolName": "Jackson-Olin High School",
-      "assignedGst": "Owen Yoder",
+      "assignedGst": "Owen",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -224814,7 +224814,7 @@
     {
       "schoolDbn": "ALMES",
       "schoolName": "Minor Elementary School",
-      "assignedGst": "Owen Yoder",
+      "assignedGst": "Owen",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -224835,7 +224835,7 @@
     {
       "schoolDbn": "ALSHS",
       "schoolName": "South Hampton K-8 School",
-      "assignedGst": "Owen Yoder",
+      "assignedGst": "Owen",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -224856,7 +224856,7 @@
     {
       "schoolDbn": "ALWES",
       "schoolName": "Wylam Elementary School",
-      "assignedGst": "Owen Yoder",
+      "assignedGst": "Owen",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -224919,7 +224919,7 @@
     {
       "schoolDbn": "HCES",
       "schoolName": "Hunter College Elementary School",
-      "assignedGst": "Sage Cormier",
+      "assignedGst": "Sage",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -225056,7 +225056,7 @@
     {
       "schoolDbn": "K021",
       "schoolName": "PS 21 Crispus Attucks",
-      "assignedGst": "Nishi",
+      "assignedGst": "Shabiha",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -225141,7 +225141,7 @@
     {
       "schoolDbn": "K034",
       "schoolName": "PS 34 Oliver H. Perry Elementary",
-      "assignedGst": "Kate",
+      "assignedGst": "Unassigned",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -225162,7 +225162,7 @@
     {
       "schoolDbn": "K058",
       "schoolName": "PS 58 The Carroll School",
-      "assignedGst": "Nef",
+      "assignedGst": "Jack",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -225215,7 +225215,7 @@
     {
       "schoolDbn": "K067",
       "schoolName": "PS 067 Charles A. Dorsey",
-      "assignedGst": "Nef",
+      "assignedGst": "Zander",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -225247,7 +225247,7 @@
     {
       "schoolDbn": "K068",
       "schoolName": "I68 Isaac Bildersee",
-      "assignedGst": "Ike",
+      "assignedGst": "Unassigned",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -225385,7 +225385,7 @@
     {
       "schoolDbn": "K090",
       "schoolName": "PS 90 Edna Cohen School",
-      "assignedGst": "Jack",
+      "assignedGst": "Nick",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -225705,7 +225705,7 @@
     {
       "schoolDbn": "K131",
       "schoolName": "PS 131 Brooklyn",
-      "assignedGst": "Ike",
+      "assignedGst": "Isaac",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -225928,7 +225928,7 @@
     {
       "schoolDbn": "K151",
       "schoolName": "PS 151 Lyndon B. Johnson",
-      "assignedGst": "Nishi",
+      "assignedGst": "Shabiha",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -226099,7 +226099,7 @@
     {
       "schoolDbn": "K159",
       "schoolName": "Isaac Pitkin",
-      "assignedGst": "Nishi",
+      "assignedGst": "Shabiha",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -226334,7 +226334,7 @@
     {
       "schoolDbn": "K190",
       "schoolName": "PS 190 Sheffield",
-      "assignedGst": "Nishi",
+      "assignedGst": "Shabiha",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -226494,7 +226494,7 @@
     {
       "schoolDbn": "K211",
       "schoolName": "IS 211 John Wilson",
-      "assignedGst": "Ike",
+      "assignedGst": "Spencer",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -226847,7 +226847,7 @@
     {
       "schoolDbn": "K279",
       "schoolName": "PS 279 Herman Schreiber",
-      "assignedGst": "Nishi",
+      "assignedGst": "Shabiha",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -226974,7 +226974,7 @@
     {
       "schoolDbn": "K292",
       "schoolName": "JHS 292 Margaret S. Douglas",
-      "assignedGst": "Nishi",
+      "assignedGst": "Shabiha",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -227145,7 +227145,7 @@
     {
       "schoolDbn": "K345",
       "schoolName": "PS 345 Patrolman Robert Bolden",
-      "assignedGst": "Karyn",
+      "assignedGst": "Peggy",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -227261,7 +227261,7 @@
     {
       "schoolDbn": "K373",
       "schoolName": "PS 373 Brooklyn Transition Center",
-      "assignedGst": "Nef",
+      "assignedGst": "Kate",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -227336,7 +227336,7 @@
     {
       "schoolDbn": "K381",
       "schoolName": "IS 381",
-      "assignedGst": "Jack",
+      "assignedGst": "Isaac",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -227389,7 +227389,7 @@
     {
       "schoolDbn": "K384",
       "schoolName": "PS /IS 384 Frances E Carter",
-      "assignedGst": "Nishi",
+      "assignedGst": "Shabiha",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -227442,7 +227442,7 @@
     {
       "schoolDbn": "K401",
       "schoolName": "PS 401: The Christopher Avenue Community School",
-      "assignedGst": "Nishi",
+      "assignedGst": "Shabiha",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -227909,7 +227909,7 @@
     {
       "schoolDbn": "K583",
       "schoolName": "Multicultural High School",
-      "assignedGst": "Ike",
+      "assignedGst": "Isaac",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -227941,7 +227941,7 @@
     {
       "schoolDbn": "K586",
       "schoolName": "Lyons Community School",
-      "assignedGst": "Nef",
+      "assignedGst": "Kate",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -228142,7 +228142,7 @@
     {
       "schoolDbn": "K660",
       "schoolName": "W.H. Maxwell Career and Technical Education High School",
-      "assignedGst": "Nishi",
+      "assignedGst": "Shabiha",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -228280,7 +228280,7 @@
     {
       "schoolDbn": "K673",
       "schoolName": "East Brooklyn Community High School",
-      "assignedGst": "Garrett",
+      "assignedGst": "Jack",
       "borough": "Brooklyn",
       "activeFlags": [
         {
@@ -228782,7 +228782,7 @@
     {
       "schoolDbn": "M028",
       "schoolName": "PS 28 Wright Brothers",
-      "assignedGst": "Jasmin",
+      "assignedGst": "Xavier",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -228877,7 +228877,7 @@
     {
       "schoolDbn": "M110",
       "schoolName": "M110 PS 110 Florence Nightingale",
-      "assignedGst": "Zander Vinocur",
+      "assignedGst": "Zander",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -229291,7 +229291,7 @@
     {
       "schoolDbn": "M297",
       "schoolName": "MS 297 75 Morton",
-      "assignedGst": "Tessa",
+      "assignedGst": "Zander",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -229471,7 +229471,7 @@
     {
       "schoolDbn": "M402",
       "schoolName": "The Urban Assembly School for Green Careers",
-      "assignedGst": "Sage",
+      "assignedGst": "Lucy",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -229673,7 +229673,7 @@
     {
       "schoolDbn": "M551",
       "schoolName": "New York Harbor School",
-      "assignedGst": "Lloyd",
+      "assignedGst": "Unassigned",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -229694,7 +229694,7 @@
     {
       "schoolDbn": "M560",
       "schoolName": "HS 560 City-As-School",
-      "assignedGst": "Evan",
+      "assignedGst": "Zander",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -229853,7 +229853,7 @@
     {
       "schoolDbn": "N/A",
       "schoolName": "Westorchard Elementary School (Chappaqua, NY)",
-      "assignedGst": "Lloyd",
+      "assignedGst": "Wyatt",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -229885,7 +229885,7 @@
     {
       "schoolDbn": "NA",
       "schoolName": "UPROSE",
-      "assignedGst": "Elizabeth",
+      "assignedGst": "Lucy",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -230362,7 +230362,7 @@
     {
       "schoolDbn": "Q078",
       "schoolName": "P.S./I.S. 78Q",
-      "assignedGst": "Wyatt",
+      "assignedGst": "Unassigned",
       "borough": "Queens",
       "activeFlags": [
         {
@@ -230542,7 +230542,7 @@
     {
       "schoolDbn": "Q150",
       "schoolName": "PS 150 Queens",
-      "assignedGst": "Maria",
+      "assignedGst": "Unassigned",
       "borough": "Queens",
       "activeFlags": [
         {
@@ -230658,7 +230658,7 @@
     {
       "schoolDbn": "Q239",
       "schoolName": "Q239 PS 239",
-      "assignedGst": "Maria Carrion",
+      "assignedGst": "Maria",
       "borough": "Queens",
       "activeFlags": [
         {
@@ -230732,7 +230732,7 @@
     {
       "schoolDbn": "Q316",
       "schoolName": "PS 316 Queens Explorers Elementary School",
-      "assignedGst": "Nishi",
+      "assignedGst": "Shabiha",
       "borough": "Queens",
       "activeFlags": [
         {
@@ -230828,7 +230828,7 @@
     {
       "schoolDbn": "Q329",
       "schoolName": "East Elmhurst Community School",
-      "assignedGst": "Hannah",
+      "assignedGst": "Wyatt",
       "borough": "Queens",
       "activeFlags": [
         {
@@ -230987,7 +230987,7 @@
     {
       "schoolDbn": "Q419",
       "schoolName": "Q419 MS 419",
-      "assignedGst": "Jonathan",
+      "assignedGst": "Unassigned",
       "borough": "Queens",
       "activeFlags": [
         {
@@ -231008,7 +231008,7 @@
     {
       "schoolDbn": "Q425",
       "schoolName": "John Bowne High School",
-      "assignedGst": "Maria",
+      "assignedGst": "Unassigned",
       "borough": "Queens",
       "activeFlags": [
         {
@@ -231114,7 +231114,7 @@
     {
       "schoolDbn": "Q575",
       "schoolName": "Q575",
-      "assignedGst": "Maria",
+      "assignedGst": "Unassigned",
       "borough": "Queens",
       "activeFlags": [
         {
@@ -231135,7 +231135,7 @@
     {
       "schoolDbn": "Q620",
       "schoolName": "Thomas A. Edison Career and Technical Education High School",
-      "assignedGst": "Miguel",
+      "assignedGst": "Erin",
       "borough": "Queens",
       "activeFlags": [
         {
@@ -231188,7 +231188,7 @@
     {
       "schoolDbn": "R204",
       "schoolName": "R204",
-      "assignedGst": "Hannah",
+      "assignedGst": "Unassigned",
       "borough": "Staten Island",
       "activeFlags": [
         {
@@ -231284,7 +231284,7 @@
     {
       "schoolDbn": "Seven Bridges Middle School",
       "schoolName": "Seven Bridges Middle School",
-      "assignedGst": "Lloyd Pyes",
+      "assignedGst": "Lloyd",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -231347,7 +231347,7 @@
     {
       "schoolDbn": "The Birch Wathen Lenox School",
       "schoolName": "The Birch Wathen Lenox School",
-      "assignedGst": "Lucy Yang",
+      "assignedGst": "Lucy",
       "borough": "Manhattan",
       "activeFlags": [
         {
@@ -231379,7 +231379,7 @@
     {
       "schoolDbn": "X017",
       "schoolName": "PS X017",
-      "assignedGst": "Rebecca",
+      "assignedGst": "Rebeca",
       "borough": "Bronx",
       "activeFlags": [
         {
@@ -231453,7 +231453,7 @@
     {
       "schoolDbn": "X031",
       "schoolName": "PS/MS 31 William Lloyd Garrison School",
-      "assignedGst": "Jonathan",
+      "assignedGst": "Jasmin",
       "borough": "Bronx",
       "activeFlags": [
         {
@@ -231698,7 +231698,7 @@
     {
       "schoolDbn": "X117",
       "schoolName": "IS 117 Joseph H Wade",
-      "assignedGst": "Jawann",
+      "assignedGst": "Unassigned",
       "borough": "Bronx",
       "activeFlags": [
         {
@@ -231719,7 +231719,7 @@
     {
       "schoolDbn": "X127",
       "schoolName": "JHS 127 The Castle Hill",
-      "assignedGst": "Jonathan",
+      "assignedGst": "Ramiro",
       "borough": "Bronx",
       "activeFlags": [
         {
@@ -231783,7 +231783,7 @@
     {
       "schoolDbn": "X147",
       "schoolName": "X147",
-      "assignedGst": "Duala",
+      "assignedGst": "Unassigned",
       "borough": "Bronx",
       "activeFlags": [
         {
@@ -231857,7 +231857,7 @@
     {
       "schoolDbn": "X177",
       "schoolName": "X177",
-      "assignedGst": "Duala",
+      "assignedGst": "Unassigned",
       "borough": "Bronx",
       "activeFlags": [
         {
@@ -231931,7 +231931,7 @@
     {
       "schoolDbn": "X208",
       "schoolName": "New Visions Charter High School for the Humanities II",
-      "assignedGst": "Jawann",
+      "assignedGst": "Jasmin",
       "borough": "Bronx",
       "activeFlags": [
         {
@@ -232269,7 +232269,7 @@
     {
       "schoolDbn": "X450",
       "schoolName": "X450",
-      "assignedGst": "Jawann",
+      "assignedGst": "Unassigned",
       "borough": "Bronx",
       "activeFlags": [
         {
@@ -232502,7 +232502,7 @@
     {
       "schoolDbn": "X564",
       "schoolName": "Claremont International HS",
-      "assignedGst": "Jawann",
+      "assignedGst": "Duala",
       "borough": "Bronx",
       "activeFlags": [
         {
@@ -232587,7 +232587,7 @@
     {
       "schoolDbn": "X754",
       "schoolName": "JM Rapport High School for Career Development",
-      "assignedGst": "Rebecca",
+      "assignedGst": "Rebeca",
       "borough": "Bronx",
       "activeFlags": [
         {
@@ -232640,7 +232640,7 @@
     {
       "schoolDbn": "X855",
       "schoolName": "X855",
-      "assignedGst": "Jawann",
+      "assignedGst": "Unassigned",
       "borough": "Bronx",
       "activeFlags": [
         {

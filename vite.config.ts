@@ -28,7 +28,7 @@ function getExpectedFiles(sliceDir: string) {
     },
     {
       id: 'weekly_reports',
-      patterns: ['GST Asset Nov 2026.xls', 'GST Asset Sept 2026.xls', 'Accelo GST Asset Export Sept-Dec 2025.xlsx'],
+      patterns: ['GST Accelo Assets 9.1.26-11.3.26.xls', 'GST Accelo Assets 9.1.26-11.3.26.xlsx', 'GST Asset Nov 2026.xls', 'GST Asset Sept 2026.xls', 'Accelo GST Asset Export Sept-Dec 2025.xlsx'],
       label: 'Accelo GST Weekly Support Reports (SY 26–27)',
       description: 'Field visit logs, system uptime, seedlings, pests, harvests, crop weights & Area Managers',
       required: true,

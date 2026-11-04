@@ -648,9 +648,20 @@ elif RESET_MODE:
 # Discover all GST support report files for the active school year
 gst_files = find_matching_files(
     SLICE_DIR,
-    patterns=['gst asset', 'gst_asset', 'weekly support', 'support reports', 'gst support'],
-    exclude_patterns=['copy of gst schedule', 'gst schedule', 'visit cadence', 'accelo partner schools', 'area manager', 'hc performance', 'teacher survey', 'missing assets']
+    patterns=['gst asset', 'gst_asset', 'gst accelo', 'accelo assets', 'accelo gst', 'weekly support', 'support reports', 'gst support'],
+    exclude_patterns=['copy of gst schedule', 'gst schedule', 'visit cadence', 'accelo partner schools', 'area manager', 'hc performance', 'teacher survey', 'missing assets', 'ed team']
 )
+
+def clean_gst_first_name(raw_val):
+    if is_na(raw_val):
+        return ''
+    s = str(raw_val).strip()
+    if not s:
+        return ''
+    first = s.split()[0].strip()
+    if first.lower() == 'rammiro':
+        return 'Ramiro'
+    return first
 
 # Filter GST visit files to the active school year if year-tagged visit files are present
 gst_files_active_yr = [
@@ -672,8 +683,9 @@ year_counter = defaultdict(Counter)
 
 for sc, v_list in visits_by_school.items():
     for v in v_list:
-        gm = v.get('gst_member')
+        gm = clean_gst_first_name(v.get('gst_member'))
         if gm:
+            v['gst_member'] = gm
             gst_counter[sc][gm] += 1
         am = v.get('area_manager')
         if am:
@@ -730,7 +742,7 @@ for gf in gst_files:
 
             crop_types = str(row.get('Types of crops harvested') or '') if not is_na(row.get('Types of crops harvested')) else ''
             notes = str(row.get('General Notes') or '') if not is_na(row.get('General Notes')) else ''
-            gst_member = str(row.get('GST Member reporting information') or '').strip()
+            gst_member = clean_gst_first_name(row.get('GST Member reporting information'))
             title = str(row.get('Title') or '').strip()
 
             fp = f"{sc}|{v_date}|{gst_member}|{title}|{notes[:40]}".lower()
@@ -740,7 +752,7 @@ for gf in gst_files:
             if not is_na(row.get('AQX PH Level (ph)')) or not is_na(row.get('Aquaponics Notes')):
                 registry[sc]['hasAquaponics'] = True
 
-            if not is_na(gst_member):
+            if gst_member:
                 gst_counter[sc][gst_member] += 1
 
             am_val = str(row.get('99.1 Area Manager') or row.get('99.1 Area Manager ') or '').strip()
@@ -809,9 +821,7 @@ os.replace(tmp_hist, HISTORICAL_VISITS_FILE)
 print(f"Saved persistent visit history to {os.path.basename(HISTORICAL_VISITS_FILE)}")
 
 for sc in registry:
-    if schedule_gst_by_school[sc]:
-        registry[sc]['assignedGst'] = schedule_gst_by_school[sc].most_common(1)[0][0]
-    elif gst_counter[sc]:
+    if gst_counter[sc]:
         registry[sc]['assignedGst'] = gst_counter[sc].most_common(1)[0][0]
     else:
         registry[sc]['assignedGst'] = 'Unassigned'
