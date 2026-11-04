@@ -3,12 +3,14 @@ import type { GroupScore } from '../../types/score.ts';
 import type { EndOfYearSnapshot, MultiYearSchoolTrend } from '../../types/snapshot.ts';
 import { calculateSchoolMultiYearTrend, getAllSnapshots } from '../../services/snapshotService.ts';
 import { renderSchoolLogSection } from './FlaggedWatchlist.ts';
+import { getSchoolScoreResolutionSummary } from '../../services/flagResolutionService.ts';
 
 export function renderSchoolDrawer(item: SchoolWithData, allSnapshots?: EndOfYearSnapshot[]): string {
   const { school, score, flags, snapshot } = item;
   const gradeClass = `badge-${score.letterGrade.toLowerCase()}`;
   const snapshotsList = allSnapshots || getAllSnapshots([item]);
   const trend = calculateSchoolMultiYearTrend(school.dbn, item, snapshotsList);
+  const resSummary = getSchoolScoreResolutionSummary(school.dbn);
 
   return `
     <div id="school-modal-overlay" class="modal-overlay">
@@ -47,6 +49,13 @@ export function renderSchoolDrawer(item: SchoolWithData, allSnapshots?: EndOfYea
                 <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-top: 0.2rem;">
                   Tier: <span style="color: var(--text-main);">${score.tier}</span>
                 </div>
+                ${resSummary ? `
+                  <div style="margin-top: 0.4rem;">
+                    <span class="status-pill pill-healthy" style="font-size: 0.72rem; padding: 0.18rem 0.55rem;">
+                      ✓ +${resSummary.scoreDelta.toFixed(1)} pts from ${resSummary.resolvedRecords.length} Resolved Flag${resSummary.resolvedRecords.length === 1 ? '' : 's'} (Base: ${resSummary.baselineOverall.toFixed(1)} · Grade ${resSummary.originalGrade})
+                    </span>
+                  </div>
+                ` : ''}
               </div>
             </div>
 
@@ -72,18 +81,74 @@ export function renderSchoolDrawer(item: SchoolWithData, allSnapshots?: EndOfYea
           <!-- Active Early-Warning Flags (if any) -->
           ${flags.length > 0 ? `
             <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius-lg); padding: 1.25rem;">
-              <h4 style="font-family: var(--font-heading); color: #991b1b; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span>🚨</span> Active Early-Warning Flags (${flags.length})
-              </h4>
-              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; flex-wrap: wrap; gap: 0.5rem;">
+                <h4 style="font-family: var(--font-heading); color: #991b1b; font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+                  <span>🚨</span> Active Early-Warning Flags (${flags.length})
+                </h4>
+                <span style="font-size: 0.75rem; color: #991b1b;">Click "Resolve Flag & Recalculate" once addressed to update the rubric score</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.6rem;">
                 ${flags.map(f => `
-                  <div style="background: #ffffff; border: 1px solid #fed7aa; border-radius: var(--radius-md); padding: 0.75rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-weight: 700; font-size: 0.85rem; color: #9a3412;">${f.title} (${f.weeksActive}w active)</span>
-                      <span class="meta-pill" style="background:#ffedd5; color:#c2410c; border:none; font-size:0.7rem;">Action: ${f.routing}</span>
+                  <div style="background: #ffffff; border: 1px solid #fed7aa; border-radius: var(--radius-md); padding: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                      <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                        <span style="font-weight: 700; font-size: 0.88rem; color: #9a3412;">${f.title} (${f.weeksActive}w active)</span>
+                        <span class="meta-pill" style="background:#ffedd5; color:#c2410c; border:none; font-size:0.7rem;">Action: ${f.routing}</span>
+                      </div>
+                      <button
+                        type="button"
+                        class="resolve-flag-btn"
+                        data-dbn="${school.dbn}"
+                        data-flag-id="${f.id}"
+                        style="background: #059669; color: #ffffff; border: 1px solid #047857; padding: 0.35rem 0.75rem; border-radius: var(--radius-sm); font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; box-shadow: var(--shadow-sm);"
+                        title="Mark this flag as resolved and automatically recalculate the school's rubric score"
+                      >
+                        <span>✓</span> Resolve Flag &amp; Recalculate Score
+                      </button>
                     </div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">${f.description}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem;">${f.description}</div>
                     <div style="font-size: 0.75rem; font-weight: 500; color: #78350f; margin-top: 0.25rem;">Trigger: ${f.triggerDetail}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+
+          <!-- Resolved Flags & Score Recalculation History -->
+          ${resSummary && resSummary.resolvedRecords.length > 0 ? `
+            <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-lg); padding: 1.15rem 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.5rem;">
+                <h4 style="font-family: var(--font-heading); color: #065f46; font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+                  <span>✅</span> Resolved Flags &amp; Score Recalculations (${resSummary.resolvedRecords.length})
+                </h4>
+                <span style="font-size: 0.78rem; font-weight: 700; color: #047857; background: #d1fae5; padding: 0.2rem 0.6rem; border-radius: 999px;">
+                  Score Boost: +${resSummary.scoreDelta.toFixed(1)} pts (${resSummary.baselineOverall.toFixed(1)} → ${resSummary.currentOverall.toFixed(1)})
+                </span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                ${resSummary.resolvedRecords.map(r => `
+                  <div style="background: #ffffff; border: 1px solid #6ee7b7; border-radius: var(--radius-md); padding: 0.65rem 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                    <div>
+                      <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                        <span style="font-weight: 700; font-size: 0.84rem; color: #065f46; text-decoration: line-through;">${escapeHtml(r.flagTitle)}</span>
+                        <span style="font-size: 0.72rem; font-weight: 700; color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.1rem 0.45rem; border-radius: 4px;">
+                          ✓ Resolved ${r.scoreGain !== undefined ? `(+${r.scoreGain.toFixed(1)} pts)` : ''}
+                        </span>
+                      </div>
+                      <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 0.2rem;">
+                        Resolved on ${escapeHtml(r.resolvedAt)} by ${escapeHtml(r.resolvedBy)}
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="reopen-flag-btn"
+                      data-dbn="${school.dbn}"
+                      data-flag-id="${r.flagId}"
+                      style="background: #ffffff; color: #b45309; border: 1px solid #fcd34d; padding: 0.3rem 0.65rem; border-radius: var(--radius-sm); font-family: var(--font-heading); font-size: 0.73rem; font-weight: 600; cursor: pointer;"
+                      title="Reopen this flag and revert its score adjustment"
+                    >
+                      ↩ Reopen Flag
+                    </button>
                   </div>
                 `).join('')}
               </div>

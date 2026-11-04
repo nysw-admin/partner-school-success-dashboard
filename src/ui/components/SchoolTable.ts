@@ -1,4 +1,5 @@
 import type { SchoolWithData } from '../../pipeline/generator.ts';
+import { getSchoolScoreResolutionSummary } from '../../services/flagResolutionService.ts';
 
 export interface FilterState {
   searchQuery: string;
@@ -280,16 +281,30 @@ function renderSchoolRow(item: SchoolWithData): string {
       </td>
 
       <td>
-        ${flags.length === 0
-          ? `<span style="font-size: 0.8rem; color: var(--tier-thriving);">✓ Clear</span>`
-          : `<div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+        ${(() => {
+          const resSummary = getSchoolScoreResolutionSummary(school.dbn);
+          const resolvedBadge = resSummary
+            ? `<div style="margin-bottom: 0.25rem;"><span style="display:inline-flex; align-items:center; gap:0.2rem; background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; border-radius:4px; padding:0.1rem 0.38rem; font-size:0.68rem; font-weight:700;" title="Score boosted by +${resSummary.scoreDelta.toFixed(1)} pts from ${resSummary.resolvedRecords.length} resolved flag(s)">✓ +${resSummary.scoreDelta.toFixed(1)} pts (${resSummary.resolvedRecords.length} resolved)</span></div>`
+            : '';
+          if (flags.length === 0) {
+            return `${resolvedBadge}<span style="font-size: 0.8rem; color: var(--tier-thriving);">✓ Clear</span>`;
+          }
+          return `${resolvedBadge}<div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
               ${flags.map(f => `
-                <span class="active-flag-chip ${f.severity === 'critical' ? '' : 'warning'}" title="${escapeHtml(f.title)}: ${escapeHtml(f.description)} (${f.weeksActive} wks active)">
-                  🚨 ${escapeHtml(f.title.split(' ')[0])} (${f.weeksActive}w)
+                <span class="active-flag-chip ${f.severity === 'critical' ? '' : 'warning'}" style="display:inline-flex; align-items:center; gap:0.3rem;" title="${escapeHtml(f.title)}: ${escapeHtml(f.description)} (${f.weeksActive} wks active)">
+                  <span>🚨 ${escapeHtml(f.title.split(' ')[0])} (${f.weeksActive}w)</span>
+                  <button
+                    type="button"
+                    class="resolve-flag-btn"
+                    data-dbn="${school.dbn}"
+                    data-flag-id="${f.id}"
+                    style="background:#059669; color:#ffffff; border:none; border-radius:3px; padding:0.05rem 0.32rem; font-size:0.65rem; font-weight:700; cursor:pointer; line-height:1.2;"
+                    title="Resolve '${escapeHtml(f.title)}' &amp; recalculate school score"
+                  >✓ Resolve</button>
                 </span>
               `).join('')}
-            </div>`
-        }
+            </div>`;
+        })()}
       </td>
     </tr>
   `;

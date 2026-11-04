@@ -1,11 +1,17 @@
 import { generateRealisticCohort, sortSchoolsByGradeDesc, type SchoolWithData } from './pipeline/generator.ts';
-import type { FlaggedSchoolReport } from './types/flags.ts';
+import type { FlaggedSchoolReport, FlagId } from './types/flags.ts';
 import { renderNavbar } from './ui/components/Navbar.ts';
 import { renderMetricsRibbon } from './ui/components/MetricsRibbon.ts';
 import { renderSchoolTable, type FilterState } from './ui/components/SchoolTable.ts';
 import { renderFlaggedWatchlist, renderSchoolLogSection } from './ui/components/FlaggedWatchlist.ts';
 import { renderSchoolDrawer } from './ui/components/SchoolDrawer.ts';
 import { addLogEntry, deleteLogEntry } from './services/flagLogStore.ts';
+import {
+  applyFlagResolutionsToCohort,
+  resolveSchoolFlag,
+  reopenSchoolFlag,
+  clearBaselineCache,
+} from './services/flagResolutionService.ts';
 import { renderAIAgentModal, type AIMessage } from './ui/components/AIAgentModal.ts';
 import { generateSchoolExecutiveReport, askSchoolCopilot } from './services/aiAgent.ts';
 import { renderDataIngestionModal, type IngestionStatusData } from './ui/components/DataIngestionModal.ts';
@@ -43,7 +49,13 @@ interface AppState {
   liveFlaggedBackup: FlaggedSchoolReport[];
 }
 
-const cohort = generateRealisticCohort();
+const rawCohort = generateRealisticCohort();
+const initialResolved = applyFlagResolutionsToCohort(rawCohort.schools);
+const cohort = {
+  schoolYear: rawCohort.schoolYear,
+  schools: initialResolved.schools,
+  flaggedReports: initialResolved.flaggedReports,
+};
 
 const initialWelcomeMsg: AIMessage = {
   id: 'msg-welcome',
@@ -635,6 +647,63 @@ function attachEventListeners() {
 
   // Wire up flag log forms and deletion buttons
   attachFlagLogListeners();
+
+  // Wire up Flag Resolution & Score Recalculation buttons
+  attachFlagResolutionListeners();
+}
+
+function attachFlagResolutionListeners() {
+  document.querySelectorAll<HTMLButtonElement>('.resolve-flag-btn').forEach(btn => {
+    if (btn.hasAttribute('data-bound')) return;
+    btn.setAttribute('data-bound', 'true');
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dbn = btn.getAttribute('data-dbn');
+      const flagId = btn.getAttribute('data-flag-id') as FlagId | null;
+      if (!dbn || !flagId) return;
+
+      const res = resolveSchoolFlag(dbn, flagId, 'NYSW Team');
+      const updated = applyFlagResolutionsToCohort(state.schools);
+      state.schools = updated.schools;
+      state.flaggedReports = updated.flaggedReports;
+      if (!state.activeSnapshotId) {
+        state.liveSchoolsBackup = [...updated.schools];
+        state.liveFlaggedBackup = [...updated.flaggedReports];
+      }
+
+      if (res) {
+        const gradeChanged = res.oldGrade !== res.newGrade ? ` · Grade ${res.oldGrade} → ${res.newGrade}` : '';
+        showIngestSuccessToast(
+          `✓ Flag Resolved for ${dbn} ("${res.flagTitle}")! Score recalculated: ${res.oldScore.toFixed(1)} → ${res.newScore.toFixed(1)} (+${res.scoreGain.toFixed(1)} pts${gradeChanged})`
+        );
+      } else {
+        renderApp();
+      }
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.reopen-flag-btn').forEach(btn => {
+    if (btn.hasAttribute('data-bound')) return;
+    btn.setAttribute('data-bound', 'true');
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dbn = btn.getAttribute('data-dbn');
+      const flagId = btn.getAttribute('data-flag-id') as FlagId | null;
+      if (!dbn || !flagId) return;
+
+      reopenSchoolFlag(dbn, flagId);
+      const updated = applyFlagResolutionsToCohort(state.schools);
+      state.schools = updated.schools;
+      state.flaggedReports = updated.flaggedReports;
+      if (!state.activeSnapshotId) {
+        state.liveSchoolsBackup = [...updated.schools];
+        state.liveFlaggedBackup = [...updated.flaggedReports];
+      }
+      showIngestSuccessToast(`↩ Reopened flag on ${dbn} and recalculated school rubric score.`);
+    });
+  });
 }
 
 function switchToLiveCohort() {
@@ -858,11 +927,13 @@ async function triggerDataIngestion() {
       if (data.schoolYear || targetCohort.schoolYear) {
         state.activeSchoolYear = data.schoolYear || targetCohort.schoolYear;
       }
-      const sorted = [...targetCohort.schools].sort(sortSchoolsByGradeDesc);
+      clearBaselineCache();
+      const recalculated = applyFlagResolutionsToCohort(targetCohort.schools);
+      const sorted = [...recalculated.schools].sort(sortSchoolsByGradeDesc);
       state.schools = sorted;
-      state.flaggedReports = targetCohort.flaggedReports;
+      state.flaggedReports = recalculated.flaggedReports;
       state.liveSchoolsBackup = [...sorted];
-      state.liveFlaggedBackup = [...targetCohort.flaggedReports];
+      state.liveFlaggedBackup = [...recalculated.flaggedReports];
       state.availableSnapshots = getAllSnapshots(sorted);
 
       await fetchIngestStatus(false);
