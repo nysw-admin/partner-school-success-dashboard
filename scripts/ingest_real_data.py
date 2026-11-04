@@ -505,20 +505,46 @@ def resolve_all_school_ids(val_str):
     if is_na(val_str):
         return []
     s = str(val_str).strip()
-    matches = re.findall(r'\b([KMXQRkmxqr][0-9]{3})\b', s)
-    found = [m.upper() for m in matches]
-    if found:
-        for dbn in found:
-            if dbn not in registry:
-                resolve_school_id(dbn)
-        return list(set(found))
-    s_low = s.lower()
-    if s_low in alias_map:
-        return [alias_map[s_low]]
-    for k, v in alias_map.items():
-        if len(k) > 4 and k in s_low:
-            return [v]
-    return []
+    if not s:
+        return []
+    s_low_full = s.lower()
+    if s_low_full in ('all completed', 'all complete', 'none completed', 'none', 'n/a', 'all done', 'off'):
+        return []
+
+    results = []
+    # Split comma- or semicolon-separated tokens so mixed cells (DBNs + named schools) resolve every school
+    tokens = re.split(r'[,;]+', s)
+    for tok in tokens:
+        tok_clean = re.sub(r'\([^)]*\)', '', tok).strip()
+        if not tok_clean:
+            continue
+        tok_low = tok_clean.lower()
+        if tok_low in ('all completed', 'all complete', 'none completed', 'none', 'n/a', 'all done', 'off'):
+            continue
+
+        matches = re.findall(r'\b([KMXQRkmxqr][0-9]{3})\b', tok_clean)
+        if matches:
+            for m in matches:
+                dbn = m.upper()
+                if dbn not in registry:
+                    resolve_school_id(dbn)
+                if dbn not in results:
+                    results.append(dbn)
+            continue
+
+        if tok_low in alias_map:
+            canon = alias_map[tok_low]
+            if canon not in results:
+                results.append(canon)
+            continue
+
+        for k, v in alias_map.items():
+            if len(k) >= 4 and (k in tok_low or tok_low in k):
+                if v not in results:
+                    results.append(v)
+                break
+
+    return results
 
 
 # ----------------------------------------------------
@@ -572,6 +598,7 @@ missing_asset_files = find_matching_files(SLICE_DIR, patterns=['missing assets']
 missing_assets_completed = Counter()
 missing_assets_missing = Counter()
 missing_assets_late = Counter()
+missing_assets_weeks_by_school = defaultdict(list)
 
 if missing_asset_files and os.path.exists(missing_asset_files[0]):
     ma_path = missing_asset_files[0]
@@ -601,6 +628,8 @@ if missing_asset_files and os.path.exists(missing_asset_files[0]):
                     schedule_gst_by_school[sc][gst] += 1
             for sc in miss_ids:
                 missing_assets_missing[sc] += 1
+                if s_name.strip() not in missing_assets_weeks_by_school[sc]:
+                    missing_assets_weeks_by_school[sc].append(s_name.strip())
                 if gst:
                     schedule_gst_by_school[sc][gst] += 1
             for sc in late_ids:
@@ -1077,30 +1106,36 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
 
     elapsed_periods = max(1, int(round(elapsed_calendar_weeks / period_len)))
 
-    # Use Missing Assets 26_27 report data combined with filed GST visits for C1a and C1b
+    # Calculate C1a (On-Time Asset Completion) and C1b (Late-vs-Missing Rate) directly from Missing Assets 26_27.xlsx
     ma_comp = missing_assets_completed.get(sc, 0)
     ma_miss = missing_assets_missing.get(sc, 0)
     ma_late = missing_assets_late.get(sc, 0)
+    ma_scheduled = ma_comp + ma_miss
     ma_total = ma_comp + ma_miss + ma_late
 
-    if ma_total > 0 or total_visits > 0:
-        effective_comp = max(ma_comp, total_visits)
-        on_time_periods = max(0, effective_comp - ma_late)
-        total_tracked_periods = max(1, effective_comp + ma_miss)
-        on_time_rate = clamp(on_time_periods / total_tracked_periods, 0.0, 1.0)
+    if ma_scheduled > 0:
+        on_time_rate = clamp(ma_comp / ma_scheduled, 0.0, 1.0)
         c1a_score, c1a_pct = linear_score(on_time_rate, 0.65, 0.95, 12.0)
 
-        non_on_time_total = ma_late + ma_miss
-        if non_on_time_total == 0:
+        if ma_miss == 0 and ma_late == 0:
             c1b_score, c1b_pct = 3.0, 1.0
             c1b_actual_str = 'Full Credit'
             c1b_actual_num = 1.0
         else:
-            late_vs_missing_rate = clamp(ma_late / non_on_time_total, 0.0, 1.0)
+            still_missing = max(0, ma_miss - ma_late)
+            denom_c1b = max(1, ma_late + still_missing)
+            late_vs_missing_rate = clamp(ma_late / denom_c1b, 0.0, 1.0)
             c1b_score, c1b_pct = linear_score(late_vs_missing_rate, 0.0, 1.0, 3.0)
             c1b_actual_str = f"{round(late_vs_missing_rate * 100, 1)}%"
             c1b_actual_num = late_vs_missing_rate
-        completed_periods = effective_comp
+        completed_periods = ma_comp + ma_late
+    elif total_visits > 0:
+        completed_periods = total_visits
+        on_time_rate = 1.0
+        c1a_score, c1a_pct = linear_score(on_time_rate, 0.65, 0.95, 12.0)
+        c1b_score, c1b_pct = 3.0, 1.0
+        c1b_actual_str = 'Full Credit'
+        c1b_actual_num = 1.0
     else:
         completed_periods = elapsed_periods
         on_time_rate = 0.85
@@ -1347,28 +1382,30 @@ for idx, (sc, meta) in enumerate(sorted(registry.items())):
 
     active_flags = []
 
-    if ma_miss >= 2 or (ma_total == 0 and total_visits < elapsed_periods - 1):
+    if ma_miss >= 2:
+        miss_weeks_list = missing_assets_weeks_by_school.get(sc, [])
+        weeks_desc = f" ({', '.join(miss_weeks_list[:4])})" if miss_weeks_list else ""
         active_flags.append({
             'id': 'TWO_REPORTS_MISSING',
             'title': 'Consecutive Reports Missing',
-            'description': 'Two or more scheduled weekly support reports are missing. Usually a visit-scheduling problem, not a school failure.',
-            'triggerDetail': f'{ma_miss} missing reports logged in Missing Assets tracker' if ma_total > 0 else f'Only {total_visits} reports filed across {elapsed_periods} scheduled periods',
+            'description': 'Two or more scheduled weekly support reports are missing in Missing Assets 26_27.xlsx. Usually a visit-scheduling problem, not a school failure.',
+            'triggerDetail': f'{ma_miss} missing reports logged in Missing Assets 26_27.xlsx{weeks_desc}',
             'triggeredDate': str(max_date),
-            'weeksActive': 2,
+            'weeksActive': ma_miss,
             'severity': 'warning',
             'routing': 'GST Check-in',
             'autoClears': False
         })
         flag_counts['TWO_REPORTS_MISSING'] += 1
 
-    if on_time_rate < 0.70:
+    if ma_scheduled > 0 and on_time_rate < 0.70:
         active_flags.append({
             'id': 'ASSET_COMPLETION_LOW',
             'title': 'Low Asset Completion Rate (<70%)',
-            'description': 'YTD on-time asset completion is below the 70% threshold. Requires GST support check-in.',
-            'triggerDetail': f'Completion rate is {round(on_time_rate*100, 1)}% (minimum threshold: 70%)',
+            'description': 'YTD on-time asset completion in Missing Assets 26_27.xlsx is below the 70% threshold. Requires GST support check-in.',
+            'triggerDetail': f'Completion rate is {round(on_time_rate*100, 1)}% ({ma_comp} completed, {ma_miss} missing in Missing Assets 26_27.xlsx — minimum threshold: 70%)',
             'triggeredDate': str(max_date),
-            'weeksActive': 3,
+            'weeksActive': max(2, ma_miss),
             'severity': 'warning',
             'routing': 'Operations / School Page',
             'autoClears': False
