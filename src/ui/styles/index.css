@@ -210,8 +210,8 @@ body {
 
 /* Main Content Area */
 .main-content {
-  padding: 2rem;
-  max-width: 1440px;
+  padding: 1.5rem 1.75rem;
+  max-width: 1680px;
   margin: 0 auto;
   width: 100%;
 }
@@ -463,7 +463,7 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow-x: auto;
   box-shadow: var(--shadow-sm);
 }
 
@@ -475,19 +475,20 @@ body {
 
 .school-table th {
   background: var(--bg-card-alt);
-  padding: 0.85rem 1rem;
-  font-size: 0.75rem;
+  padding: 0.75rem 0.6rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--text-muted);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   border-bottom: 1px solid var(--border-light);
+  white-space: nowrap;
 }
 
 .school-table td {
-  padding: 1rem;
+  padding: 0.75rem 0.6rem;
   border-bottom: 1px solid var(--border-light);
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   vertical-align: middle;
 }
 
@@ -590,7 +591,7 @@ body {
 /* Score Breakdown Mini Bars */
 .bucket-mini-group {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.35rem;
   align-items: center;
 }
 
@@ -598,11 +599,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
 }
 
 .bucket-mini-bar {
-  width: 48px;
+  width: 38px;
   height: 6px;
   background: var(--bg-card-alt);
   border-radius: var(--radius-full);

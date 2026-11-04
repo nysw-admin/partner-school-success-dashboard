@@ -159,16 +159,16 @@ export function renderSchoolTable(
       <table class="school-table">
         <thead>
           <tr>
-            <th style="width: 115px;" title="Sorted by highest to lowest grade (A → F)">Grade &amp; Score <span style="font-size: 0.72rem; color: var(--accent-emerald); font-weight: bold;">▼</span></th>
-            <th style="min-width: 180px;">School / DBN</th>
-            <th style="width: 100px;">Borough</th>
-            <th style="width: 130px;">Status</th>
-            <th style="width: 120px;">Area Manager</th>
-            <th style="width: 125px;">GST Team</th>
-            <th style="width: 140px;">Ed Team</th>
-            <th style="width: 115px;">Gate Status</th>
-            <th style="width: 135px;">3-Bucket Breakdown</th>
-            <th style="min-width: 140px;">Active Flags</th>
+            <th style="width: 98px;" title="Sorted by highest to lowest grade (A → F)">Grade &amp; Score <span style="font-size: 0.72rem; color: var(--accent-emerald); font-weight: bold;">▼</span></th>
+            <th style="min-width: 155px;">School / DBN</th>
+            <th style="width: 88px;">Borough</th>
+            <th style="width: 108px;">Status</th>
+            <th style="width: 100px;">Area Manager</th>
+            <th style="width: 90px;">GST Team</th>
+            <th style="width: 120px;">Ed Team</th>
+            <th style="width: 105px;">Gate Status</th>
+            <th style="width: 125px;">3-Bucket Breakdown</th>
+            <th style="min-width: 195px;">Active Flags</th>
           </tr>
         </thead>
         <tbody>
@@ -280,28 +280,30 @@ function renderSchoolRow(item: SchoolWithData): string {
         </div>
       </td>
 
-      <td>
+      <td style="min-width: 195px;">
         ${(() => {
           const resSummary = getSchoolScoreResolutionSummary(school.dbn);
           const resolvedBadge = resSummary
-            ? `<div style="margin-bottom: 0.25rem;"><span style="display:inline-flex; align-items:center; gap:0.2rem; background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; border-radius:4px; padding:0.1rem 0.38rem; font-size:0.68rem; font-weight:700;" title="Score boosted by +${resSummary.scoreDelta.toFixed(1)} pts from ${resSummary.resolvedRecords.length} resolved flag(s)">✓ +${resSummary.scoreDelta.toFixed(1)} pts (${resSummary.resolvedRecords.length} resolved)</span></div>`
+            ? `<div style="margin-bottom: 0.25rem;"><span style="display:inline-flex; align-items:center; gap:0.2rem; background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; border-radius:4px; padding:0.1rem 0.38rem; font-size:0.68rem; font-weight:700; white-space:nowrap;" title="Score boosted by +${resSummary.scoreDelta.toFixed(1)} pts from ${resSummary.resolvedRecords.length} resolved flag(s)">✓ +${resSummary.scoreDelta.toFixed(1)} pts (${resSummary.resolvedRecords.length} resolved)</span></div>`
             : '';
           if (flags.length === 0) {
-            return `${resolvedBadge}<span style="font-size: 0.8rem; color: var(--tier-thriving);">✓ Clear</span>`;
+            return `${resolvedBadge}<span style="font-size: 0.8rem; color: var(--tier-thriving); white-space: nowrap;">✓ Clear</span>`;
           }
-          return `${resolvedBadge}<div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+          return `${resolvedBadge}<div style="display: flex; flex-direction: column; gap: 0.3rem; align-items: flex-start;">
               ${flags.map(f => `
-                <span class="active-flag-chip ${f.severity === 'critical' ? '' : 'warning'}" style="display:inline-flex; align-items:center; gap:0.3rem;" title="${escapeHtml(f.title)}: ${escapeHtml(f.description)} (${f.weeksActive} wks active)">
-                  <span>🚨 ${escapeHtml(f.title.split(' ')[0])} (${f.weeksActive}w)</span>
+                <div style="display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap;">
+                  <span class="active-flag-chip ${f.severity === 'critical' ? '' : 'warning'}" style="padding: 0.15rem 0.45rem; font-size: 0.7rem;" title="${escapeHtml(f.title)}: ${escapeHtml(f.description)} (${f.weeksActive} wks active)">
+                    🚨 ${escapeHtml(f.title.split(' ')[0])} (${f.weeksActive}w)
+                  </span>
                   <button
                     type="button"
                     class="resolve-flag-btn"
                     data-dbn="${school.dbn}"
                     data-flag-id="${f.id}"
-                    style="background:#059669; color:#ffffff; border:none; border-radius:3px; padding:0.05rem 0.32rem; font-size:0.65rem; font-weight:700; cursor:pointer; line-height:1.2;"
+                    style="background:#059669; color:#ffffff; border:1px solid #047857; border-radius:4px; padding:0.14rem 0.42rem; font-size:0.68rem; font-weight:700; cursor:pointer; line-height:1.2; white-space:nowrap; flex-shrink:0;"
                     title="Resolve '${escapeHtml(f.title)}' &amp; recalculate school score"
                   >✓ Resolve</button>
-                </span>
+                </div>
               `).join('')}
             </div>`;
         })()}
