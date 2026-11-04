@@ -64,7 +64,7 @@ export function renderSchoolTable(
       return false;
     }
 
-    if (filters.areaManager && filters.areaManager !== 'all' && s.areaManager !== filters.areaManager) {
+    if (filters.areaManager && filters.areaManager !== 'all' && (s.areaManager || 'Unassigned') !== filters.areaManager) {
       return false;
     }
 
@@ -91,7 +91,7 @@ export function renderSchoolTable(
   });
 
   const uniqueAreaManagers = Array.from(
-    new Set(schools.map(s => s.school.areaManager).filter(Boolean))
+    new Set(schools.map(s => s.school.areaManager || 'Unassigned'))
   ).sort() as string[];
   const uniqueGsts = Array.from(new Set(schools.map(s => s.school.assignedGst))).sort();
   const uniqueEdTeam = Array.from(
